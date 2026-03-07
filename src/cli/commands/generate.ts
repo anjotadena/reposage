@@ -51,9 +51,7 @@ export async function generateCommand(
   let force = opts.force ?? false;
   const cursorDir = path.join(resolved, ".cursor");
   if (fs.existsSync(cursorDir) && !force) {
-    const ok = await confirmOverride(
-      "Are you sure you want to override existing .cursor/**/*?"
-    );
+    const ok = await confirmOverride("Are you sure you want to override existing .cursor/**/*?");
     if (!ok) {
       console.log(chalk.gray("Aborted."));
       process.exit(0);
@@ -79,8 +77,7 @@ export async function generateCommand(
         force,
         useAI,
         model,
-        onFileGenerated: (file) =>
-          console.log(chalk.gray(`  ${file} -> ${chalk.green("done!")}`)),
+        onFileGenerated: (file) => console.log(chalk.gray(`  ${file} -> ${chalk.green("done!")}`)),
       });
     }
 
