@@ -1,14 +1,14 @@
-# RepoSage
-
-**AI-powered repository understanding and developer context generator**
-
 <p align="center">
-  <img src="assets/reposage_logo.png" alt="RepoSage" width="200"/>
+  <img src="assets/reposage_logo.png" alt="RepoSage" width="450"/>
 </p>
 
 <p align="center">
   <a href="https://github.com/anjotadena/reposage/actions/workflows/ci.yml"><img src="https://github.com/anjotadena/reposage/actions/workflows/ci.yml/badge.svg" alt="CI"/></a>
 </p>
+
+# RepoSage
+
+**AI-powered repository understanding and developer context generator**
 
 ---
 
