@@ -1,91 +1,129 @@
-<!-- Generated: 2026-03-07T12:43:17.872Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-07T13:05:52.239Z | RepoSage 0.1.0 -->
 
 # Testing Strategy
 
-## Status (as detected)
+This document is generated from the repository analysis report (generated at `2026-03-07T13:05:52.239Z`). The report is the sole source of truth; anything not detected is treated as unknown and called out explicitly.
 
-From the repository analysis report:
+## Current State (per report)
 
-- **Test frameworks**: **none detected** (confidence: low)
-- **Primary runtime surface**: a **CLI entry point** at `dist/cli/index.js` (used for both `main` and `bin`)
-- **CI/CD**: GitHub Actions workflow at `.github/workflows/ci.yml`
-- **Language/tooling constraints**:
-  - **TypeScript**: strict mode enabled
-  - **ESLint**: present (`eslint.config.js`)
-  - **Prettier**: present (`.prettierrc`)
-
-Implication: this repo does not currently have an evidence-backed, standardized testing stack captured by the report. Treat any testing additions as introducing a new convention that must be made explicit and enforced.
+- **Primary languages**: TypeScript (43 files; 48%), Markdown (13; 15%), JSON (3; 3%), JavaScript (1; 1%). (Language detection confidence: high)
+- **Application type**: Node.js CLI (entrypoints: `dist/cli/index.js` as both `main` and `bin: reposage`). (Entrypoint detection confidence: high)
+- **CI/CD**: GitHub Actions workflow present at `.github/workflows/ci.yml`. (CI/CD detection confidence: high)
+- **Code quality tooling**: ESLint and Prettier are configured (`eslint.config.js`, `.prettierrc`), and TypeScript is configured with strictness enabled. (Coding conventions confidence: medium)
+- **Test frameworks**: No test framework detected. (Test framework detection confidence: low)
 
 ## Goals
 
-- **Prevent regressions** in the CLI surface and core logic.
-- **Keep tests deterministic** (stable across machines/CI runs).
-- **Make tests easy to add** with minimal boilerplate, while staying compatible with **strict TypeScript**, **ESLint**, and **Prettier**.
+- **Fast feedback**: keep checks quick for local iteration and CI.
+- **Confidence**: cover core CLI behavior with automated tests that validate observable outputs and exit codes.
+- **Maintainability**: prefer stable, deterministic tests and avoid flaky timing- or environment-dependent assertions.
 
-## Test Levels (recommended)
+## CI Expectations
 
-Because the detected runtime surface is a CLI entry point, cover the following levels:
+The repository contains a GitHub Actions workflow at `.github/workflows/ci.yml`. This document does not assume what that workflow runs; align any testing approach with that workflow by:
 
-- **Unit tests**: for pure logic (fast, isolated).
-- **Integration tests**: for module boundaries (filesystem, process invocation) with controlled fixtures.
-- **CLI end-to-end tests**: execute the CLI in a subprocess and assert on exit codes and stdout/stderr.
+- Ensuring CI runs the same core checks developers run locally.
+- Keeping CI deterministic (pin tooling via lockfiles; avoid environment-specific dependencies where possible).
+- Adding a test job/step once a test runner is introduced (see “Adding Tests”).
 
-## Test Frameworks
+## What “Testing” Means in This Repo
 
-The analysis report did not detect any test framework. If you add tests, choose and standardize on a single test runner/tooling stack for Node.js + TypeScript.
+Because the report identifies a CLI entrypoint (`dist/cli/index.js`) and does not detect any existing test framework, treat testing as a layered approach you can introduce incrementally:
 
-Guidelines for selecting a framework (non-exhaustive):
+- **Static checks (already indicated by tooling)**:
+  - Linting (ESLint)
+  - Formatting (Prettier)
+  - Type checking (TypeScript strict mode)
+- **Automated tests (not detected yet)**:
+  - Unit tests for pure logic (functions with minimal I/O)
+  - Integration tests for CLI behavior (command invocation → stdout/stderr/exit code/filesystem effects)
+  - Smoke tests to ensure the built CLI entrypoint remains executable
 
-- **TypeScript support**: can run tests written in `.ts` (or supports a build step that compiles tests).
-- **ESM/CJS compatibility**: matches how the project is built/executed.
-- **Good CLI/process testing ergonomics**: easy assertions on output and exit codes.
-- **CI friendliness**: stable output, non-interactive by default, supports reporting if needed.
+## Test Frameworks (Detected vs. Planned)
 
-## Conventions (recommended)
+### Detected
 
-### File and folder layout
+- **None detected** by the report.
 
-The report does not evidence a particular source layout (it only evidences `dist/` and config/CI paths). When introducing tests:
+### Planned (to be selected)
 
-- **Pick a test location convention** and document it (e.g. a dedicated test directory or colocated tests).
-- **Keep test discovery predictable** (consistent file naming and directory structure).
-- **Do not couple tests to build artifacts** unless explicitly testing distribution output.
+Choose and add a single JavaScript/TypeScript test runner that supports:
 
-### What to test
+- TypeScript test authoring (or reliable transpilation)
+- Assertions and snapshots (optional)
+- Spawning processes for CLI integration tests
+- Coverage reporting (optional but recommended)
 
-- **Logic**: validate transformations and decision logic with unit tests.
-- **Error handling**: assert that invalid inputs produce clear errors and non-zero exit codes.
-- **CLI contract**: flags/arguments parsing, help output shape, and “happy path” execution.
-- **Cross-platform behavior**: prefer path-safe and shell-safe test setup (portable temp dirs, no hardcoded absolute paths).
+This document intentionally does not name specific frameworks because the analysis report did not confirm any.
 
-### Determinism and isolation
+## Test Organization (Choose a Convention)
 
-- **Avoid network** in tests by default; isolate via fakes/mocks if needed.
-- **Use temporary directories** for filesystem-heavy tests and clean them up reliably.
-- **Avoid time-based flakiness**; if time matters, control the time source in tests.
+No test layout convention was detected. Pick one and apply consistently:
 
-## How to Add Tests (implementation checklist)
+- **Co-located tests**: place tests next to source (example pattern: `src/**/foo.test.ts`)
+- **Centralized tests**: place tests under a single directory (example pattern: `tests/**`)
 
-1. **Pick a test runner** compatible with TypeScript strictness and your module system.
-2. **Add a `test` script** (and optionally `test:watch`, `test:ci`) so contributors and CI have a stable entry point.
-3. **Create the initial test structure** (choose a location + naming convention) and add at least one “smoke” test that:
-   - runs fast
-   - does not rely on external state
-   - demonstrates the expected style and assertions
-4. **Integrate with CI** by updating `.github/workflows/ci.yml` to run the test script.
-5. **Keep the quality gates aligned** with detected tooling:
-   - tests should be **lint-clean**
-   - tests should be **format-clean**
-   - tests should pass **strict TypeScript** checks (directly or via the chosen runner’s TypeScript pipeline)
+Whichever you choose, ensure it is supported by the selected test runner configuration and reflected in CI.
 
-## CI Expectations (as detected)
+## Test Patterns (Recommended)
 
-- **CI system**: GitHub Actions via `.github/workflows/ci.yml`.
+### Unit tests (pure logic)
 
-When adding tests, ensure CI runs them for both `push` and `pull_request` events (matching the existing CI presence).
+- **Prefer pure functions**: isolate parsing/formatting/decision logic into functions that accept inputs and return outputs.
+- **Table-driven cases**: use data-driven test cases to cover many input permutations with minimal boilerplate.
+- **Avoid filesystem/network** unless the unit under test is explicitly about I/O.
 
-## Limitations (report scope)
+### CLI integration tests (behavioral)
 
-- **No test framework identified**: the report does not provide a current testing stack to extend.
-- **No framework/architecture inference**: the report lists architecture style as Unknown (no frameworks detected).
-- **No module graph**: “where to place tests” must be decided explicitly (the report does not evidence a `src/` layout or internal boundaries).
+Given the CLI entrypoint, integration tests should validate:
+
+- **Exit codes**: success vs. failure paths
+- **stdout/stderr**: user-facing messages and errors
+- **Args and flags**: parsing and behavior changes
+- **Filesystem effects**: outputs created/modified, if applicable
+
+To keep these tests deterministic:
+
+- Run each test in an isolated temporary working directory.
+- Avoid relying on user-specific environment variables or global state.
+- Prefer fixed inputs committed as fixtures.
+
+### Build/packaging smoke tests
+
+Because the entrypoint in the report is under `dist/`, include at least one automated check that ensures:
+
+- The build output exists when expected (in CI workflows that build).
+- The CLI can be invoked in the environment CI uses (node runtime consistent with CI).
+
+## Adding Tests (Step-by-step)
+
+Since no test framework is currently detected, adding tests means introducing the testing toolchain and wiring it into local workflows and CI.
+
+1. **Select a test runner** that fits the “Planned” criteria above and is compatible with the project’s TypeScript setup.
+2. **Add test scripts** to `package.json` (names and exact commands depend on the chosen runner).
+3. **Decide test layout** (co-located vs centralized) and configure the runner to discover tests accordingly.
+4. **Add a minimal “smoke” test**:
+   - A small unit test for a pure function (or a new pure function extracted from existing logic).
+   - A CLI integration test that runs the CLI with `--help` (or an equivalent safe command) and asserts exit code/output.
+5. **Add CI coverage**:
+   - Update `.github/workflows/ci.yml` to run the new `test` script.
+   - Keep lint/typecheck steps aligned with the existing ESLint/Prettier/TypeScript configuration (as indicated by the report).
+6. **Stabilize and scale**:
+   - Add fixtures for representative inputs.
+   - Add tests for core CLI commands and edge cases.
+
+## Writing a New Test (Checklist)
+
+- **Scope**: pick one behavior, one assertion focus.
+- **Determinism**: no reliance on wall-clock time, network, or developer machine state.
+- **Isolation**: unique temp directory per test when touching the filesystem.
+- **Assertions**: assert exit code + the most important output; avoid brittle full-output matches unless output is intentionally stable.
+- **Naming**: test names should describe user-observable behavior (especially for CLI integration tests).
+
+## When the Report Changes
+
+If a test framework is added later, update this document to:
+
+- List the detected test framework(s) and their configuration files.
+- Document the canonical commands (`test`, `test:watch`, `test:ci`) as they exist in the repo.
+- Describe the established test layout and any fixtures convention.

@@ -48,8 +48,9 @@ export async function generateCommand(
     }
   }
 
+  let force = opts.force ?? false;
   const cursorDir = path.join(resolved, ".cursor");
-  if (fs.existsSync(cursorDir) && !opts.force) {
+  if (fs.existsSync(cursorDir) && !force) {
     const ok = await confirmOverride(
       "Are you sure you want to override existing .cursor/**/*?"
     );
@@ -57,6 +58,7 @@ export async function generateCommand(
       console.log(chalk.gray("Aborted."));
       process.exit(0);
     }
+    force = true;
   }
 
   try {
@@ -74,7 +76,7 @@ export async function generateCommand(
     if (opts.force !== false) {
       console.log(chalk.gray("\nGenerating:"));
       await pipeline.runPhase5({
-        force: opts.force,
+        force,
         useAI,
         model,
         onFileGenerated: (file) =>
@@ -86,7 +88,6 @@ export async function generateCommand(
     console.log("  - .cursor/rules/ (5 rule files)");
     console.log("  - .cursor/commands/ (5 command files)");
     console.log("  - docs/context/ (7 documentation files)");
-    console.log("  - README.md");
   } catch (err) {
     console.error(chalk.red("Generation failed"));
     console.error(chalk.red(String(err)));

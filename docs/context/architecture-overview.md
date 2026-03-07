@@ -1,48 +1,67 @@
-<!-- Generated: 2026-03-07T12:43:17.872Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-07T13:05:52.239Z | RepoSage 0.1.0 -->
 
 # Architecture Overview
 
-## Architecture Style (as detected)
+This document is **evidence-based only** and is generated from the repository analysis report.
 
-- **Style**: **Unknown**
-  - **Evidence**: The architecture analyzer did not infer a pattern from detected frameworks, and no frameworks were detected.
+## Architecture Style
 
-## Runtime Shape / Entry Points (as detected)
+The architecture style is **not inferred**.
 
-- **Packaged entry point**: `dist/cli/index.js`
-  - **`package.json` `main`**: `dist/cli/index.js`
-  - **`package.json` `bin`**: `reposage` → `dist/cli/index.js`
+- **Detector result**: `style: "Unknown"`
+- **Detector note**: “No architecture pattern inferred from detected frameworks”
+- **Confidence**: low (no frameworks detected)
 
-## Layers (evidence-based)
+## High-Level Shape
 
-Only the following layers are directly evidenced by the analysis report:
+The repository appears to be a **CLI application** whose published entrypoint is a built JavaScript artifact.
 
-- **Distribution / build output layer**: `dist/`
-  - **CLI entry layer**: `dist/cli/index.js`
+- **Entrypoints (high confidence)**:
+  - **`main`**: `dist/cli/index.js` (from `package.json` `main`)
+  - **`bin`**: `dist/cli/index.js` (CLI name: `reposage`)
 
-No additional source-layer structure (e.g., `src/`, domain/application/infrastructure boundaries) was detected by the report.
+## Layers and Component Relationships (What’s Known)
 
-## Components and Relationships (as detected)
+Only the following relationships are supported by the report:
 
-- **CLI (`reposage`)** invokes **`dist/cli/index.js`** (the same file is used for both `main` and `bin` entry points).
+- **CLI runtime → built output**: execution begins at `dist/cli/index.js` (serving as both `main` and `bin` entrypoint).
+- **TypeScript/JavaScript split**: the codebase is primarily TypeScript, with a small amount of JavaScript, and a `dist/` JavaScript entrypoint.
 
-No other component graph (modules, services, API routing, database access) was detected by the report.
+## Interfaces / External Boundaries
 
-## Data / External Interfaces (as detected)
+No HTTP API or database boundary is detected by the analysis.
 
-- **API routes**: none detected
-- **Databases**: none detected
+- **API routes**: none detected (low confidence)
+- **Databases**: none detected (low confidence)
 
-## Tooling That Shapes Architecture (as detected)
+## Deployment / Infrastructure
 
-- **Linting/formatting**:
-  - **ESLint**: `eslint.config.js` present
-  - **Prettier**: `.prettierrc` present
-- **TypeScript**:
-  - **Strict mode**: enabled
+No container or IaC tooling is detected by the analysis.
 
-## Delivery / Operations (as detected)
+- **Docker**: not detected (low confidence)
+- **Docker Compose**: not detected (low confidence)
+- **Terraform**: not detected (low confidence)
+- **Kubernetes**: not detected (low confidence)
 
-- **CI/CD**: GitHub Actions workflow at `.github/workflows/ci.yml`
-- **Infrastructure as code / containers**:
-  - Docker / Docker Compose / Terraform / Kubernetes: not detected
+## CI/CD
+
+CI is present via GitHub Actions.
+
+- **Workflow**: `.github/workflows/ci.yml` (high confidence)
+
+## Codebase Conventions (Relevant to Structure)
+
+Formatting and linting tooling is present, and TypeScript strictness is enabled.
+
+- **ESLint**: detected (confidence: medium)
+- **Prettier**: detected (confidence: medium)
+- **Strict TypeScript**: enabled (confidence: medium)
+
+## Unknowns / Not Determined From Evidence
+
+The report does not provide enough evidence to describe:
+
+- internal layering (e.g., “domain/application/infrastructure”)
+- module boundaries or package-level relationships
+- component graph beyond the CLI entrypoint
+- runtime dependencies, I/O mechanisms, or data flow through the CLI

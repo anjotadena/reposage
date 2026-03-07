@@ -1,102 +1,83 @@
-<!-- Generated: 2026-03-07T12:43:17.872Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-07T13:05:52.239Z | RepoSage 0.1.0 -->
 
 # Glossary
 
-Terms, acronyms, and concepts referenced by the repository analysis report.
+Definitions in this glossary are derived solely from the repository analysis report generated on 2026-03-07.
 
-## A
+## Project / build artifacts
 
-- **APIDetector**: The detector named in the report section `apiRoutes`.
-- **API routes**: HTTP/API route surface. **Not detected** by the report.
-- **ArchitectureAnalyzer**: The detector named in the report section `architecture`.
-- **Architecture style**: High-level architecture classification. Reported as **Unknown** (“No architecture pattern inferred from detected frameworks”).
+### `reposage`
+The detected CLI name (from the package `bin` entry) that maps to `dist/cli/index.js`.
 
-## B
+### CLI (Command Line Interface)
+An executable entry point intended to be run from a terminal. This repository’s CLI entry point is `dist/cli/index.js`.
 
-- **bin (package.json field)**: A Node.js package field that defines executable command(s). Report detected **CLI: `reposage`** mapped to `dist/cli/index.js`.
+### `dist/`
+A directory name commonly used for build output. The analysis report identifies `dist/cli/index.js` as the runtime entry point.
 
-## C
+### Entry point
+A file designated as the program’s starting file by configuration. The analysis report detects:
+- **`main` entry**: `dist/cli/index.js` (via the `package.json` `main` field)
+- **`bin` entry**: `dist/cli/index.js` (via the CLI `bin` mapping)
 
-- **CI**: Continuous Integration. In this repository, detected via **GitHub Actions**.
-- **CI/CD**: Continuous Integration / Continuous Delivery (or Deployment). In this repository, detected via **GitHub Actions** at `.github/workflows/ci.yml`.
-- **CICDDetector**: The detector named in the report section `cicd`.
-- **CLI**: Command-Line Interface. Reported entry point: `dist/cli/index.js`; command name: `reposage`.
-- **Confidence**: Per-section confidence score reported by the analyzers (e.g., high/medium/low).
+### `main` (package entry)
+A `package.json` field used to specify the primary module entry point for a package; detected as `dist/cli/index.js`.
 
-## D
+### `bin` (package entry)
+A `package.json` field used to specify executable command mappings for a package; detected as a CLI named `reposage` pointing at `dist/cli/index.js`.
 
-- **DatabaseDetector**: The detector named in the report section `databases`.
-- **Databases**: Persistent data stores. **Not detected** by the report.
-- **dist/**: Distribution/build output directory. Reported to contain the CLI entry at `dist/cli/index.js`.
+## Languages / file types (detected)
 
-## E
+### TypeScript (TS)
+A typed superset of JavaScript. The report indicates TypeScript is the primary language by file count.
 
-- **EditorConfig**: Repository formatting convention file family. **Not detected** by the report.
-- **ESLint**: JavaScript/TypeScript linter. Report says **present**; config file: `eslint.config.js`.
-- **Entry point**: A runtime start file exposed by packaging metadata. Reported entry points:
-  - `main`: `dist/cli/index.js`
-  - `bin`: `reposage` → `dist/cli/index.js`
+### JavaScript (JS)
+A programming language used in the repository (detected, low file count relative to TypeScript).
 
-## F
+### JSON
+A data-interchange format; detected by `.json` files.
 
-- **FrameworkDetector**: The detector named in the report section `frameworks`.
-- **Frameworks**: Application frameworks identified by the report. **None detected**.
+### Markdown
+A lightweight markup format; detected by `.md` files.
 
-## G
+## CI/CD
 
-- **GitHub Actions**: CI/CD system detected by the report. Workflow file: `.github/workflows/ci.yml`.
+### CI (Continuous Integration)
+Automated checks run on code changes. The report detects GitHub Actions CI configuration at `.github/workflows/ci.yml`.
 
-## H
+### GitHub Actions
+GitHub’s workflow automation system. Detected via `.github/workflows/ci.yml`.
 
-- **Husky**: Git hooks management tool. **Not detected** by the report.
+### Workflow
+A GitHub Actions configuration file defining automation steps. Detected workflow: `.github/workflows/ci.yml`.
 
-## I
+## Code quality / formatting
 
-- **InfrastructureDetector**: The detector named in the report section `infrastructure`.
+### ESLint
+A static analysis (linting) tool for JavaScript/TypeScript. The report indicates ESLint is present and references `eslint.config.js`.
 
-## J
+### `eslint.config.js`
+The detected ESLint configuration file path.
 
-- **JavaScript**: Language detected in the repo (extensions: `.js`, `.jsx`, `.mjs`, `.cjs`).
-- **JSON**: Data format detected in the repo (extension: `.json`).
+### Prettier
+A code formatter. The report indicates Prettier is present and references `.prettierrc`.
 
-## K
+### `.prettierrc`
+The detected Prettier configuration file path.
 
-- **Kubernetes**: Container orchestration. **Not detected** by the report.
+### Strict TypeScript
+A TypeScript configuration stance where stricter type-checking is enabled. The report indicates “strictTypeScript: true”.
 
-## L
+## Infrastructure (explicitly not detected)
 
-- **LanguageDetector**: The detector named in the report section `languages`.
+### Docker
+Container tooling. The analysis report indicates Docker support was not detected.
 
-## M
+### Docker Compose
+Multi-container orchestration tooling. The analysis report indicates Docker Compose support was not detected.
 
-- **main (package.json field)**: A Node.js package field that defines the primary module entry. Report detected `main` as `dist/cli/index.js`.
-- **Markdown**: Documentation format detected in the repo (extension: `.md`).
-- **ModuleAnalyzer**: The detector named in the report section `modules`.
-- **Modules**: Higher-level module structure as detected by the report. **None detected**.
+### Terraform
+Infrastructure-as-code tooling. The analysis report indicates Terraform support was not detected.
 
-## P
-
-- **Prettier**: Code formatter. Report says **present**; config file: `.prettierrc`.
-
-## R
-
-- **RepoSage**: The report generator name/version shown in generated context docs (“RepoSage 0.1.0”).
-- **reposage**: The CLI command name detected via the package `bin` entry; maps to `dist/cli/index.js`.
-
-## S
-
-- **scanDurationMs**: Report metadata field for scan runtime in milliseconds (reported as `0` in this run).
-- **SecurityAnalyzer**: The detector named in the report section `security`.
-- **Security findings**: Security-related detections in the report. **None reported**.
-- **Strict TypeScript**: TypeScript compiler checking mode. Report says **strict mode enabled**.
-
-## T
-
-- **Terraform**: Infrastructure-as-code tool. **Not detected** by the report.
-- **TestFrameworkDetector**: The detector named in the report section `testFrameworks`.
-- **Test frameworks**: Testing tools/frameworks. **None detected** by the report.
-- **TypeScript**: Language detected in the repo (extensions: `.ts`, `.tsx`).
-
-## W
-
-- **Workflow (GitHub Actions)**: A CI/CD configuration file under `.github/workflows/`. Report detected `.github/workflows/ci.yml`.
+### Kubernetes
+Container orchestration platform. The analysis report indicates Kubernetes support was not detected.

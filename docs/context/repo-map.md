@@ -1,43 +1,23 @@
-<!-- Generated: 2026-03-07T12:43:17.872Z | RepoSage 0.1.0 -->
+## Repository Map
 
-# Repository Map (`reposage`)
+- **Repository shape (from analyzer)**
+  - **Languages present**: TypeScript (primary), Markdown, JSON, JavaScript (minimal)
+  - **Frameworks detected**: none
+  - **Architecture style inferred**: unknown (no framework signal)
+  - **Modules detected**: none (module analyzer returned empty)
 
-- **Primary purpose (from detected entry points)**:
-  - **CLI runtime entry**: `dist/cli/index.js`
-    - **package main**: `dist/cli/index.js` (per `package.json` `main`)
-    - **package bin**: `reposage` → `dist/cli/index.js`
+- **Top-level areas (identified by referenced paths)**
+  - **`.github/`**
+    - **`.github/workflows/ci.yml`**: GitHub Actions CI pipeline configuration
+  - **`dist/`**
+    - **`dist/cli/index.js`**: compiled CLI entry used for both `main` and `bin`
 
-- **Top-level map (known paths from analysis)**:
-  - **`.github/`**: CI/CD configuration
-    - **GitHub Actions workflow**: `.github/workflows/ci.yml`
-  - **`dist/`**: distribution/build output
-    - **CLI entry**: `dist/cli/index.js`
-  - **Formatting/lint config**:
-    - **Prettier**: `.prettierrc`
-    - **ESLint**: `eslint.config.js`
+- **Key entry points**
+  - **`dist/cli/index.js`**
+    - **`package.json` `main`**: points here
+    - **CLI `bin` (`reposage`)**: points here
 
-- **Detected languages (by file count)**:
-  - **TypeScript (`.ts`, `.tsx`)**: 43 files (~49%)
-  - **Markdown (`.md`)**: 13 files (~15%)
-  - **JSON (`.json`)**: 3 files (~3%)
-  - **JavaScript (`.js`, `.jsx`, `.mjs`, `.cjs`)**: 1 file (~1%)
-
-- **Architecture / modules (as detected)**:
-  - **Architecture style**: Unknown (no framework-based pattern inferred)
-  - **Modules**: none detected
-
-- **Testing / runtime surface (as detected)**:
-  - **Test frameworks**: none detected
-  - **API routes**: none detected
-  - **Databases**: none detected
-
-- **Infrastructure (as detected)**:
-  - **Docker**: not detected
-  - **Docker Compose**: not detected
-  - **Terraform**: not detected
-  - **Kubernetes**: not detected
-
-- **Coding conventions (as detected)**:
-  - **ESLint**: present
-  - **Prettier**: present
-  - **TypeScript strict mode**: enabled
+- **Developer tooling / conventions**
+  - **`eslint.config.js`**: ESLint configuration present
+  - **`.prettierrc`**: Prettier configuration present
+  - **Strict TypeScript**: enabled (per conventions analyzer)
