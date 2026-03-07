@@ -4,10 +4,16 @@
 
 import type { AnalysisReport } from "../models/index.js";
 
+export interface GeneratorOptions {
+  force?: boolean;
+  useAI?: boolean;
+  model?: string;
+}
+
 export async function runGenerators(
   report: AnalysisReport,
   rootPath: string,
-  options: { force?: boolean } = {}
+  options: GeneratorOptions = {}
 ): Promise<void> {
   const { CursorRuleGenerator } = await import("./CursorRuleGenerator.js");
   const { CursorCommandGenerator } = await import("./CursorCommandGenerator.js");

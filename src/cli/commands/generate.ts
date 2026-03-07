@@ -3,10 +3,11 @@ import chalk from "chalk";
 import ora from "ora";
 import { AnalysisPipeline } from "../../pipeline/AnalysisPipeline.js";
 import { PathValidator } from "../../validators/PathValidator.js";
+import { isCursorCLIAvailable } from "../../utils/cursorCli.js";
 
 export async function generateCommand(
   targetPath: string,
-  opts: { force?: boolean } = {}
+  opts: { force?: boolean; ai?: boolean; model?: string } = {}
 ): Promise<void> {
   const resolved = path.resolve(targetPath);
   const valid = PathValidator.validate(resolved);
@@ -15,10 +16,31 @@ export async function generateCommand(
     process.exit(1);
   }
 
-  const spinner = ora("Generating Cursor context...").start();
+  let useAI = opts.ai !== false;
+  const model = opts.model ?? "gpt-5";
+
+  if (useAI) {
+    const available = await isCursorCLIAvailable();
+    if (!available) {
+      console.warn(
+        chalk.yellow(
+          "Cursor CLI (agent) not found. Falling back to template-based generation. Install with: curl https://cursor.com/install -fsS | bash"
+        )
+      );
+      useAI = false;
+    }
+  }
+
+  const spinner = ora(
+    useAI ? `Generating Cursor context with AI (${model})...` : "Generating Cursor context..."
+  ).start();
   try {
     const pipeline = new AnalysisPipeline(resolved);
-    await pipeline.run({ force: opts.force });
+    await pipeline.run({
+      force: opts.force,
+      useAI,
+      model,
+    });
     spinner.succeed("Generation complete");
 
     console.log(chalk.green("\nGenerated artifacts:"));

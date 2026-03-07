@@ -29,9 +29,14 @@ reposage generate <path> # Generate Cursor rules, commands, docs
 reposage explain <path>  # Human-readable repository summary
 ```
 
-Options:
+Generate options:
 
-- `reposage generate <path> --force` — Overwrite existing generated files
+- `--ai` (default) — Use Cursor CLI with GPT-5 to generate rules, commands, and context
+- `--no-ai` — Use Handlebars templates instead of AI
+- `-m, --model <model>` — AI model (default: gpt-5)
+- `-f, --force` — Overwrite existing generated files
+
+Requires [Cursor CLI](https://cursor.com/docs/cli/overview) (`agent`) installed and authenticated when using `--ai`.
 
 ## Generated Output
 

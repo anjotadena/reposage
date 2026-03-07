@@ -27,7 +27,10 @@ program
   .command("generate <path>")
   .description("Generate Cursor rules, commands, and documentation")
   .option("-f, --force", "Overwrite existing files")
-  .action(async (path: string, opts: { force?: boolean }) => {
+  .option("--ai", "Use Cursor CLI with AI to generate (default)")
+  .option("--no-ai", "Use Handlebars templates instead of AI")
+  .option("-m, --model <model>", "AI model for generation (default: gpt-5)", "gpt-5")
+  .action(async (path: string, opts: { force?: boolean; ai?: boolean; model?: string }) => {
     const { generateCommand } = await import("./commands/generate.js");
     await generateCommand(path, opts);
   });
