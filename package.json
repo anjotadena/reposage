@@ -1,0 +1,39 @@
+{
+  "name": "reposage",
+  "version": "0.1.0",
+  "description": "CLI tool that analyzes repositories and generates Cursor-ready developer context",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "bin": {
+    "reposage": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli/index.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
+  },
+  "keywords": ["cli", "cursor", "repository", "analysis", "documentation"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "fast-glob": "^3.3.2",
+    "handlebars": "^4.7.8",
+    "ora": "^8.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^22.10.1",
+    "typescript-eslint": "^8.15.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.7.2"
+  }
+}
