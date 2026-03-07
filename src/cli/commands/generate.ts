@@ -1,9 +1,22 @@
+import fs from "node:fs";
 import path from "node:path";
+import readline from "node:readline";
 import chalk from "chalk";
 import ora from "ora";
 import { AnalysisPipeline } from "../../pipeline/AnalysisPipeline.js";
 import { PathValidator } from "../../validators/PathValidator.js";
 import { checkCursorCLIReady } from "../../utils/cursorCli.js";
+
+async function confirmOverride(message: string): Promise<boolean> {
+  if (!process.stdin.isTTY) return false;
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((resolve) => {
+    rl.question(`${message} (y/N) `, (answer) => {
+      rl.close();
+      resolve(/^y(es)?$/i.test(answer.trim()));
+    });
+  });
+}
 
 export async function generateCommand(
   targetPath: string,
@@ -32,6 +45,17 @@ export async function generateCommand(
       console.error(chalk.gray("  agent login"));
       console.error(chalk.gray("\nOr use templates: reposage generate <path> --no-ai"));
       process.exit(1);
+    }
+  }
+
+  const cursorDir = path.join(resolved, ".cursor");
+  if (fs.existsSync(cursorDir) && !opts.force) {
+    const ok = await confirmOverride(
+      "Are you sure you want to override existing .cursor/**/*?"
+    );
+    if (!ok) {
+      console.log(chalk.gray("Aborted."));
+      process.exit(0);
     }
   }
 
