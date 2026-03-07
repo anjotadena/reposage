@@ -3,7 +3,7 @@ import chalk from "chalk";
 import ora from "ora";
 import { AnalysisPipeline } from "../../pipeline/AnalysisPipeline.js";
 import { PathValidator } from "../../validators/PathValidator.js";
-import { isCursorCLIAvailable } from "../../utils/cursorCli.js";
+import { checkCursorCLIReady } from "../../utils/cursorCli.js";
 
 export async function generateCommand(
   targetPath: string,
@@ -16,18 +16,22 @@ export async function generateCommand(
     process.exit(1);
   }
 
-  let useAI = opts.ai !== false;
+  const useAI = opts.ai !== false;
   const model = opts.model ?? "gpt-5";
 
   if (useAI) {
-    const available = await isCursorCLIAvailable();
-    if (!available) {
-      console.warn(
-        chalk.yellow(
-          "Cursor CLI (agent) not found. Falling back to template-based generation. Install with: curl https://cursor.com/install -fsS | bash"
-        )
-      );
-      useAI = false;
+    const check = await checkCursorCLIReady();
+    if (!check.ok) {
+      console.error(chalk.red("Error: Cursor CLI is required for AI generation."));
+      console.error(chalk.yellow(`\n${check.message}`));
+      console.error(chalk.gray("\nInstall (macOS, Linux, WSL):"));
+      console.error(chalk.gray("  curl https://cursor.com/install -fsS | bash"));
+      console.error(chalk.gray("Install (Windows PowerShell):"));
+      console.error(chalk.gray("  irm 'https://cursor.com/install?win32=true' | iex"));
+      console.error(chalk.gray("Log in:"));
+      console.error(chalk.gray("  agent login"));
+      console.error(chalk.gray("\nOr use templates: reposage generate <path> --no-ai"));
+      process.exit(1);
     }
   }
 
