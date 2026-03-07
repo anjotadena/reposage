@@ -1,25 +1,20 @@
 /**
- * Generates Cursor command files in .cursor/commands/
+ * Generates Cursor prompt files in .cursor/prompts/
  */
 
 import path from "node:path";
 import { BaseGenerator } from "./base/BaseGenerator.js";
-import { generateCommandViaAI } from "./AIGenerator.js";
+import { generatePromptViaAI } from "./AIGenerator.js";
 
-const COMMAND_FILES = [
-  "explain-repo",
-  "trace-feature",
-  "create-test-plan",
-  "document-module",
-  "review-risk",
-  "create-module",
-  "create-endpoint",
-  "generate-tests",
-  "refactor-service",
-  "analyze-performance",
+const PROMPT_FILES = [
+  "generate-feature",
+  "refactor-code",
+  "write-unit-tests",
+  "code-review",
+  "debug-issue",
 ];
 
-export class CursorCommandGenerator extends BaseGenerator {
+export class CursorPromptGenerator extends BaseGenerator {
   async generate(
     options: {
       force?: boolean;
@@ -31,24 +26,24 @@ export class CursorCommandGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
-    const commandsDir = path.join(this.rootPath, ".cursor", "commands");
-    this.ensureDir(commandsDir);
+    const promptsDir = path.join(this.rootPath, ".cursor", "prompts");
+    this.ensureDir(promptsDir);
 
-    for (const name of COMMAND_FILES) {
+    for (const name of PROMPT_FILES) {
       let content: string;
       if (useAI) {
-        content = await generateCommandViaAI(this.report, name, {
+        content = await generatePromptViaAI(this.report, name, {
           model,
           workspace: this.rootPath,
         });
       } else {
-        content = this.renderTemplate(`cursor/commands/${name}.hbs`, {
+        content = this.renderTemplate(`cursor/prompts/${name}.hbs`, {
           report: this.report,
           generatedAt: this.report.metadata.generatedAt.toISOString(),
           version: this.report.metadata.generatorVersion,
         });
       }
-      const filePath = path.join(".cursor", "commands", `${name}.md`);
+      const filePath = path.join(".cursor", "prompts", `${name}.md`);
       this.writeFile(filePath, content, force);
       options.onFileGenerated?.(filePath);
     }

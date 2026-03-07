@@ -12,6 +12,12 @@ const RULE_FILES = [
   "20-testing-strategy",
   "30-security",
   "40-tech-stack",
+  "coding-standards",
+  "architecture",
+  "security",
+  "testing",
+  "api-design",
+  "naming-conventions",
 ];
 
 export class CursorRuleGenerator extends BaseGenerator {

@@ -1,0 +1,18 @@
+<!-- Generated: 2026-03-07T13:30:17.812Z | RepoSage 0.1.0 -->
+# Debug Issue
+
+Investigate and resolve the reported issue.
+
+## Context
+- Trace from entry points using the analysis report
+- Identify data flow and boundaries
+
+## Inputs
+- Error message, stack trace, or observed behavior
+- Steps to reproduce
+- Suspected area (if any)
+
+## Output
+- Root cause analysis with evidence
+- Proposed fix with rationale
+- Verification steps

@@ -1,16 +1,7 @@
-<!-- Generated: 2026-03-07T13:05:52.239Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-07T13:30:17.812Z | RepoSage 0.1.0 -->
 
 # Known Risks
 
-## Security findings
+## Security and Risk Findings
 
-No known risks detected.
-
-## Architectural risks
-
-No known risks detected.
-
-## Scan limitations (from report)
-
-- Security analyzer confidence: low (no findings reported)
-- Architecture analyzer confidence: low (no architecture pattern inferred from detected frameworks)
+(Generated from analysis)
