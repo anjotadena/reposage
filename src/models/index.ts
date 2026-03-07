@@ -1,9 +1,5 @@
 export type { FileEntry, ScanResult, ScanStats } from "./ScanResult.js";
-export type {
-  ConfidenceLevel,
-  DetectionResult,
-  Evidence,
-} from "./DetectionResult.js";
+export type { ConfidenceLevel, DetectionResult, Evidence } from "./DetectionResult.js";
 export type {
   AnalysisReport,
   AnalysisReportMetadata,

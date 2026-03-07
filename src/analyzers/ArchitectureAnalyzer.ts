@@ -8,11 +8,11 @@ import type { ArchitectureInfo, ArchitectureStyle } from "../models/AnalysisRepo
 
 const FRAMEWORK_ARCH: Record<string, ArchitectureStyle> = {
   "Next.js": "Layered",
-  "NestJS": "Layered",
-  "Express": "Monolith",
-  "Fastify": "Monolith",
-  "React": "MVC",
-  "Vue": "MVC",
+  NestJS: "Layered",
+  Express: "Monolith",
+  Fastify: "Monolith",
+  React: "MVC",
+  Vue: "MVC",
 };
 
 export const ArchitectureAnalyzer = {

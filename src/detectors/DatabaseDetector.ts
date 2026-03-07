@@ -36,6 +36,12 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<Da
     detector: "DatabaseDetector",
     data: result,
     confidence: result.length > 0 ? "medium" : "low",
-    evidence: result.flatMap((r) => r.evidence.map((e) => ({ file: e, pattern: r.type, description: `Database usage: ${r.type}` }))),
+    evidence: result.flatMap((r) =>
+      r.evidence.map((e) => ({
+        file: e,
+        pattern: r.type,
+        description: `Database usage: ${r.type}`,
+      }))
+    ),
   };
 }

@@ -28,8 +28,7 @@ export const ModuleAnalyzer = {
 
     const srcFiles = scanResult.files.filter(
       (f) =>
-        /\.(ts|tsx|js|jsx|mjs|cjs)$/.test(f.extension) &&
-        !f.relativePath.includes("node_modules")
+        /\.(ts|tsx|js|jsx|mjs|cjs)$/.test(f.extension) && !f.relativePath.includes("node_modules")
     );
 
     for (const f of srcFiles) {

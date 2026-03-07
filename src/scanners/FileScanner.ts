@@ -26,7 +26,7 @@ const KEY_FILE_PATTERNS: Record<string, string> = {
   "requirements.txt": "**/requirements.txt",
   "go.mod": "**/go.mod",
   "Cargo.toml": "**/Cargo.toml",
-  "Dockerfile": "**/Dockerfile",
+  Dockerfile: "**/Dockerfile",
   "docker-compose.yml": "**/docker-compose.yml",
   "docker-compose.yaml": "**/docker-compose.yaml",
   ".github/workflows": "**/.github/workflows/*.yml",

@@ -9,7 +9,10 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<Fr
     const fs = await import("node:fs");
     try {
       const raw = fs.readFileSync(pkgPath, "utf-8");
-      const pkg = JSON.parse(raw) as { dependencies?: Record<string, string>; devDependencies?: Record<string, string> };
+      const pkg = JSON.parse(raw) as {
+        dependencies?: Record<string, string>;
+        devDependencies?: Record<string, string>;
+      };
       const deps = { ...(pkg.dependencies ?? {}), ...(pkg.devDependencies ?? {}) };
       const known: Record<string, { name: string; category: FrameworkInfo["category"] }> = {
         react: { name: "React", category: "frontend" },

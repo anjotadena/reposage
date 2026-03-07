@@ -40,15 +40,7 @@ export async function search(
     return [];
   }
 
-  const args = [
-    "--line-number",
-    "--no-heading",
-    "--no-color",
-    "-e",
-    pattern,
-    "--",
-    ".",
-  ];
+  const args = ["--line-number", "--no-heading", "--no-color", "-e", pattern, "--", "."];
   if (options.type) {
     args.unshift("-t", options.type);
   }

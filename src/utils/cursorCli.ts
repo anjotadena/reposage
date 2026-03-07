@@ -17,10 +17,7 @@ export interface CursorCLIOptions {
  * Runs Cursor CLI agent with the given prompt and returns stdout.
  * Requires `agent` (Cursor CLI) to be installed and authenticated.
  */
-export async function runAgent(
-  prompt: string,
-  options: CursorCLIOptions = {}
-): Promise<string> {
+export async function runAgent(prompt: string, options: CursorCLIOptions = {}): Promise<string> {
   const model = options.model ?? DEFAULT_MODEL;
   const workspace = options.workspace ? path.resolve(options.workspace) : process.cwd();
 
@@ -60,9 +57,7 @@ export async function runAgent(
     proc.on("close", (code) => {
       if (code !== 0) {
         reject(
-          new Error(
-            `Cursor CLI exited with code ${code}. ${stderr ? `stderr: ${stderr}` : ""}`
-          )
+          new Error(`Cursor CLI exited with code ${code}. ${stderr ? `stderr: ${stderr}` : ""}`)
         );
       } else {
         resolve(stdout.trim());

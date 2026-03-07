@@ -6,11 +6,13 @@ import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateReadmeViaAI } from "./AIGenerator.js";
 
 export class ReadmeGenerator extends BaseGenerator {
-  async generate(options: {
-    force?: boolean;
-    useAI?: boolean;
-    model?: string;
-  } = {}): Promise<void> {
+  async generate(
+    options: {
+      force?: boolean;
+      useAI?: boolean;
+      model?: string;
+    } = {}
+  ): Promise<void> {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5";

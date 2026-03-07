@@ -23,8 +23,8 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<In
     } else if (
       f.relativePath.includes("k8s") ||
       f.relativePath.includes("kubernetes") ||
-      /\.(yaml|yml)$/.test(f.extension) &&
-        (f.relativePath.includes("deployment") || f.relativePath.includes("service"))
+      (/\.(yaml|yml)$/.test(f.extension) &&
+        (f.relativePath.includes("deployment") || f.relativePath.includes("service")))
     ) {
       kubernetes = true;
       files.push(f.relativePath);

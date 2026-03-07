@@ -104,8 +104,7 @@ export async function generateCommandViaAI(
   commandName: string,
   options: AIGenerationOptions
 ): Promise<string> {
-  const instructions =
-    COMMAND_INSTRUCTIONS[commandName] ?? "Generate a Cursor command file (.md).";
+  const instructions = COMMAND_INSTRUCTIONS[commandName] ?? "Generate a Cursor command file (.md).";
   const prompt = buildArtifactPrompt("Cursor command", `${commandName}.md`, report, instructions);
   return runAgent(prompt, {
     model: options.model ?? DEFAULT_MODEL,

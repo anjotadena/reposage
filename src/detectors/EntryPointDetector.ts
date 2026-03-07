@@ -22,8 +22,7 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<En
         });
       }
       if (pkg.bin) {
-        const bins =
-          typeof pkg.bin === "string" ? { [pkg.name ?? "cli"]: pkg.bin } : pkg.bin;
+        const bins = typeof pkg.bin === "string" ? { [pkg.name ?? "cli"]: pkg.bin } : pkg.bin;
         for (const [name, entry] of Object.entries(bins)) {
           result.push({
             type: "bin",
@@ -42,7 +41,9 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<En
     result.push({ type: "aspnet", path: programCs.relativePath, description: "ASP.NET entry" });
   }
 
-  const mainPy = scanResult.files.find((f) => f.relativePath === "main.py" || f.relativePath.endsWith("/main.py"));
+  const mainPy = scanResult.files.find(
+    (f) => f.relativePath === "main.py" || f.relativePath.endsWith("/main.py")
+  );
   if (mainPy) {
     result.push({ type: "python", path: mainPy.relativePath, description: "Python main" });
   }

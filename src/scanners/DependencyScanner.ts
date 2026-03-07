@@ -45,9 +45,7 @@ export class DependencyScanner {
       if (cargo) results.push(cargo);
     }
 
-    const csprojFiles = this.scanResult.files.filter((f) =>
-      f.relativePath.endsWith(".csproj")
-    );
+    const csprojFiles = this.scanResult.files.filter((f) => f.relativePath.endsWith(".csproj"));
     for (const f of csprojFiles) {
       const dotnet = this.parseCsproj(f.absolutePath);
       if (dotnet) results.push(dotnet);
@@ -61,8 +59,8 @@ export class DependencyScanner {
       if (maven) results.push(maven);
     }
 
-    const gradlePath = this.scanResult.files.find((f) =>
-      f.relativePath.endsWith("build.gradle") || f.relativePath.endsWith("build.gradle.kts")
+    const gradlePath = this.scanResult.files.find(
+      (f) => f.relativePath.endsWith("build.gradle") || f.relativePath.endsWith("build.gradle.kts")
     )?.absolutePath;
     if (gradlePath) {
       const gradle = this.parseGradle(gradlePath);

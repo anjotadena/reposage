@@ -17,11 +17,13 @@ const DOC_FILES = [
 ];
 
 export class ContextDocGenerator extends BaseGenerator {
-  async generate(options: {
-    force?: boolean;
-    useAI?: boolean;
-    model?: string;
-  } = {}): Promise<void> {
+  async generate(
+    options: {
+      force?: boolean;
+      useAI?: boolean;
+      model?: string;
+    } = {}
+  ): Promise<void> {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5";

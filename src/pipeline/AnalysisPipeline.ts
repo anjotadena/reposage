@@ -57,11 +57,13 @@ export class AnalysisPipeline {
   /**
    * Phase 5: Generation - template rendering or Cursor CLI (AI)
    */
-  async runPhase5(options: {
-    force?: boolean;
-    useAI?: boolean;
-    model?: string;
-  } = {}): Promise<void> {
+  async runPhase5(
+    options: {
+      force?: boolean;
+      useAI?: boolean;
+      model?: string;
+    } = {}
+  ): Promise<void> {
     if (!this.report) {
       throw new Error("Phases 1-4 must complete before Phase 5");
     }
@@ -72,11 +74,13 @@ export class AnalysisPipeline {
   /**
    * Run full pipeline: scan -> analyze -> generate
    */
-  async run(options: {
-    force?: boolean;
-    useAI?: boolean;
-    model?: string;
-  } = {}): Promise<AnalysisReport> {
+  async run(
+    options: {
+      force?: boolean;
+      useAI?: boolean;
+      model?: string;
+    } = {}
+  ): Promise<AnalysisReport> {
     await this.runPhase1();
     await this.runPhase2();
     await this.runPhase3();

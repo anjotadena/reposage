@@ -11,13 +11,7 @@ export interface LanguageInfo {
   percentage: number;
 }
 
-export type FrameworkCategory =
-  | "frontend"
-  | "backend"
-  | "testing"
-  | "build"
-  | "infra"
-  | "other";
+export type FrameworkCategory = "frontend" | "backend" | "testing" | "build" | "infra" | "other";
 
 export interface FrameworkInfo {
   name: string;
