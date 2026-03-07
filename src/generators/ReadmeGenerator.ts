@@ -11,12 +11,12 @@ export class ReadmeGenerator extends BaseGenerator {
       force?: boolean;
       useAI?: boolean;
       model?: string;
+      onFileGenerated?: (relativePath: string) => void;
     } = {}
   ): Promise<void> {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
-
     let content: string;
     if (useAI) {
       content = await generateReadmeViaAI(this.report, {
@@ -31,5 +31,6 @@ export class ReadmeGenerator extends BaseGenerator {
       });
     }
     this.writeFile("README.md", content, force);
+    options.onFileGenerated?.("README.md");
   }
 }

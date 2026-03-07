@@ -20,6 +20,7 @@ export class CursorCommandGenerator extends BaseGenerator {
       force?: boolean;
       useAI?: boolean;
       model?: string;
+      onFileGenerated?: (relativePath: string) => void;
     } = {}
   ): Promise<void> {
     const force = options.force ?? false;
@@ -44,6 +45,7 @@ export class CursorCommandGenerator extends BaseGenerator {
       }
       const filePath = path.join(".cursor", "commands", `${name}.md`);
       this.writeFile(filePath, content, force);
+      options.onFileGenerated?.(filePath);
     }
   }
 }

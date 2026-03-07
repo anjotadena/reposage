@@ -8,6 +8,7 @@ export interface GeneratorOptions {
   force?: boolean;
   useAI?: boolean;
   model?: string;
+  onFileGenerated?: (relativePath: string) => void;
 }
 
 export async function runGenerators(

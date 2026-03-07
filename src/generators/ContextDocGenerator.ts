@@ -22,6 +22,7 @@ export class ContextDocGenerator extends BaseGenerator {
       force?: boolean;
       useAI?: boolean;
       model?: string;
+      onFileGenerated?: (relativePath: string) => void;
     } = {}
   ): Promise<void> {
     const force = options.force ?? false;
@@ -46,6 +47,7 @@ export class ContextDocGenerator extends BaseGenerator {
       }
       const filePath = path.join("docs", "context", `${name}.md`);
       this.writeFile(filePath, content, force);
+      options.onFileGenerated?.(filePath);
     }
   }
 }

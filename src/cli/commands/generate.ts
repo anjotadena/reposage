@@ -35,17 +35,28 @@ export async function generateCommand(
     }
   }
 
-  const spinner = ora(
-    useAI ? `Generating Cursor context with AI (${model})...` : "Generating Cursor context..."
-  ).start();
   try {
     const pipeline = new AnalysisPipeline(resolved);
-    await pipeline.run({
-      force: opts.force,
-      useAI,
-      model,
-    });
-    spinner.succeed("Generation complete");
+
+    let spinner = ora("Scanning...").start();
+    await pipeline.runPhase1();
+    spinner.succeed("Scan complete");
+
+    spinner = ora("Exploring...").start();
+    await pipeline.runPhase2();
+    await pipeline.runPhase3();
+    spinner.succeed("Analysis complete");
+
+    if (opts.force !== false) {
+      console.log(chalk.gray("\nGenerating:"));
+      await pipeline.runPhase5({
+        force: opts.force,
+        useAI,
+        model,
+        onFileGenerated: (file) =>
+          console.log(chalk.gray(`  ${file} -> ${chalk.green("done!")}`)),
+      });
+    }
 
     console.log(chalk.green("\nGenerated artifacts:"));
     console.log("  - .cursor/rules/ (5 rule files)");
@@ -53,7 +64,7 @@ export async function generateCommand(
     console.log("  - docs/context/ (7 documentation files)");
     console.log("  - README.md");
   } catch (err) {
-    spinner.fail("Generation failed");
+    console.error(chalk.red("Generation failed"));
     console.error(chalk.red(String(err)));
     process.exit(1);
   }

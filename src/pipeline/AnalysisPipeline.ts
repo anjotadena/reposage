@@ -62,6 +62,7 @@ export class AnalysisPipeline {
       force?: boolean;
       useAI?: boolean;
       model?: string;
+      onFileGenerated?: (relativePath: string) => void;
     } = {}
   ): Promise<void> {
     if (!this.report) {

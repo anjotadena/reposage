@@ -20,6 +20,7 @@ export class CursorRuleGenerator extends BaseGenerator {
       force?: boolean;
       useAI?: boolean;
       model?: string;
+      onFileGenerated?: (relativePath: string) => void;
     } = {}
   ): Promise<void> {
     const force = options.force ?? false;
@@ -44,6 +45,7 @@ export class CursorRuleGenerator extends BaseGenerator {
       }
       const filePath = path.join(".cursor", "rules", `${name}.mdc`);
       this.writeFile(filePath, content, force);
+      options.onFileGenerated?.(filePath);
     }
   }
 }
