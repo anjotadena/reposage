@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RepoSage — AI-powered repository understanding</title>
+  <meta name="description" content="RepoSage analyzes source code repositories and generates Cursor-ready developer context: rules, commands, prompts, and documentation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            sage: {
+              50: '#ecfdf8',
+              100: '#d1faf0',
+              200: '#a7f3e1',
+              300: '#6ee7ce',
+              400: '#34d3b4',
+              500: '#10b99a',
+              600: '#05967c',
+              700: '#047865',
+              800: '#065f52',
+              900: '#064e43',
+            },
+            repo: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .gradient-text { background: linear-gradient(135deg, #3b82f6 0%, #10b99a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gradient-border { background: linear-gradient(135deg, rgba(59,130,246,0.3) 0%, rgba(16,185,154,0.3) 100%); }
+    .glow-sage { box-shadow: 0 0 40px -10px rgba(16,185,154,0.4); }
+    .glow-blue { box-shadow: 0 0 40px -10px rgba(59,130,246,0.4); }
+  </style>
+</head>
+<body class="bg-[#0a0a0f] text-slate-200 font-sans antialiased min-h-screen">
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(59,130,246,0.15),transparent)] pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_60%,rgba(16,185,154,0.08),transparent)] pointer-events-none" aria-hidden="true"></div>
+
+    <header class="relative z-10 border-b border-slate-800/50">
+      <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="./" class="flex items-center gap-2">
+          <img src="assets/reposage_logo.png" alt="RepoSage" class="h-8 w-auto" />
+        </a>
+        <div class="flex items-center gap-6">
+          <a href="https://github.com/anjotadena/reposage" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">GitHub</a>
+          <a href="https://github.com/anjotadena/reposage#installation" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">Install</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="relative z-10">
+      <section class="max-w-6xl mx-auto px-6 pt-20 pb-28 text-center">
+        <img src="assets/reposage_logo.png" alt="RepoSage" class="mx-auto h-24 md:h-32 w-auto mb-8 glow-sage rounded-lg" />
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+          <span class="text-white">AI-powered</span>
+          <span class="gradient-text"> repository understanding</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+          Generate Cursor-ready developer context from any codebase. Rules, commands, prompts, and documentation—evidence-driven, not invented.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://github.com/anjotadena/reposage#installation" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-repo-500 to-sage-500 text-white font-semibold hover:opacity-90 transition-opacity glow-blue">
+            Get started
+          </a>
+          <a href="https://github.com/anjotadena/reposage" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-600 text-slate-300 font-medium hover:border-sage-500/50 hover:text-sage-400 transition-colors">
+            View on GitHub
+          </a>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto px-6 py-20">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-12 text-center">Built for the real world</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-sage-500/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-sage-500/20 flex items-center justify-center mb-4 text-sage-400 font-mono text-lg">→</div>
+            <h3 class="text-lg font-semibold text-white mb-2">Repository scanning</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Fast file traversal with configurable ignore patterns. Tech stack, architecture, and module boundaries from evidence.</p>
+          </article>
+          <article class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-sage-500/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-repo-500/20 flex items-center justify-center mb-4 text-repo-400 font-mono text-lg">⌘</div>
+            <h3 class="text-lg font-semibold text-white mb-2">Cursor integration</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Context-aware .mdc rules and pre-built commands for explain, trace, document, and review workflows.</p>
+          </article>
+          <article class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-sage-500/30 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-sage-500/20 flex items-center justify-center mb-4 text-sage-400 font-mono text-lg">◇</div>
+            <h3 class="text-lg font-semibold text-white mb-2">AI-powered generation</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Uses Cursor CLI with GPT-5 by default. Handlebars templates as fallback when CLI is unavailable.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto px-6 py-20">
+        <div class="rounded-2xl gradient-border p-px">
+          <div class="rounded-2xl bg-slate-900/90 p-8 md:p-12">
+            <h2 class="text-2xl font-bold text-white mb-6">Quick start</h2>
+            <pre class="font-mono text-sm text-slate-300 overflow-x-auto p-6 rounded-xl bg-black/40 border border-slate-700/50"><code>npm install -g reposage
+reposage generate .</code></pre>
+            <p class="text-slate-400 text-sm mt-4">Requires Node.js 18+ and Cursor CLI for AI generation. Use <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">--no-ai</code> for template-based output.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto px-6 py-20">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-12 text-center">What you get</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-sage-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/</h3>
+            <ul class="space-y-2 text-slate-400">
+              <li class="flex items-center gap-2"><span class="text-sage-500">•</span> Rules: baseline, architecture, testing, security, tech stack</li>
+              <li class="flex items-center gap-2"><span class="text-sage-500">•</span> Commands: explain-repo, trace-feature, create-test-plan, document-module, review-risk</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-repo-400 font-mono text-sm uppercase tracking-wider mb-4">docs/context/</h3>
+            <ul class="space-y-2 text-slate-400">
+              <li class="flex items-center gap-2"><span class="text-repo-500">•</span> Repo map, architecture overview, module index</li>
+              <li class="flex items-center gap-2"><span class="text-repo-500">•</span> Coding conventions, testing strategy, glossary, known risks</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto px-6 py-20 text-center">
+        <p class="text-slate-500 text-sm">
+          <a href="https://github.com/anjotadena/reposage" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sage-400 transition-colors">RepoSage</a>
+          — MIT License
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
