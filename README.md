@@ -100,7 +100,7 @@ pnpm add -g reposage
 **From source:**
 
 ```bash
-git clone https://github.com/your-org/reposage.git
+git clone https://github.com/anjotadena/reposage.git
 cd reposage
 pnpm install
 pnpm run build
