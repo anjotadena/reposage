@@ -187,8 +187,7 @@ export async function generatePromptViaAI(
   promptName: string,
   options: AIGenerationOptions
 ): Promise<string> {
-  const instructions =
-    PROMPT_INSTRUCTIONS[promptName] ?? "Generate a Cursor prompt file (.md).";
+  const instructions = PROMPT_INSTRUCTIONS[promptName] ?? "Generate a Cursor prompt file (.md).";
   const prompt = buildArtifactPrompt("Cursor prompt", `${promptName}.md`, report, instructions);
   return runAgent(prompt, {
     model: options.model ?? DEFAULT_MODEL,
@@ -203,12 +202,7 @@ export async function generateCursorContextViaAI(
 ): Promise<string> {
   const instructions =
     CURSOR_CONTEXT_INSTRUCTIONS[contextName] ?? "Generate .cursor/context documentation.";
-  const prompt = buildArtifactPrompt(
-    "Cursor context",
-    `${contextName}.md`,
-    report,
-    instructions
-  );
+  const prompt = buildArtifactPrompt("Cursor context", `${contextName}.md`, report, instructions);
   return runAgent(prompt, {
     model: options.model ?? DEFAULT_MODEL,
     workspace: options.workspace,
