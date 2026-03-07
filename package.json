@@ -8,7 +8,7 @@
     "reposage": "dist/cli/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/templates dist/",
     "dev": "tsc --watch",
     "start": "node dist/cli/index.js",
     "lint": "eslint src",
