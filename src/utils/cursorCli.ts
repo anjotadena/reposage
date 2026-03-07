@@ -34,11 +34,12 @@ export async function runAgent(
       "text",
       "--workspace",
       workspace,
+      "--trust",
     ];
 
     const proc = spawn("agent", args, {
       stdio: ["pipe", "pipe", "pipe"],
-      shell: true,
+      shell: false,
     });
 
     let stdout = "";
