@@ -1,12 +1,12 @@
 /**
  * Cursor CLI integration for AI-powered generation.
- * Spawns `agent -p "..." --model "gpt-5" --output-format text` for non-interactive generation.
+ * Spawns `agent -p "..." --model "gpt-5.2" --output-format text` for non-interactive generation.
  */
 
 import { spawn } from "node:child_process";
 import path from "node:path";
 
-const DEFAULT_MODEL = "gpt-5";
+const DEFAULT_MODEL = "gpt-5.2";
 
 export interface CursorCLIOptions {
   model?: string;

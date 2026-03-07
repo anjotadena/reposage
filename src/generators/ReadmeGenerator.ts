@@ -15,7 +15,7 @@ export class ReadmeGenerator extends BaseGenerator {
   ): Promise<void> {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
-    const model = options.model ?? "gpt-5";
+    const model = options.model ?? "gpt-5.2";
 
     let content: string;
     if (useAI) {

@@ -29,7 +29,7 @@ program
   .option("-f, --force", "Overwrite existing files")
   .option("--ai", "Use Cursor CLI with AI to generate (default)")
   .option("--no-ai", "Use Handlebars templates instead of AI")
-  .option("-m, --model <model>", "AI model for generation (default: gpt-5)", "gpt-5")
+  .option("-m, --model <model>", "AI model for generation (default: gpt-5.2)", "gpt-5.2")
   .action(async (path: string, opts: { force?: boolean; ai?: boolean; model?: string }) => {
     const { generateCommand } = await import("./commands/generate.js");
     await generateCommand(path, opts);

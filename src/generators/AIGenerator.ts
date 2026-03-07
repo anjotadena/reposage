@@ -6,7 +6,7 @@
 import type { AnalysisReport } from "../models/index.js";
 import { runAgent } from "../utils/cursorCli.js";
 
-const DEFAULT_MODEL = "gpt-5";
+const DEFAULT_MODEL = "gpt-5.2";
 
 function serializeReport(report: AnalysisReport): string {
   const copy = JSON.parse(

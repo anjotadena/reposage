@@ -163,7 +163,7 @@ reposage analyze .
 
 ```bash
 reposage generate .
-reposage generate . --model gpt-5
+reposage generate . --model gpt-5.2
 reposage generate . --force   # Overwrite existing files
 ```
 
@@ -185,7 +185,7 @@ reposage explain .
 |--------|-------------|
 | `--ai` | Use Cursor CLI with AI (default) |
 | `--no-ai` | Use Handlebars templates instead |
-| `-m, --model <model>` | AI model (default: gpt-5) |
+| `-m, --model <model>` | AI model (default: gpt-5.2) |
 | `-f, --force` | Overwrite existing generated files |
 
 ---

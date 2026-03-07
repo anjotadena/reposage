@@ -17,7 +17,7 @@ export async function generateCommand(
   }
 
   const useAI = opts.ai !== false;
-  const model = opts.model ?? "gpt-5";
+  const model = opts.model ?? "gpt-5.2";
 
   if (useAI) {
     const check = await checkCursorCLIReady();
