@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 
 import { program } from "commander";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const pkg = require("../../package.json");
 
 program
   .name("reposage")
   .description("Analyzes repositories and generates Cursor-ready developer context")
-  .version("0.1.0");
+  .version(pkg.version);
 
 program
   .command("scan <path>")
