@@ -81,9 +81,7 @@ export async function updateCommand(): Promise<void> {
 
   const packageManager = installInfo.type;
   const updateCmd =
-    packageManager === "pnpm"
-      ? "pnpm update -g reposage"
-      : "npm update -g reposage";
+    packageManager === "pnpm" ? "pnpm update -g reposage" : "npm update -g reposage";
 
   console.log(`\nUpdating via ${packageManager}...\n`);
 
