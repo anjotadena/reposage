@@ -1,6 +1,6 @@
 {
   "name": "reposage",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "CLI tool that analyzes repositories and generates Cursor-ready developer context",
   "type": "module",
   "main": "dist/cli/index.js",
