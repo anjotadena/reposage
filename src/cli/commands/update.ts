@@ -4,6 +4,7 @@ import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
 import chalk from "chalk";
+import { info } from "../../utils/logger.js";
 
 const require = createRequire(import.meta.url);
 
@@ -54,7 +55,7 @@ function getCurrentVersion(): string {
 
 export async function updateCommand(): Promise<void> {
   const currentVersion = getCurrentVersion();
-  console.log(chalk.bold("Current version: ") + currentVersion);
+  info(`Current version: ${currentVersion}`);
 
   const installInfo = detectInstallationType();
 
