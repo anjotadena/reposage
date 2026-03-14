@@ -25,7 +25,9 @@ program
 
 program
   .command("generate <path>")
-  .description("Generate Cursor rules, commands, and documentation")
+  .description(
+    "Generate Cursor artifacts: rules, commands, prompts, context, automations, and docs"
+  )
   .option("-f, --force", "Overwrite existing files")
   .option("--ai", "Use Cursor CLI with AI to generate (default)")
   .option("--no-ai", "Use Handlebars templates instead of AI")

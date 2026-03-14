@@ -1,17 +1,52 @@
 <!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+
 # Analyze Performance
 
 Analyze performance of the selected code or feature.
 
 ## Context
-- Use the analysis report for architecture and bottlenecks
-- Consider I/O, algorithms, and resource usage
+
+{{#if report.entryPoints.data}}
+Entry points to consider:
+{{#each report.entryPoints.data}}
+- `{{path}}` ({{type}})
+{{/each}}
+{{/if}}
+
+{{#if report.apiRoutes.data}}
+API routes (potential performance hotspots):
+{{#each report.apiRoutes.data}}
+- `{{path}}` in `{{file}}`
+{{/each}}
+{{/if}}
 
 ## Inputs
-- Target module, endpoint, or operation
-- Performance goals or constraints
+
+- **Target**: Module, endpoint, or operation to analyze
+- **Symptoms**: Observed performance issues (if any)
+- **Goals**: Response time, throughput, or resource constraints
+
+## Steps
+
+1. Identify the critical path in the target code
+2. Check for common performance anti-patterns:
+   - N+1 queries
+   - Blocking I/O in async code
+   - Unnecessary data copying
+   - Missing caching opportunities
+3. Analyze algorithm complexity
+4. Review resource usage (memory, connections, file handles)
+5. Suggest profiling strategy
 
 ## Output
-- Performance analysis and bottlenecks
-- Optimization recommendations
+
+- Performance analysis summary
+- Identified bottlenecks with severity
+- Optimization recommendations (prioritized)
 - Profiling or instrumentation suggestions
+- Before/after complexity estimates
+
+## Automation Integration
+
+- Use `release-readiness-check` automation to verify performance after optimization
+- Document performance-critical paths in `.cursor/context/`

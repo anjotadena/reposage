@@ -82,8 +82,11 @@ export async function generateCommand(
     }
 
     console.log(chalk.green("\nGenerated artifacts:"));
-    console.log("  - .cursor/rules/ (5 rule files)");
-    console.log("  - .cursor/commands/ (5 command files)");
+    console.log("  - .cursor/rules/ (11 rule files)");
+    console.log("  - .cursor/commands/ (10 command files)");
+    console.log("  - .cursor/prompts/ (5 prompt files)");
+    console.log("  - .cursor/context/ (4 context files)");
+    console.log("  - .cursor/automations/ (6 automation workflows)");
     console.log("  - docs/context/ (7 documentation files)");
   } catch (err) {
     console.error(chalk.red("Generation failed"));

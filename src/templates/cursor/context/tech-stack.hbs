@@ -1,7 +1,90 @@
 <!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
 
-# Architecture Overview
+# Tech Stack
 
-## Detected Architecture
+Complete technology inventory for agents and automation workflows.
 
-(Generated from analysis)
+## Languages
+
+{{#if report.languages.data}}
+| Language | Files | Percentage |
+|----------|-------|------------|
+{{#each report.languages.data}}
+| {{name}} | {{fileCount}} | {{percentage}}% |
+{{/each}}
+{{else}}
+Language breakdown not available.
+{{/if}}
+
+## Frameworks & Libraries
+
+{{#if report.frameworks.data}}
+### Application Frameworks
+{{#each report.frameworks.data}}
+{{#ifCond category "!=" "testing"}}
+- **{{name}}** ({{category}}){{#if version}} — v{{version}}{{/if}}
+{{/ifCond}}
+{{/each}}
+{{/if}}
+
+{{#if report.testFrameworks.data}}
+### Testing Frameworks
+{{#each report.testFrameworks.data}}
+- **{{name}}**{{#if version}} — v{{version}}{{/if}}
+{{/each}}
+{{else}}
+No test frameworks detected.
+{{/if}}
+
+## CI/CD
+
+{{#if report.cicd.data}}
+{{#each report.cicd.data}}
+- **{{type}}**: `{{path}}`{{#if configFile}} ({{configFile}}){{/if}}
+{{/each}}
+{{else}}
+No CI/CD configuration detected.
+{{/if}}
+
+## Development Tools
+
+{{#if report.codingConventions.data}}
+### Code Quality
+- ESLint: {{#if report.codingConventions.data.eslint}}Configured{{else}}Not detected{{/if}}
+- Prettier: {{#if report.codingConventions.data.prettier}}Configured{{else}}Not detected{{/if}}
+- EditorConfig: {{#if report.codingConventions.data.editorConfig}}Present{{else}}Not detected{{/if}}
+- Husky: {{#if report.codingConventions.data.husky}}Configured{{else}}Not detected{{/if}}
+- Strict TypeScript: {{#if report.codingConventions.data.strictTypeScript}}Yes{{else}}No{{/if}}
+
+{{#if report.codingConventions.data.configFiles}}
+### Config Files
+{{#each report.codingConventions.data.configFiles}}
+- `{{this}}`
+{{/each}}
+{{/if}}
+{{/if}}
+
+## Infrastructure
+
+{{#if report.infrastructure.data}}
+| Tool | Present |
+|------|---------|
+| Docker | {{#if report.infrastructure.data.docker}}Yes{{else}}No{{/if}} |
+| Docker Compose | {{#if report.infrastructure.data.dockerCompose}}Yes{{else}}No{{/if}} |
+| Kubernetes | {{#if report.infrastructure.data.kubernetes}}Yes{{else}}No{{/if}} |
+| Terraform | {{#if report.infrastructure.data.terraform}}Yes{{else}}No{{/if}} |
+
+{{#if report.infrastructure.data.files}}
+### Infrastructure Files
+{{#each report.infrastructure.data.files}}
+- `{{this}}`
+{{/each}}
+{{/if}}
+{{/if}}
+
+## Automation Tooling Notes
+
+- Use detected linter/formatter for code generation
+- Follow test framework patterns for new tests
+- Respect CI/CD pipeline requirements
+- Match infrastructure patterns when adding services

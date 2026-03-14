@@ -1,0 +1,86 @@
+<!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+
+# PR Review & Risk Scan
+
+Automated workflow for reviewing pull requests and scanning for risks.
+
+## Trigger
+
+- On pull request creation or update
+- On significant code changes (> 100 lines or > 3 files)
+- Manual invocation for ad-hoc reviews
+
+## Goal
+
+Perform a comprehensive review of code changes to identify:
+- Breaking changes or regressions
+- Security vulnerabilities
+- Architecture violations
+- Missing tests or documentation
+
+## Steps
+
+1. **Gather Context**
+   - Read the PR diff and commit messages
+   - Identify affected modules and their dependencies
+   - Load relevant `.cursor/context/` files for background
+
+2. **Analyze Changes**
+   - Check for breaking API changes
+   - Identify new dependencies or removed functionality
+   - Flag changes to critical paths (entry points, auth, data handling)
+
+3. **Security Scan**
+   - Look for hardcoded secrets or credentials
+   - Check input validation on new endpoints
+   - Review changes to authentication/authorization code
+
+4. **Architecture Review**
+   - Verify changes follow existing patterns
+   - Check for proper separation of concerns
+   - Flag violations of module boundaries
+
+5. **Report Findings**
+   - Summarize changes by category (feature, fix, refactor)
+   - List risks with severity (high/medium/low)
+   - Provide actionable recommendations
+
+## Signals to Inspect
+
+{{#if report.modules.data}}
+- Module boundaries: {{#each report.modules.data}}{{this.name}}{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{#if report.entryPoints.data}}
+- Entry points: {{#each report.entryPoints.data}}`{{this.path}}`{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+- Security-sensitive patterns: auth, password, token, secret, key
+- Test file patterns: *.test.*, *.spec.*, __tests__/
+
+## Expected Output
+
+```markdown
+## PR Review Summary
+
+### Changes Overview
+- Files changed: X
+- Lines added/removed: +Y / -Z
+- Affected modules: [list]
+
+### Risk Assessment
+| Risk | Severity | Location | Recommendation |
+|------|----------|----------|----------------|
+| ... | ... | ... | ... |
+
+### Checklist
+- [ ] Tests cover new functionality
+- [ ] No breaking changes (or documented)
+- [ ] Security review passed
+- [ ] Documentation updated
+```
+
+## Fallback
+
+If analysis is inconclusive:
+- Flag for manual review with specific concerns
+- Request additional context from PR author
+- Escalate security-sensitive changes to security team

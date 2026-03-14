@@ -1,7 +1,72 @@
 <!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
 
-# Architecture Overview
+# Project Overview
 
-## Detected Architecture
+High-level summary for Cursor agents and automation workflows.
 
-(Generated from analysis)
+## Purpose
+
+{{#if report.metadata.targetRepository}}
+Repository: `{{report.metadata.targetRepository}}`
+{{/if}}
+
+## Key Technologies
+
+{{#if report.languages.data}}
+### Languages
+{{#each report.languages.data}}
+- **{{name}}**: {{fileCount}} files ({{percentage}}%)
+{{/each}}
+{{/if}}
+
+{{#if report.frameworks.data}}
+### Frameworks
+{{#each report.frameworks.data}}
+- **{{name}}** ({{category}}){{#if version}} v{{version}}{{/if}}
+{{/each}}
+{{/if}}
+
+## Entry Points
+
+{{#if report.entryPoints.data}}
+Start here when exploring the codebase:
+{{#each report.entryPoints.data}}
+- `{{path}}` — {{type}}{{#if description}}: {{description}}{{/if}}
+{{/each}}
+{{else}}
+Entry points not detected. Check `src/index.*`, `main.*`, or `app.*`.
+{{/if}}
+
+## Directory Structure
+
+{{#if report.modules.data}}
+Key modules:
+{{#each report.modules.data}}
+- `{{path}}` — {{name}}
+{{/each}}
+{{/if}}
+
+## Quick Start for Agents
+
+1. Read this file for project overview
+2. Check `.cursor/context/architecture-overview.md` for component relationships
+3. Check `.cursor/context/tech-stack.md` for tooling details
+4. Use `.cursor/automations/` workflows for recurring tasks
+
+## High-Signal Files
+
+Files that automations and agents should prioritize:
+{{#if report.entryPoints.data}}
+{{#each report.entryPoints.data}}
+- `{{path}}`
+{{/each}}
+{{/if}}
+- Configuration files (package.json, tsconfig.json, etc.)
+- Test files for understanding expected behavior
+
+## Safe Assumptions for Automations
+
+- Follow existing patterns in the codebase
+- Respect detected linter/formatter configurations
+- Maintain test coverage for changed code
+- Document breaking changes

@@ -23,6 +23,12 @@ const OUTPUT_QUALITY_RUBRIC = `
 - Be consistent: match the repository's detected conventions and tooling
 - Be concise: prefer 3–7 bullet points per section; no filler
 - Include concrete examples where the report provides enough detail
+
+## Automation-aware guidelines
+- Reference related automations where applicable (e.g., "Run security-review automation for deep scan")
+- Include clear trigger conditions for automated workflows
+- Define expected outputs and fallback behaviors
+- Ensure artifacts complement each other (rules constrain, commands execute, prompts structure, automations repeat)
 `;
 
 function buildArtifactPrompt(
@@ -50,27 +56,27 @@ Output ONLY the raw file content. No explanations, no markdown code fences aroun
 
 const RULE_INSTRUCTIONS: Record<string, string> = {
   "coding-standards":
-    "Generate a Cursor rule file (.mdc) for coding standards. Frontmatter: description, globs: *. Cover style/formatting (linter, formatter configs), code quality (small functions, avoid nesting, document APIs), and conventions. Be actionable.",
+    "Generate a Cursor rule file (.mdc) for coding standards. Frontmatter: description, globs: *. Cover style/formatting (detected linter, formatter configs), code quality (small functions, avoid nesting, document APIs), and conventions. Include sections for 'For Code Generation', 'For Automations', 'For Reviews'. Be actionable.",
   architecture:
-    "Generate a Cursor rule file (.mdc) for architecture context. Frontmatter: description, globs: *. Describe the inferred architecture style, key modules, entry points, and how components connect. Be evidence-based; only state what the report supports.",
+    "Generate a Cursor rule file (.mdc) for architecture context. Frontmatter: description, globs: *. Describe the inferred architecture style, key modules, entry points, and how components connect. Include 'Architecture Rules' section with guidance for code changes, automations, and reviews. Be evidence-based; only state what the report supports.",
   security:
-    "Generate a Cursor rule file (.mdc) for security context. Frontmatter: description, globs: *. Summarize security findings (if any), dangerous patterns to avoid, and security conventions. Be concise.",
+    "Generate a Cursor rule file (.mdc) for security context. Frontmatter: description, globs: *. Summarize security findings (if any), dangerous patterns to avoid, and security conventions. Include sections for 'For Code Generation', 'For Automations', 'For Reviews'. Reference security-review automation for deep scans. Be concise.",
   testing:
-    "Generate a Cursor rule file (.mdc) for testing strategy. Frontmatter: description, globs: *. List detected test frameworks, test file patterns, and recommendations for adding tests. Include confidence level from the report.",
+    "Generate a Cursor rule file (.mdc) for testing strategy. Frontmatter: description, globs: *. List detected test frameworks, test file patterns, and recommendations for adding tests. Include sections for 'For Code Generation', 'For Automations', 'For Reviews'. Reference test-plan-on-large-change automation. Include confidence level from the report.",
   "api-design":
-    "Generate a Cursor rule file (.mdc) for API design. Frontmatter: description, globs: *. Cover REST/API conventions, request/response patterns, error handling, versioning. Use report's API routes if present; otherwise provide framework-agnostic guidance.",
+    "Generate a Cursor rule file (.mdc) for API design. Frontmatter: description, globs: *. Cover REST/API conventions, request/response patterns, error handling, versioning. Use report's API routes if present; otherwise provide framework-agnostic guidance. Include guidance for automations reviewing API changes.",
   "naming-conventions":
-    "Generate a Cursor rule file (.mdc) for naming conventions. Frontmatter: description, globs: *. Cover files, modules, functions, variables, types. Infer from report's module structure and language; be specific to the stack.",
+    "Generate a Cursor rule file (.mdc) for naming conventions. Frontmatter: description, globs: *. Cover files, modules, functions, variables, types. Infer from report's module structure and language; be specific to the stack. Include guidance for automations to validate naming.",
   "00-repo-baseline":
-    "Generate a Cursor rule file (.mdc) that establishes the repository baseline. Include YAML frontmatter with description and globs: *. Use concise bullet points for: detected stack (languages, frameworks), architecture, and conventions to follow. End with a brief 'Follow existing patterns' section.",
+    "Generate a Cursor rule file (.mdc) that establishes the repository baseline. Include YAML frontmatter with description and globs: *. Use concise bullet points for: detected stack (languages, frameworks), architecture, and conventions to follow. End with a brief 'Follow existing patterns' section. Reference .cursor/automations/ for recurring workflows.",
   "10-architecture":
-    "Generate a Cursor rule file (.mdc) for architecture context. Frontmatter: description, globs: *. Describe the inferred architecture style, key modules, entry points, and how components connect. Be evidence-based; only state what the report supports.",
+    "Generate a Cursor rule file (.mdc) for architecture context. Frontmatter: description, globs: *. Describe the inferred architecture style, key modules, entry points, and how components connect. Include rules for automations respecting module boundaries. Be evidence-based; only state what the report supports.",
   "20-testing-strategy":
-    "Generate a Cursor rule file (.mdc) for testing strategy. Frontmatter: description, globs: *. List detected test frameworks, test file patterns, and recommendations for adding tests. Include confidence level from the report.",
+    "Generate a Cursor rule file (.mdc) for testing strategy. Frontmatter: description, globs: *. List detected test frameworks, test file patterns, and recommendations for adding tests. Include guidance for automations to verify test coverage. Reference test-plan-on-large-change automation. Include confidence level from the report.",
   "30-security":
-    "Generate a Cursor rule file (.mdc) for security context. Frontmatter: description, globs: *. Summarize security findings (if any), dangerous patterns to avoid, and security conventions. Be concise.",
+    "Generate a Cursor rule file (.mdc) for security context. Frontmatter: description, globs: *. Summarize security findings (if any), dangerous patterns to avoid, and security conventions. Include guidance for automations to flag security-sensitive changes. Reference security-review automation. Be concise.",
   "40-tech-stack":
-    "Generate a Cursor rule file (.mdc) for tech stack context. Frontmatter: description, globs: *. List languages, frameworks, databases, CI/CD, infrastructure. Include versions where available. Keep it scannable.",
+    "Generate a Cursor rule file (.mdc) for tech stack context. Frontmatter: description, globs: *. List languages, frameworks, databases, CI/CD, infrastructure. Include versions where available. Reference dependency-change-review automation for dependency updates. Keep it scannable.",
 };
 
 const COMMAND_INSTRUCTIONS: Record<string, string> = {
@@ -115,26 +121,79 @@ const DOC_INSTRUCTIONS: Record<string, string> = {
 
 const PROMPT_INSTRUCTIONS: Record<string, string> = {
   "generate-feature":
-    "Generate a Cursor prompt file (.md) for feature generation. Structure: Context (use report), Inputs (feature name, acceptance criteria), Output (implementation plan, code, tests). Keep under 40 lines.",
+    "Generate a Cursor prompt file (.md) for feature generation. Structure: Context (architecture, frameworks from report), Inputs (feature name, description, acceptance criteria), Output (implementation plan, code, tests, documentation). Include 'Quality Expectations' section. Include 'Automation Follow-up' section referencing pr-review-or-risk-scan and test-plan-on-large-change. Keep under 50 lines.",
   "refactor-code":
-    "Generate a Cursor prompt file (.md) for refactoring. Structure: Context, Inputs (target file/module, goals), Output (refactored code with rationale). Reference architecture and conventions from the report.",
+    "Generate a Cursor prompt file (.md) for refactoring. Structure: Context (architecture, modules from report), Inputs (target file/module, goals), Output (refactored code with rationale). Include guidance on maintaining test coverage and running automations post-refactor. Reference architecture and conventions from the report.",
   "write-unit-tests":
-    "Generate a Cursor prompt file (.md) for writing unit tests. Structure: Context (test framework from report), Inputs (module/function to test), Output (test cases with assertions). Be specific to detected stack.",
+    "Generate a Cursor prompt file (.md) for writing unit tests. Structure: Context (test framework from report), Inputs (module/function to test), Output (test cases with assertions, coverage estimate). Include 'Test Quality Checklist'. Be specific to detected stack.",
   "code-review":
-    "Generate a Cursor prompt file (.md) for code review. Structure: Context (security, architecture from report), Inputs (diff or file), Output (review checklist, findings, suggestions).",
+    "Generate a Cursor prompt file (.md) for code review. Structure: Context (security rules, architecture rules from report), Inputs (diff or file, focus areas), Output (structured review with severity levels). Include 'Review Checklist' covering code quality, security, architecture, testing. Include 'Automation Integration' section referencing pr-review-or-risk-scan and security-review automations.",
   "debug-issue":
-    "Generate a Cursor prompt file (.md) for debugging. Structure: Context (entry points, modules from report), Inputs (symptoms, error messages), Output (hypothesis, trace steps, fix).",
+    "Generate a Cursor prompt file (.md) for debugging. Structure: Context (entry points, modules, API routes from report), Inputs (symptoms, error messages, reproduction steps), Output (hypothesis, trace steps, root cause, fix). Include guidance on adding regression tests.",
 };
 
 const CURSOR_CONTEXT_INSTRUCTIONS: Record<string, string> = {
   "project-overview":
-    "Generate .cursor/context/project-overview.md. High-level summary: purpose, key technologies, entry points, directory structure. Use report's modules and frameworks. Bullet format, under 50 lines.",
+    "Generate .cursor/context/project-overview.md. High-level summary: purpose, key technologies, entry points, directory structure. Include 'Quick Start for Agents' section pointing to architecture-overview, tech-stack, and automations. Include 'High-Signal Files' section listing files automations should prioritize. Include 'Safe Assumptions for Automations' section. Use report's modules and frameworks. Bullet format, under 60 lines.",
   "architecture-overview":
-    "Generate .cursor/context/architecture-overview.md. Architecture style, layers, component relationships. Evidence-based from the report. Scannable with headers.",
+    "Generate .cursor/context/architecture-overview.md. Architecture style, layers, component relationships. Include 'Architecture Guidelines for Automations' section with rules for respecting module boundaries and flagging violations. Evidence-based from the report. Scannable with headers.",
   "tech-stack":
-    "Generate .cursor/context/tech-stack.md. Languages, frameworks, databases, CI/CD, tooling. Include versions where available. Table or bullet list.",
+    "Generate .cursor/context/tech-stack.md. Languages, frameworks, databases, CI/CD, tooling. Include versions where available. Include 'Automation Tooling Notes' section with guidance on using detected linter/formatter, test framework patterns, CI/CD requirements. Table or bullet list.",
   "domain-knowledge":
-    "Generate .cursor/context/domain-knowledge.md. Key terms, domain concepts, acronyms used in the codebase. Infer from report's modules and file names.",
+    "Generate .cursor/context/domain-knowledge.md. Key terms, domain concepts, acronyms used in the codebase. Include 'For Automations' section explaining how automations should handle unfamiliar terms. Infer from report's modules and file names.",
+};
+
+const AUTOMATION_INSTRUCTIONS: Record<string, string> = {
+  "pr-review-or-risk-scan": `Generate a Cursor automation workflow (.md) for PR review and risk scanning.
+Structure:
+- Trigger: When to run (e.g., on PR creation, code changes)
+- Goal: What the automation should accomplish
+- Steps: Numbered agent actions (1. gather context, 2. analyze changes, 3. report findings)
+- Signals to inspect: Files, patterns, metrics from the report
+- Expected output: Review checklist, risk assessment, recommendations
+- Fallback: What to do if analysis is inconclusive
+Keep under 60 lines. Be actionable and evidence-based.`,
+  "security-review": `Generate a Cursor automation workflow (.md) for security review.
+Structure:
+- Trigger: When to run (e.g., security-sensitive file changes, dependency updates)
+- Goal: Identify security risks and vulnerabilities
+- Steps: Numbered agent actions for security analysis
+- Signals to inspect: Auth patterns, data handling, API security from the report
+- Expected output: Security findings with severity, remediation steps
+- Fallback: Escalation path for uncertain findings
+Reference the report's security findings if available.`,
+  "refresh-context-on-structure-change": `Generate a Cursor automation workflow (.md) for refreshing context when repo structure changes.
+Structure:
+- Trigger: When architecture-relevant files change (e.g., config files, module additions)
+- Goal: Keep .cursor/context up to date with repo reality
+- Steps: Detect changes, update relevant context docs, validate consistency
+- Signals to inspect: Directory structure, entry points, module index from the report
+- Expected output: Updated context files, change summary
+- Fallback: Flag for manual review if changes are ambiguous`,
+  "test-plan-on-large-change": `Generate a Cursor automation workflow (.md) for generating test plans on large changes.
+Structure:
+- Trigger: When changes span multiple modules or exceed a threshold
+- Goal: Ensure adequate test coverage for significant changes
+- Steps: Analyze change scope, identify affected modules, propose test cases
+- Signals to inspect: Test frameworks, existing coverage, module dependencies from the report
+- Expected output: Test plan with cases, priority, and coverage estimate
+- Fallback: Minimal smoke test suggestions if scope is unclear`,
+  "release-readiness-check": `Generate a Cursor automation workflow (.md) for release readiness checks.
+Structure:
+- Trigger: Before release, version bump, or deployment
+- Goal: Validate that the release is safe and complete
+- Steps: Check tests pass, review breaking changes, verify docs, validate config
+- Signals to inspect: Entry points, API routes, version info from the report
+- Expected output: Release checklist with pass/fail, blocking issues
+- Fallback: Manual review requirements for uncertain items`,
+  "dependency-change-review": `Generate a Cursor automation workflow (.md) for dependency change review.
+Structure:
+- Trigger: When package.json, requirements.txt, or similar files change
+- Goal: Assess impact and risk of dependency updates
+- Steps: Identify changed deps, check for breaking changes, security advisories, license issues
+- Signals to inspect: Dependencies from the report, security findings
+- Expected output: Dependency change report with risk assessment, action items
+- Fallback: Flag high-risk changes for manual review`,
 };
 
 export interface AIGenerationOptions {
@@ -203,6 +262,26 @@ export async function generateCursorContextViaAI(
   const instructions =
     CURSOR_CONTEXT_INSTRUCTIONS[contextName] ?? "Generate .cursor/context documentation.";
   const prompt = buildArtifactPrompt("Cursor context", `${contextName}.md`, report, instructions);
+  return runAgent(prompt, {
+    model: options.model ?? DEFAULT_MODEL,
+    workspace: options.workspace,
+  });
+}
+
+export async function generateAutomationViaAI(
+  report: AnalysisReport,
+  automationName: string,
+  options: AIGenerationOptions
+): Promise<string> {
+  const instructions =
+    AUTOMATION_INSTRUCTIONS[automationName] ??
+    "Generate a Cursor automation workflow file (.md) with trigger, goal, steps, signals, expected output, and fallback sections.";
+  const prompt = buildArtifactPrompt(
+    "Cursor automation",
+    `${automationName}.md`,
+    report,
+    instructions
+  );
   return runAgent(prompt, {
     model: options.model ?? DEFAULT_MODEL,
     workspace: options.workspace,

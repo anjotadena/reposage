@@ -20,12 +20,14 @@ export async function runGenerators(
   const { CursorCommandGenerator } = await import("./CursorCommandGenerator.js");
   const { CursorPromptGenerator } = await import("./CursorPromptGenerator.js");
   const { CursorContextGenerator } = await import("./CursorContextGenerator.js");
+  const { CursorAutomationGenerator } = await import("./CursorAutomationGenerator.js");
   const { ContextDocGenerator } = await import("./ContextDocGenerator.js");
 
   const cursorRules = new CursorRuleGenerator(report, rootPath);
   const cursorCommands = new CursorCommandGenerator(report, rootPath);
   const cursorPrompts = new CursorPromptGenerator(report, rootPath);
   const cursorContext = new CursorContextGenerator(report, rootPath);
+  const cursorAutomations = new CursorAutomationGenerator(report, rootPath);
   const contextDocs = new ContextDocGenerator(report, rootPath);
 
   await Promise.all([
@@ -33,6 +35,7 @@ export async function runGenerators(
     cursorCommands.generate(options),
     cursorPrompts.generate(options),
     cursorContext.generate(options),
+    cursorAutomations.generate(options),
     contextDocs.generate(options),
   ]);
 }

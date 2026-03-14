@@ -1,0 +1,124 @@
+<!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+
+# Test Plan on Large Change
+
+Automated workflow for generating test plans when changes are significant.
+
+## Trigger
+
+- Changes span 3+ modules
+- More than 500 lines changed
+- New feature implementation
+- Refactoring of core functionality
+- Changes to shared utilities or base classes
+- Manual request for test planning
+
+## Goal
+
+Ensure adequate test coverage for significant changes:
+- Identify all affected components and their test requirements
+- Propose unit, integration, and e2e test cases
+- Estimate coverage impact and risk areas
+- Prioritize tests by importance and effort
+
+## Steps
+
+1. **Analyze Change Scope**
+   - Map changed files to modules and components
+   - Identify direct and transitive dependencies
+   - Determine change category (feature, fix, refactor)
+
+2. **Assess Current Coverage**
+   - Check existing tests for affected modules
+   - Identify coverage gaps in changed code
+   - Note any tests that may need updates
+
+3. **Generate Unit Test Cases**
+   - List functions/methods needing new tests
+   - Propose test scenarios (happy path, edge cases, errors)
+   - Include input/output examples where possible
+
+4. **Generate Integration Test Cases**
+   - Identify component interaction points
+   - Propose integration scenarios
+   - Note external dependencies to mock
+
+5. **Consider E2E Tests**
+   - Determine if user-facing flows are affected
+   - Propose critical path test scenarios
+   - Identify performance-sensitive paths
+
+6. **Prioritize and Estimate**
+   - Rank tests by risk coverage
+   - Estimate implementation effort (S/M/L)
+   - Mark blocking vs. nice-to-have tests
+
+## Signals to Inspect
+
+{{#if report.testFrameworks.data}}
+- Test frameworks:
+{{#each report.testFrameworks.data}}
+  - {{this.name}}{{#if this.version}} v{{this.version}}{{/if}} (confidence: {{this.confidence}})
+{{/each}}
+{{else}}
+- Test framework: Not detected (recommend setting up)
+{{/if}}
+{{#if report.modules.data}}
+- Module test mapping:
+{{#each report.modules.data}}
+  - {{this.name}}: check for {{this.name}}.test.* or __tests__/{{this.name}}/
+{{/each}}
+{{/if}}
+
+## Expected Output
+
+```markdown
+## Test Plan
+
+### Change Summary
+- Modules affected: [list]
+- Lines changed: X
+- Risk level: [High/Medium/Low]
+
+### Unit Tests
+
+#### Module: [module-name]
+| Function | Test Scenario | Priority | Effort |
+|----------|--------------|----------|--------|
+| `funcA()` | Happy path with valid input | P0 | S |
+| `funcA()` | Edge case: empty input | P1 | S |
+| `funcA()` | Error: invalid type | P1 | S |
+| `funcB()` | Integration with funcA | P0 | M |
+
+### Integration Tests
+
+| Components | Scenario | Priority | Effort |
+|------------|----------|----------|--------|
+| A + B | Data flows correctly | P0 | M |
+| B + C | Error propagation | P1 | M |
+
+### E2E Tests (if applicable)
+
+| User Flow | Scenario | Priority | Effort |
+|-----------|----------|----------|--------|
+| Login → Dashboard | New feature visible | P0 | L |
+
+### Coverage Estimate
+- Before: ~X%
+- After (with proposed tests): ~Y%
+- Critical paths covered: Yes/No
+
+### Implementation Order
+1. [P0] funcA unit tests (blocks other tests)
+2. [P0] A + B integration test
+3. [P1] Edge case and error tests
+4. [P2] Performance tests (optional)
+```
+
+## Fallback
+
+If change scope is unclear:
+- Generate minimal smoke test suggestions
+- Recommend manual exploratory testing
+- Flag for test lead review
+- Suggest pair programming on test implementation

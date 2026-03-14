@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RepoSage — AI-powered repository understanding</title>
-  <meta name="description" content="RepoSage analyzes source code repositories and generates Cursor-ready developer context: rules, commands, prompts, and documentation." />
+  <meta name="description" content="RepoSage analyzes source code repositories and generates Cursor-ready developer context: rules, commands, prompts, automations, and documentation for daily development workflows." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -65,8 +65,10 @@
           <img src="assets/reposage_logo.png" alt="RepoSage" class="h-8 w-auto" />
         </a>
         <div class="flex items-center gap-6">
+          <a href="#daily-workflow" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">Workflow</a>
+          <a href="#usage-guide" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">Usage</a>
+          <a href="#artifact-reference" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">Reference</a>
           <a href="https://github.com/anjotadena/reposage" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">GitHub</a>
-          <a href="https://github.com/anjotadena/reposage#installation" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sage-400 transition-colors text-sm font-medium">Install</a>
         </div>
       </nav>
     </header>
@@ -79,7 +81,7 @@
           <span class="gradient-text"> repository understanding</span>
         </h1>
         <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-          Generate Cursor-ready developer context from any codebase. Rules, commands, prompts, and documentation—evidence-driven, not invented.
+          Generate Cursor-ready developer context from any codebase. Rules, commands, prompts, automations, and documentation—evidence-driven, not invented.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="https://github.com/anjotadena/reposage#installation" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-repo-500 to-sage-500 text-white font-semibold hover:opacity-90 transition-opacity glow-blue">
@@ -125,21 +127,393 @@ reposage generate .</code></pre>
 
       <section class="max-w-6xl mx-auto px-6 py-20">
         <h2 class="text-2xl md:text-3xl font-bold text-white mb-12 text-center">What you get</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 class="text-sage-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/</h3>
-            <ul class="space-y-2 text-slate-400">
-              <li class="flex items-center gap-2"><span class="text-sage-500">•</span> Rules: baseline, architecture, testing, security, tech stack</li>
-              <li class="flex items-center gap-2"><span class="text-sage-500">•</span> Commands: explain-repo, trace-feature, create-test-plan, document-module, review-risk</li>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80">
+            <h3 class="text-sage-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/rules/</h3>
+            <p class="text-slate-500 text-xs mb-3">11 rule files — durable repo policy</p>
+            <ul class="space-y-1.5 text-slate-400 text-sm">
+              <li>• Baseline, architecture, testing, security</li>
+              <li>• Tech stack, API design, naming conventions</li>
+              <li>• Coding standards with automation guidance</li>
             </ul>
           </div>
-          <div>
+          <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80">
+            <h3 class="text-repo-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/commands/</h3>
+            <p class="text-slate-500 text-xs mb-3">10 command files — manual workflows</p>
+            <ul class="space-y-1.5 text-slate-400 text-sm">
+              <li>• explain-repo, trace-feature, document-module</li>
+              <li>• create-module, create-endpoint, generate-tests</li>
+              <li>• review-risk, analyze-performance, refactor-service</li>
+            </ul>
+          </div>
+          <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80">
+            <h3 class="text-sage-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/prompts/</h3>
+            <p class="text-slate-500 text-xs mb-3">5 prompt files — output quality shapers</p>
+            <ul class="space-y-1.5 text-slate-400 text-sm">
+              <li>• generate-feature, refactor-code</li>
+              <li>• write-unit-tests, code-review</li>
+              <li>• debug-issue</li>
+            </ul>
+          </div>
+          <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80">
+            <h3 class="text-repo-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/context/</h3>
+            <p class="text-slate-500 text-xs mb-3">4 context files — repo memory</p>
+            <ul class="space-y-1.5 text-slate-400 text-sm">
+              <li>• project-overview, architecture-overview</li>
+              <li>• tech-stack, domain-knowledge</li>
+              <li>• Quick start guides for agents</li>
+            </ul>
+          </div>
+          <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 border-sage-500/30">
+            <h3 class="text-sage-400 font-mono text-sm uppercase tracking-wider mb-4">.cursor/automations/</h3>
+            <p class="text-slate-500 text-xs mb-3">6 automation workflows — recurring tasks</p>
+            <ul class="space-y-1.5 text-slate-400 text-sm">
+              <li>• pr-review-or-risk-scan, security-review</li>
+              <li>• test-plan-on-large-change</li>
+              <li>• release-readiness-check, dependency-change-review</li>
+            </ul>
+          </div>
+          <div class="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80">
             <h3 class="text-repo-400 font-mono text-sm uppercase tracking-wider mb-4">docs/context/</h3>
-            <ul class="space-y-2 text-slate-400">
-              <li class="flex items-center gap-2"><span class="text-repo-500">•</span> Repo map, architecture overview, module index</li>
-              <li class="flex items-center gap-2"><span class="text-repo-500">•</span> Coding conventions, testing strategy, glossary, known risks</li>
+            <p class="text-slate-500 text-xs mb-3">7 documentation files</p>
+            <ul class="space-y-1.5 text-slate-400 text-sm">
+              <li>• Repo map, architecture overview, module index</li>
+              <li>• Coding conventions, testing strategy</li>
+              <li>• Glossary, known risks</li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      <!-- Daily Development Workflow Section -->
+      <section id="daily-workflow" class="max-w-6xl mx-auto px-6 py-20">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 text-center">Daily Development Workflow</h2>
+        <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">How to use the generated Cursor setup for maximum productivity</p>
+        
+        <div class="space-y-8">
+          <!-- Starting Your Day -->
+          <div class="rounded-2xl bg-slate-900/50 border border-slate-800/80 p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-8 h-8 rounded-full bg-sage-500/20 flex items-center justify-center text-sage-400 font-bold">1</span>
+              <h3 class="text-xl font-semibold text-white">Starting Your Day</h3>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-sage-400 font-medium mb-2">Quick context refresh</h4>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                  <li>• Open <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">.cursor/context/project-overview.md</code> to remember project structure</li>
+                  <li>• Review <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">.cursor/context/architecture-overview.md</code> for component relationships</li>
+                  <li>• Check high-signal files listed in project overview</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-repo-400 font-medium mb-2">Useful commands</h4>
+                <pre class="font-mono text-xs text-slate-300 overflow-x-auto p-4 rounded-xl bg-black/40 border border-slate-700/50"><code># Run the explain-repo command in Cursor
+# Or use the trace-feature command to understand a flow</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Implementing Features -->
+          <div class="rounded-2xl bg-slate-900/50 border border-slate-800/80 p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-8 h-8 rounded-full bg-repo-500/20 flex items-center justify-center text-repo-400 font-bold">2</span>
+              <h3 class="text-xl font-semibold text-white">Implementing Features</h3>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+              <div>
+                <h4 class="text-sage-400 font-medium mb-2">Use prompts for quality</h4>
+                <p class="text-slate-400 text-sm">Reference <code class="font-mono text-sage-400 bg-slate-800/50 px-1 rounded">generate-feature.md</code> prompt when building new functionality. It structures AI output for implementation plans, code, and tests.</p>
+              </div>
+              <div>
+                <h4 class="text-repo-400 font-medium mb-2">Follow the rules</h4>
+                <p class="text-slate-400 text-sm">Cursor automatically applies <code class="font-mono text-repo-400 bg-slate-800/50 px-1 rounded">.cursor/rules/*.mdc</code> to constrain AI behavior. Architecture, security, and testing rules keep output consistent.</p>
+              </div>
+              <div>
+                <h4 class="text-sage-400 font-medium mb-2">Create modules</h4>
+                <p class="text-slate-400 text-sm">Use <code class="font-mono text-sage-400 bg-slate-800/50 px-1 rounded">create-module</code> and <code class="font-mono text-sage-400 bg-slate-800/50 px-1 rounded">create-endpoint</code> commands to scaffold new code following existing patterns.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code Review & Testing -->
+          <div class="rounded-2xl bg-slate-900/50 border border-slate-800/80 p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-8 h-8 rounded-full bg-sage-500/20 flex items-center justify-center text-sage-400 font-bold">3</span>
+              <h3 class="text-xl font-semibold text-white">Code Review & Testing</h3>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-sage-400 font-medium mb-2">Before committing</h4>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                  <li>• Use <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">code-review.md</code> prompt for self-review</li>
+                  <li>• Run <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">generate-tests</code> command for missing tests</li>
+                  <li>• Check <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">review-risk</code> command for security concerns</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-repo-400 font-medium mb-2">Automation workflows</h4>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                  <li>• <code class="font-mono text-repo-400 bg-slate-800/50 px-1 rounded">pr-review-or-risk-scan</code> — comprehensive PR review</li>
+                  <li>• <code class="font-mono text-repo-400 bg-slate-800/50 px-1 rounded">security-review</code> — security-focused analysis</li>
+                  <li>• <code class="font-mono text-repo-400 bg-slate-800/50 px-1 rounded">test-plan-on-large-change</code> — test coverage planning</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Maintenance & Releases -->
+          <div class="rounded-2xl bg-slate-900/50 border border-slate-800/80 p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-8 h-8 rounded-full bg-repo-500/20 flex items-center justify-center text-repo-400 font-bold">4</span>
+              <h3 class="text-xl font-semibold text-white">Maintenance & Releases</h3>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="text-sage-400 font-medium mb-2">Keep context fresh</h4>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                  <li>• Run <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">refresh-context-on-structure-change</code> when architecture changes</li>
+                  <li>• Re-run <code class="font-mono text-sage-400 bg-slate-800/50 px-1.5 py-0.5 rounded">reposage generate .</code> periodically</li>
+                  <li>• Update domain knowledge as project evolves</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-repo-400 font-medium mb-2">Pre-release checklist</h4>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                  <li>• <code class="font-mono text-repo-400 bg-slate-800/50 px-1 rounded">release-readiness-check</code> — validate release</li>
+                  <li>• <code class="font-mono text-repo-400 bg-slate-800/50 px-1 rounded">dependency-change-review</code> — audit dependencies</li>
+                  <li>• Verify all tests pass and docs are current</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Usage Guide Section -->
+      <section id="usage-guide" class="max-w-6xl mx-auto px-6 py-20">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 text-center">Usage Guide</h2>
+        <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">Complete reference for RepoSage CLI and generated artifacts</p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- CLI Commands -->
+          <div class="rounded-2xl gradient-border p-px">
+            <div class="rounded-2xl bg-slate-900/90 p-6 h-full">
+              <h3 class="text-xl font-bold text-white mb-4">CLI Commands</h3>
+              <div class="space-y-4">
+                <div>
+                  <code class="font-mono text-sage-400 text-sm">reposage generate &lt;path&gt;</code>
+                  <p class="text-slate-400 text-sm mt-1">Generate all Cursor artifacts for a repository</p>
+                  <div class="mt-2 text-xs text-slate-500">
+                    <span class="text-slate-400">--force</span> Overwrite existing files<br/>
+                    <span class="text-slate-400">--no-ai</span> Use templates instead of AI<br/>
+                    <span class="text-slate-400">--model &lt;m&gt;</span> Specify AI model
+                  </div>
+                </div>
+                <div>
+                  <code class="font-mono text-sage-400 text-sm">reposage scan &lt;path&gt;</code>
+                  <p class="text-slate-400 text-sm mt-1">Scan repository and report file statistics</p>
+                </div>
+                <div>
+                  <code class="font-mono text-sage-400 text-sm">reposage analyze &lt;path&gt;</code>
+                  <p class="text-slate-400 text-sm mt-1">Analyze repository structure and tech stack</p>
+                </div>
+                <div>
+                  <code class="font-mono text-sage-400 text-sm">reposage explain &lt;path&gt;</code>
+                  <p class="text-slate-400 text-sm mt-1">Output human-readable repository summary</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Best Practices -->
+          <div class="rounded-2xl gradient-border p-px">
+            <div class="rounded-2xl bg-slate-900/90 p-6 h-full">
+              <h3 class="text-xl font-bold text-white mb-4">Best Practices</h3>
+              <ul class="space-y-3 text-slate-400 text-sm">
+                <li class="flex items-start gap-2">
+                  <span class="text-sage-500 mt-1">✓</span>
+                  <span><strong class="text-white">Run on new repos:</strong> Generate artifacts when starting on an unfamiliar codebase</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sage-500 mt-1">✓</span>
+                  <span><strong class="text-white">Commit generated files:</strong> Share the <code class="font-mono text-sage-400 bg-slate-800/50 px-1 rounded">.cursor/</code> directory with your team</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sage-500 mt-1">✓</span>
+                  <span><strong class="text-white">Refresh periodically:</strong> Re-run generation after major refactors or architecture changes</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sage-500 mt-1">✓</span>
+                  <span><strong class="text-white">Customize rules:</strong> Edit generated rules to add project-specific constraints</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sage-500 mt-1">✓</span>
+                  <span><strong class="text-white">Use automations:</strong> Reference automation workflows for recurring tasks like PR review</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-sage-500 mt-1">✓</span>
+                  <span><strong class="text-white">Check context first:</strong> Read project-overview.md before diving into code</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Artifact Reference Section -->
+      <section id="artifact-reference" class="max-w-6xl mx-auto px-6 py-20">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 text-center">Artifact Reference</h2>
+        <p class="text-slate-400 text-center mb-12 max-w-2xl mx-auto">Detailed breakdown of each generated artifact type</p>
+
+        <div class="space-y-6">
+          <!-- Rules -->
+          <details class="rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden group">
+            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-slate-800/30 transition-colors">
+              <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-lg bg-sage-500/20 flex items-center justify-center text-sage-400 font-mono">R</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Rules (.cursor/rules/*.mdc)</h3>
+                  <p class="text-slate-400 text-sm">Durable constraints that guide AI behavior</p>
+                </div>
+              </div>
+              <span class="text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="px-6 pb-6 border-t border-slate-800/50 pt-4">
+              <p class="text-slate-400 text-sm mb-4">Rules are always-on context that Cursor applies to every interaction. They constrain what the AI does and ensure consistency.</p>
+              <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 class="text-sage-400 font-medium mb-2">Core rules</h4>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>00-repo-baseline</strong> — Project fundamentals</li>
+                    <li>• <strong>10-architecture</strong> — Module boundaries, patterns</li>
+                    <li>• <strong>20-testing-strategy</strong> — Test frameworks, coverage</li>
+                    <li>• <strong>30-security</strong> — Security findings, constraints</li>
+                    <li>• <strong>40-tech-stack</strong> — Languages, frameworks, tools</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="text-repo-400 font-medium mb-2">Extended rules</h4>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>coding-standards</strong> — Style, formatting, quality</li>
+                    <li>• <strong>api-design</strong> — REST conventions, patterns</li>
+                    <li>• <strong>naming-conventions</strong> — Files, functions, types</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Commands -->
+          <details class="rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden group">
+            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-slate-800/30 transition-colors">
+              <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-lg bg-repo-500/20 flex items-center justify-center text-repo-400 font-mono">C</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Commands (.cursor/commands/*.md)</h3>
+                  <p class="text-slate-400 text-sm">Manual workflows you invoke on-demand</p>
+                </div>
+              </div>
+              <span class="text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="px-6 pb-6 border-t border-slate-800/50 pt-4">
+              <p class="text-slate-400 text-sm mb-4">Commands are step-by-step workflows you trigger manually. Use them for specific development tasks.</p>
+              <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 class="text-sage-400 font-medium mb-2">Understanding code</h4>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>explain-repo</strong> — Get a project overview</li>
+                    <li>• <strong>trace-feature</strong> — Follow a feature through layers</li>
+                    <li>• <strong>document-module</strong> — Generate module docs</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="text-repo-400 font-medium mb-2">Building & reviewing</h4>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>create-module</strong> — Scaffold new modules</li>
+                    <li>• <strong>create-endpoint</strong> — Add API endpoints</li>
+                    <li>• <strong>generate-tests</strong> — Write tests for code</li>
+                    <li>• <strong>review-risk</strong> — Security/architecture review</li>
+                    <li>• <strong>analyze-performance</strong> — Find bottlenecks</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Automations -->
+          <details class="rounded-2xl bg-slate-900/50 border border-sage-500/30 overflow-hidden group">
+            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-slate-800/30 transition-colors">
+              <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-lg bg-sage-500/20 flex items-center justify-center text-sage-400 font-mono">A</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Automations (.cursor/automations/*.md)</h3>
+                  <p class="text-slate-400 text-sm">Recurring workflows for common tasks</p>
+                </div>
+              </div>
+              <span class="text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="px-6 pb-6 border-t border-slate-800/50 pt-4">
+              <p class="text-slate-400 text-sm mb-4">Automations are structured workflows for recurring tasks. They include triggers, steps, expected outputs, and fallback behaviors.</p>
+              <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 class="text-sage-400 font-medium mb-2">Review & Security</h4>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>pr-review-or-risk-scan</strong> — Comprehensive PR review</li>
+                    <li>• <strong>security-review</strong> — Security-focused analysis</li>
+                    <li>• <strong>dependency-change-review</strong> — Audit dependency updates</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="text-repo-400 font-medium mb-2">Maintenance</h4>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>test-plan-on-large-change</strong> — Generate test plans</li>
+                    <li>• <strong>refresh-context-on-structure-change</strong> — Update context docs</li>
+                    <li>• <strong>release-readiness-check</strong> — Pre-release validation</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Context & Prompts -->
+          <details class="rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden group">
+            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-slate-800/30 transition-colors">
+              <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-lg bg-repo-500/20 flex items-center justify-center text-repo-400 font-mono">P</span>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Context & Prompts</h3>
+                  <p class="text-slate-400 text-sm">Repository memory and output quality shapers</p>
+                </div>
+              </div>
+              <span class="text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="px-6 pb-6 border-t border-slate-800/50 pt-4">
+              <div class="grid md:grid-cols-2 gap-6 text-sm">
+                <div>
+                  <h4 class="text-sage-400 font-medium mb-2">Context files (.cursor/context/)</h4>
+                  <p class="text-slate-400 mb-2">High-signal repo memory for agents</p>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>project-overview</strong> — Entry points, structure</li>
+                    <li>• <strong>architecture-overview</strong> — Components, relationships</li>
+                    <li>• <strong>tech-stack</strong> — Languages, frameworks, tools</li>
+                    <li>• <strong>domain-knowledge</strong> — Terms, concepts, patterns</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="text-repo-400 font-medium mb-2">Prompts (.cursor/prompts/)</h4>
+                  <p class="text-slate-400 mb-2">Templates that structure AI output</p>
+                  <ul class="space-y-1 text-slate-400">
+                    <li>• <strong>generate-feature</strong> — Feature implementation</li>
+                    <li>• <strong>refactor-code</strong> — Code improvement</li>
+                    <li>• <strong>write-unit-tests</strong> — Test generation</li>
+                    <li>• <strong>code-review</strong> — Review checklist</li>
+                    <li>• <strong>debug-issue</strong> — Troubleshooting</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </section>
 

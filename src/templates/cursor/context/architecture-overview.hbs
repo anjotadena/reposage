@@ -2,6 +2,72 @@
 
 # Architecture Overview
 
-## Detected Architecture
+Component relationships and architectural patterns for agents and automations.
 
-(Generated from analysis)
+## Architecture Style
+
+{{#if report.architecture.data.style}}
+**Detected**: {{report.architecture.data.style}}
+{{#if report.architecture.data.description}}
+{{report.architecture.data.description}}
+{{/if}}
+{{else}}
+Architecture style not confidently detected. Infer from module structure.
+{{/if}}
+
+## Component Relationships
+
+{{#if report.modules.data}}
+### Modules
+{{#each report.modules.data}}
+#### {{name}}
+- **Path**: `{{path}}`
+{{#if entryPoints}}
+- **Entry points**: {{#each entryPoints}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{#if dependencies}}
+- **Dependencies**: {{#each dependencies}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{/each}}
+{{/if}}
+
+## API Surface
+
+{{#if report.apiRoutes.data}}
+### Routes
+| Method | Path | File |
+|--------|------|------|
+{{#each report.apiRoutes.data}}
+| {{#if method}}{{method}}{{else}}*{{/if}} | `{{path}}` | `{{file}}` |
+{{/each}}
+{{else}}
+No API routes detected.
+{{/if}}
+
+## Data Layer
+
+{{#if report.databases.data}}
+### Databases
+{{#each report.databases.data}}
+- **{{type}}**{{#if evidence}} — Evidence: {{#each evidence}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}{{/if}}
+{{/each}}
+{{else}}
+No database integration detected.
+{{/if}}
+
+## Infrastructure
+
+{{#if report.infrastructure.data}}
+- Docker: {{#if report.infrastructure.data.docker}}Yes{{else}}No{{/if}}
+- Docker Compose: {{#if report.infrastructure.data.dockerCompose}}Yes{{else}}No{{/if}}
+- Kubernetes: {{#if report.infrastructure.data.kubernetes}}Yes{{else}}No{{/if}}
+- Terraform: {{#if report.infrastructure.data.terraform}}Yes{{else}}No{{/if}}
+{{/if}}
+
+## Architecture Guidelines for Automations
+
+When reviewing or modifying code:
+1. Respect module boundaries — avoid cross-cutting dependencies
+2. Keep the detected architecture style intact
+3. Route changes through appropriate layers
+4. Flag architectural violations for review
