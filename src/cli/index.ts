@@ -50,4 +50,12 @@ program
     await explainCommand(path, opts);
   });
 
+program
+  .command("update")
+  .description("Update RepoSage to the latest version")
+  .action(async () => {
+    const { updateCommand } = await import("./commands/update.js");
+    await updateCommand();
+  });
+
 program.parse();
