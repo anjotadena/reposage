@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/anjotadena/reposage/compare/v1.1.0...v1.1.1) (2026-03-14)
+
+
+### Bug Fixes
+
+* replace console log with logger for current version output in update command ([53308ca](https://github.com/anjotadena/reposage/commit/53308ca6fce2de19d71bac35d7b2b081f7be9dc0))
+
 ## [1.1.0](https://github.com/anjotadena/reposage/compare/v1.0.1...v1.1.0) (2026-03-14)
 
 
