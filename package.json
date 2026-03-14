@@ -1,6 +1,6 @@
 {
   "name": "reposage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool that analyzes repositories and generates Cursor-ready developer context",
   "type": "module",
   "main": "dist/cli/index.js",
@@ -16,7 +16,13 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\""
   },
-  "keywords": ["cli", "cursor", "repository", "analysis", "documentation"],
+  "keywords": [
+    "cli",
+    "cursor",
+    "repository",
+    "analysis",
+    "documentation"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
