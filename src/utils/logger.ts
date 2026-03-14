@@ -22,6 +22,7 @@ function shouldLog(level: LogLevel): boolean {
 }
 
 export function debug(message: string, meta?: Record<string, unknown>): void {
+  console.debug(message, meta);
   if (shouldLog("debug")) {
     const suffix = meta ? ` ${JSON.stringify(meta)}` : "";
     console.debug(`[reposage] ${message}${suffix}`);
@@ -29,6 +30,7 @@ export function debug(message: string, meta?: Record<string, unknown>): void {
 }
 
 export function info(message: string, meta?: Record<string, unknown>): void {
+  console.info(message, meta);
   if (shouldLog("info")) {
     const suffix = meta ? ` ${JSON.stringify(meta)}` : "";
     console.info(`[reposage] ${message}${suffix}`);
@@ -36,6 +38,7 @@ export function info(message: string, meta?: Record<string, unknown>): void {
 }
 
 export function warn(message: string, meta?: Record<string, unknown>): void {
+  console.warn(message, meta);
   if (shouldLog("warn")) {
     const suffix = meta ? ` ${JSON.stringify(meta)}` : "";
     console.warn(`[reposage] ${message}${suffix}`);
@@ -43,6 +46,7 @@ export function warn(message: string, meta?: Record<string, unknown>): void {
 }
 
 export function error(message: string, meta?: Record<string, unknown>): void {
+  console.error(message, meta);
   if (shouldLog("error")) {
     const suffix = meta ? ` ${JSON.stringify(meta)}` : "";
     console.error(`[reposage] ${message}${suffix}`);
