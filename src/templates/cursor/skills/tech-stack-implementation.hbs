@@ -1,0 +1,54 @@
+<!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+
+# Tech Stack Implementation
+
+Use this skill before generating code, commands, or prompts. Anchor every output to detected technologies and avoid assumptions outside the repository evidence.
+
+## Detected Stack Evidence
+
+{{#if report.languages.data}}
+### Languages
+{{#each report.languages.data}}
+- **{{name}}** ({{fileCount}} files, {{percentage}}%)
+{{/each}}
+{{else}}
+- No language evidence available from analysis report.
+{{/if}}
+
+{{#if report.frameworks.data}}
+### Frameworks
+{{#each report.frameworks.data}}
+- **{{name}}** ({{category}}){{#if version}} — v{{version}}{{/if}}
+{{/each}}
+{{else}}
+- No framework evidence available from analysis report.
+{{/if}}
+
+{{#if report.testFrameworks.data}}
+### Testing
+{{#each report.testFrameworks.data}}
+- **{{name}}**{{#if version}} — v{{version}}{{/if}}
+{{/each}}
+{{/if}}
+
+## How To Use This Skill
+
+1. Start from `.cursor/context/tech-stack.md` and this file.
+2. Limit generated implementation patterns to detected languages/frameworks.
+3. If a requested pattern is not present in stack evidence, mark it as `Unknown` and ask for confirmation.
+4. Mirror existing lint, formatting, testing, and CI signals before proposing changes.
+5. Prefer extending existing modules and conventions over introducing new architecture.
+
+## Hallucination Guardrails
+
+- Do not invent frameworks, services, or deployment targets not present in report evidence.
+- Do not claim versions unless detected in manifests or lockfiles.
+- Do not produce commands that assume unavailable tooling.
+- Call out uncertainty explicitly with required follow-up checks.
+
+## Output Quality Checks
+
+- Generated file references at least one detected stack signal.
+- Proposed code style aligns with detected conventions.
+- Test strategy matches detected test framework.
+- Security-sensitive code paths include validation and safe defaults.

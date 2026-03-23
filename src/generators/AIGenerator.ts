@@ -29,6 +29,7 @@ const OUTPUT_QUALITY_RUBRIC = `
 - Include clear trigger conditions for automated workflows
 - Define expected outputs and fallback behaviors
 - Ensure artifacts complement each other (rules constrain, commands execute, prompts structure, automations repeat)
+- For commands and skills, require stack-aware execution guidance grounded in detected technologies
 `;
 
 function buildArtifactPrompt(
@@ -81,27 +82,32 @@ const RULE_INSTRUCTIONS: Record<string, string> = {
 
 const COMMAND_INSTRUCTIONS: Record<string, string> = {
   "explain-repo":
-    "Generate a Cursor command file (.md) that instructs the AI to explain the repository to a developer. The command should: 1) Reference the analysis report context, 2) Ask the AI to summarize structure, entry points, and key modules, 3) Be concise (under 30 lines).",
+    "Generate a Cursor command file (.md) that instructs the AI to explain the repository to a developer. The command should: 1) Reference the analysis report context, 2) Ask the AI to summarize structure, entry points, and key modules, 3) Require using .cursor/skills/tech-stack-implementation/SKILL.md first, 4) Be concise (under 30 lines).",
   "analyze-codebase":
-    "Generate a Cursor command file (.md) for codebase analysis. The command should guide the AI to analyze a requested scope in the repository by summarizing responsibilities, tracing dependencies, calling out architecture and risks, and suggesting safe next steps. Reference the report's entry points, modules, conventions, and related .cursor/context files.",
+    "Generate a Cursor command file (.md) for codebase analysis. The command should guide the AI to analyze a requested scope in the repository by summarizing responsibilities, tracing dependencies, calling out architecture and risks, and suggesting safe next steps. Reference the report's entry points, modules, conventions, related .cursor/context files, and .cursor/skills/tech-stack-implementation/SKILL.md.",
   "trace-feature":
-    "Generate a Cursor command file (.md) for tracing a feature through the codebase. The command should ask the AI to trace from entry point to data layer using the module/API info in the report.",
+    "Generate a Cursor command file (.md) for tracing a feature through the codebase. The command should ask the AI to trace from entry point to data layer using the module/API info in the report, and require stack-constrained reasoning using .cursor/skills/tech-stack-implementation/SKILL.md.",
   "create-test-plan":
-    "Generate a Cursor command file (.md) for creating a test plan. Reference detected test frameworks and modules. The command should guide the AI to propose tests for a given module or feature.",
+    "Generate a Cursor command file (.md) for creating a test plan. Reference detected test frameworks and modules. The command should guide the AI to propose tests for a given module or feature and require use of .cursor/skills/tech-stack-implementation/SKILL.md.",
   "document-module":
-    "Generate a Cursor command file (.md) for documenting a module. Use the module index from the report. The command should ask the AI to document a specified module with its dependencies and purpose.",
+    "Generate a Cursor command file (.md) for documenting a module. Use the module index from the report. The command should ask the AI to document a specified module with its dependencies and purpose, and ground recommendations in .cursor/skills/tech-stack-implementation/SKILL.md.",
   "review-risk":
-    "Generate a Cursor command file (.md) for risk review. Reference security findings and architecture. The command should guide the AI to review code changes for security and architectural risks.",
+    "Generate a Cursor command file (.md) for risk review. Reference security findings and architecture. The command should guide the AI to review code changes for security and architectural risks while using .cursor/skills/tech-stack-implementation/SKILL.md.",
   "create-module":
-    "Generate a Cursor command file (.md) for creating a new module. The command should: 1) Reference the analysis report for module structure, 2) Ask for module name and purpose, 3) Guide the AI to produce implementation following existing patterns.",
+    "Generate a Cursor command file (.md) for creating a new module. The command should: 1) Reference the analysis report for module structure, 2) Ask for module name and purpose, 3) Guide the AI to produce implementation following existing patterns and .cursor/skills/tech-stack-implementation/SKILL.md.",
   "create-endpoint":
-    "Generate a Cursor command file (.md) for creating an API endpoint. Use the report's API routes and framework info. The command should guide the AI to add a new endpoint with proper routing, validation, and error handling.",
+    "Generate a Cursor command file (.md) for creating an API endpoint. Use the report's API routes and framework info. The command should guide the AI to add a new endpoint with proper routing, validation, and error handling, grounded in .cursor/skills/tech-stack-implementation/SKILL.md.",
   "generate-tests":
-    "Generate a Cursor command file (.md) for generating tests. Reference detected test frameworks and modules. The command should guide the AI to write unit/integration tests for a given module or feature.",
+    "Generate a Cursor command file (.md) for generating tests. Reference detected test frameworks and modules. The command should guide the AI to write unit/integration tests for a given module or feature and use .cursor/skills/tech-stack-implementation/SKILL.md.",
   "refactor-service":
-    "Generate a Cursor command file (.md) for refactoring a service. The command should guide the AI to improve structure, reduce coupling, and follow repository conventions. Reference architecture and module info from the report.",
+    "Generate a Cursor command file (.md) for refactoring a service. The command should guide the AI to improve structure, reduce coupling, and follow repository conventions. Reference architecture and module info from the report plus .cursor/skills/tech-stack-implementation/SKILL.md.",
   "analyze-performance":
-    "Generate a Cursor command file (.md) for performance analysis. The command should guide the AI to identify bottlenecks, suggest optimizations, and reference the report's entry points and critical paths.",
+    "Generate a Cursor command file (.md) for performance analysis. The command should guide the AI to identify bottlenecks, suggest optimizations, and reference the report's entry points, critical paths, and .cursor/skills/tech-stack-implementation/SKILL.md.",
+};
+
+const SKILL_INSTRUCTIONS: Record<string, string> = {
+  "tech-stack-implementation":
+    "Generate a Cursor skill file at .cursor/skills/tech-stack-implementation/SKILL.md. The skill must force stack-grounded generation: detected technologies first, no unsupported assumptions, explicit unknowns, and concrete anti-hallucination guardrails. Include sections: Detected Stack Evidence, How To Use This Skill, Hallucination Guardrails, Output Quality Checks.",
 };
 
 const DOC_INSTRUCTIONS: Record<string, string> = {
@@ -281,6 +287,26 @@ export async function generateAutomationViaAI(
   const prompt = buildArtifactPrompt(
     "Cursor automation",
     `${automationName}.md`,
+    report,
+    instructions
+  );
+  return runAgent(prompt, {
+    model: options.model ?? DEFAULT_MODEL,
+    workspace: options.workspace,
+  });
+}
+
+export async function generateSkillViaAI(
+  report: AnalysisReport,
+  skillName: string,
+  options: AIGenerationOptions
+): Promise<string> {
+  const instructions =
+    SKILL_INSTRUCTIONS[skillName] ??
+    "Generate a Cursor skill file that is strictly grounded in detected technology evidence.";
+  const prompt = buildArtifactPrompt(
+    "Cursor skill",
+    `${skillName}/SKILL.md`,
     report,
     instructions
   );

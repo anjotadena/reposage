@@ -21,6 +21,7 @@ Core capabilities:
 - Infer a lightweight architecture summary and build a simple module dependency view.
 - Surface basic security findings and coding-convention signals.
 - Generate `.cursor/` assets for rules, commands, prompts, context, and automations.
+- Generate stack-grounded `.cursor/skills/` artifacts to reduce AI hallucination.
 - Generate `docs/context/` documentation for onboarding and repository understanding.
 
 ## Why It Exists
@@ -160,7 +161,8 @@ Running `reposage generate <path>` creates or refreshes these artifacts:
 ├── commands/        # 11 command files
 ├── prompts/         # 5 prompt files
 ├── context/         # 4 context files
-└── automations/     # 6 automation workflows
+├── automations/     # 6 automation workflows
+└── skills/          # 1 stack-grounded skill bundle
 
 docs/
 └── context/         # 7 documentation files
@@ -172,6 +174,7 @@ Examples of generated assets:
 - Commands such as `explain-repo`, `analyze-codebase`, `trace-feature`, and `generate-tests`.
 - Prompts for feature generation, debugging, code review, refactoring, and unit-test writing.
 - Automation playbooks for PR review, dependency review, release readiness, and security review.
+- Skills for stack-grounded generation to reduce hallucination and keep outputs evidence-based.
 - Context docs such as repo map, module index, coding conventions, and known risks.
 
 ## Detection Coverage
