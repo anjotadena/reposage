@@ -8,96 +8,52 @@
 
 # RepoSage
 
-**AI-powered repository understanding and developer context generator**
+CLI for analyzing source repositories and generating Cursor-ready developer context.
 
----
+## What RepoSage Does
 
-## Overview
+RepoSage helps you turn an unfamiliar repository into something both developers and AI tools can work with quickly. It scans the codebase, derives structure from files and manifests, and generates reusable context for Cursor.
 
-RepoSage is a CLI application that analyzes source code repositories and generates **Cursor-ready developer context**: rules, commands, prompts, and documentation. It helps developers understand unfamiliar codebases quickly, especially those that lack documentation and tests.
+Core capabilities:
 
-### The Problem
+- Scan a repository and report size, file counts, and key files.
+- Detect languages, frameworks, test tooling, CI/CD, infrastructure, databases, entry points, and API routes.
+- Infer a lightweight architecture summary and build a simple module dependency view.
+- Surface basic security findings and coding-convention signals.
+- Generate `.cursor/` assets for rules, commands, prompts, context, and automations.
+- Generate `docs/context/` documentation for onboarding and repository understanding.
 
-When you join a new project or inherit a legacy codebase, you often face:
+## Why It Exists
 
-- Sparse or outdated documentation
-- No tests to guide behavior
-- Unclear architecture and module boundaries
-- Missing context for AI-assisted development (e.g., Cursor)
+RepoSage is useful when a repository has little documentation, unclear structure, or weak onboarding material. Instead of manually piecing together framework choices, entry points, tooling, and conventions, you can run one command and generate a working context package for development in Cursor.
 
-### The Solution
+## Commands
 
-RepoSage scans repositories, detects tech stack and architecture, and generates structured context that both humans and AI tools can use. All analysis is **evidence-driven**—it reports only what it finds in files and manifests, without inventing frameworks or architecture.
-
-### Who It Is For
-
-- Developers onboarding to new or legacy repositories
-- Teams adopting Cursor or similar AI-assisted IDEs
-- Maintainers documenting undocumented codebases
-- Architects reviewing repository structure and risks
-
----
-
-## Key Features
-
-- **Repository scanning** — Fast file traversal with configurable ignore patterns
-- **Tech stack detection** — Languages, frameworks, dependency managers, test frameworks
-- **Architecture inference** — MVC, layered, monolith, microservices from evidence
-- **Module analysis** — Import-based dependency graph and module boundaries
-- **CI/CD detection** — GitHub Actions, GitLab CI, Azure Pipelines
-- **Infrastructure detection** — Docker, Terraform, Kubernetes manifests
-- **Security analysis** — Dangerous patterns, hardcoded secrets, auth middleware
-- **Cursor rule generation** — Context-aware `.mdc` rules for Cursor IDE
-- **Cursor command generation** — Pre-built commands for explain, trace, document, review
-- **Context documentation** — Repo map, architecture overview, module index, glossary, risks
-- **AI-powered generation** — Uses Cursor CLI with GPT-5 (or templates as fallback)
-
----
-
-## Example Output
-
-Running `reposage generate ./my-repo` produces:
-
-```
-.cursor/
-├── rules/
-│   ├── 00-repo-baseline.mdc
-│   ├── 10-architecture.mdc
-│   ├── 20-testing-strategy.mdc
-│   ├── 30-security.mdc
-│   └── 40-tech-stack.mdc
-└── commands/
-    ├── explain-repo.md
-    ├── trace-feature.md
-    ├── create-test-plan.md
-    ├── document-module.md
-    └── review-risk.md
-
-docs/
-└── context/
-    ├── repo-map.md
-    ├── architecture-overview.md
-    ├── module-index.md
-    ├── coding-conventions.md
-    ├── testing-strategy.md
-    ├── glossary.md
-    └── known-risks.md
-
-README.md
+```bash
+reposage scan <path>
+reposage analyze <path>
+reposage generate [options] <path>
+reposage explain [options] <path>
+reposage update
 ```
 
----
+| Command | Purpose |
+|--------|---------|
+| `scan <path>` | Fast repository scan with file statistics and detected key files |
+| `analyze <path>` | Runs detection and prints a structured analysis summary |
+| `generate <path>` | Generates Cursor assets and context docs from the analysis report |
+| `explain <path>` | Prints a short human-readable repository summary |
+| `update` | Updates a global install, or prints source-update instructions for linked/source installs |
 
 ## Installation
 
-### Prerequisites
+### Requirements
 
-- **Node.js** 18 or later
-- **npm** or **pnpm**
+- Node.js `>=18`
+- `npm` or `pnpm`
+- Optional: [Cursor CLI](https://cursor.com/docs/cli/overview) for AI-backed generation
 
-### Install RepoSage
-
-**Global install (recommended):**
+### Global install
 
 ```bash
 npm install -g reposage
@@ -105,7 +61,7 @@ npm install -g reposage
 pnpm add -g reposage
 ```
 
-**From source:**
+### From source
 
 ```bash
 git clone https://github.com/anjotadena/reposage.git
@@ -115,217 +71,227 @@ pnpm run build
 pnpm link
 ```
 
-**Verify:**
+### Verify install
 
 ```bash
 reposage --version
+reposage --help
 ```
-
-### Cursor CLI (for AI generation)
-
-AI-powered generation (default) requires the [Cursor CLI](https://cursor.com/docs/cli/overview) to be installed and authenticated.
-
-```bash
-# macOS, Linux, WSL
-curl https://cursor.com/install -fsS | bash
-
-# Windows PowerShell
-irm 'https://cursor.com/install?win32=true' | iex
-
-# Log in
-agent login
-agent status   # Verify
-```
-
-Use `--no-ai` to generate with templates when Cursor CLI is not available.
-
----
 
 ## Usage
 
-### Commands
+### Quick start
 
 ```bash
-reposage scan <path>      # Scan repository, report file statistics
-reposage analyze <path>   # Analyze structure and tech stack
-reposage generate <path>  # Generate Cursor rules, commands, docs
-reposage explain <path>   # Human-readable repository summary
-```
-
-### Examples
-
-**Scan a repository:**
-
-```bash
+# 1. Inspect a repository
 reposage scan .
-reposage scan ./my-project
-```
 
-**Analyze and view report:**
-
-```bash
+# 2. Get a structured summary
 reposage analyze .
+
+# 3. Generate Cursor context and docs
+reposage generate . --no-ai
 ```
 
-**Generate Cursor context (AI, default):**
+### AI-backed generation
+
+`generate` uses Cursor CLI by default. If Cursor CLI is installed and authenticated, RepoSage can ask it to produce project-specific artifacts instead of using only Handlebars templates.
 
 ```bash
+# Install Cursor CLI
+curl https://cursor.com/install -fsS | bash
+
+# Authenticate
+agent login
+agent status
+
+# Generate with AI
 reposage generate .
 reposage generate . --model gpt-5.2
-reposage generate . --force   # Overwrite existing files
 ```
 
-**Generate with templates (no Cursor CLI):**
+If Cursor CLI is unavailable, use template generation explicitly:
 
 ```bash
 reposage generate . --no-ai
 ```
 
-**Get a quick summary:**
+### Common workflows
 
 ```bash
-reposage explain .
+# Scan a local repo
+reposage scan ./my-project
+
+# Analyze a repo before changing it
+reposage analyze ./my-project
+
+# Generate or refresh Cursor assets
+reposage generate ./my-project --force
+
+# Print a short repo summary
+reposage explain ./my-project
+
+# Update a global install
+reposage update
 ```
 
-### Generate Options
+### `generate` options
 
 | Option | Description |
 |--------|-------------|
-| `--ai` | Use Cursor CLI with AI (default) |
-| `--no-ai` | Use Handlebars templates instead |
-| `-m, --model <model>` | AI model (default: gpt-5.2) |
-| `-f, --force` | Overwrite existing generated files |
+| `--ai` | Use Cursor CLI with AI generation |
+| `--no-ai` | Use built-in Handlebars templates |
+| `-m, --model <model>` | Model passed to Cursor CLI, default `gpt-5.2` |
+| `-f, --force` | Overwrite existing generated files without prompting |
 
----
+Notes:
+
+- If `.cursor/` already exists and `--force` is not provided, RepoSage asks for confirmation before overwriting generated assets.
+- Generated output targets `.cursor/` and `docs/context/`.
+- `README.md` is not part of the normal `generate` pipeline.
+
+## What Gets Generated
+
+Running `reposage generate <path>` creates or refreshes these artifacts:
+
+```text
+.cursor/
+├── rules/           # 11 rule files
+├── commands/        # 11 command files
+├── prompts/         # 5 prompt files
+├── context/         # 4 context files
+└── automations/     # 6 automation workflows
+
+docs/
+└── context/         # 7 documentation files
+```
+
+Examples of generated assets:
+
+- Rules for architecture, security, testing, naming, and tech stack.
+- Commands such as `explain-repo`, `analyze-codebase`, `trace-feature`, and `generate-tests`.
+- Prompts for feature generation, debugging, code review, refactoring, and unit-test writing.
+- Automation playbooks for PR review, dependency review, release readiness, and security review.
+- Context docs such as repo map, module index, coding conventions, and known risks.
+
+## Detection Coverage
+
+RepoSage is intentionally heuristic and evidence-driven. Today it recognizes the following areas directly in code:
+
+### Languages
+
+- TypeScript
+- JavaScript
+- Python
+- Go
+- Rust
+- C#
+- Java
+- Ruby
+- JSON
+- Markdown
+
+### Frameworks and test tooling
+
+- React
+- Next.js
+- Vue
+- Express
+- Fastify
+- NestJS
+- Jest
+- Vitest
+- Mocha
+- React Testing Library
+
+### Delivery and infrastructure
+
+- GitHub Actions
+- GitLab CI
+- Azure Pipelines
+- Docker
+- Docker Compose
+- Terraform
+- Kubernetes-style manifests and paths
+
+### Repository signals
+
+- `package.json` `main` and `bin` entry points
+- `Program.cs` for ASP.NET-style entry points
+- `main.py` for Python entry points
+- Express-style route declarations such as `router.get(...)` and `app.post(...)`
+- Database usage patterns for PostgreSQL, MySQL, SQLite, MongoDB, and Redis
+- Basic security findings such as `eval`, `exec`, and obvious hardcoded secrets
+- Coding-convention signals for ESLint, Prettier, EditorConfig, Husky, and strict TypeScript
 
 ## How It Works
 
-RepoSage uses a five-phase analysis pipeline:
+RepoSage uses a five-phase pipeline:
 
-1. **Repository scan** — `FileScanner` traverses the repo with fast-glob, collects file metadata, and builds a key-files map (package.json, Dockerfile, etc.).
+1. Discovery: scans the repository with `fast-glob`, tracks file metadata, and collects key files.
+2. Parsing: prepares repository content and manifests for downstream analysis.
+3. Detection: runs detectors for stack, entry points, APIs, CI/CD, infrastructure, databases, and test tooling.
+4. Analysis: synthesizes architecture, modules, security findings, and coding conventions.
+5. Generation: renders Cursor assets and docs using AI or built-in templates.
 
-2. **Stack detection** — Parallel detectors identify:
-   - Languages (from file extensions)
-   - Frameworks (from dependencies and config files)
-   - Test frameworks, CI/CD, infrastructure, databases
-   - Entry points, API routes
+## Project Structure
 
-3. **Architecture inference** — Analyzers synthesize detection results into:
-   - Architecture style (MVC, layered, monolith, etc.)
-   - Module dependency graph
-   - Security findings
-   - Coding conventions (ESLint, Prettier, etc.)
-
-4. **Context generation** — Either Cursor CLI (AI) or Handlebars templates produce rules, commands, and documentation from the analysis report.
-
-All findings include confidence levels and evidence sources.
-
----
-
-## Project Architecture
-
-```
+```text
 src/
-├── cli/                 # Commander-based CLI, command handlers
-├── scanners/            # FileScanner, ContentScanner, DependencyScanner
-├── detectors/           # Language, Framework, CICD, Infrastructure, etc.
-├── analyzers/           # Architecture, Module, Security, CodingConventions
-├── generators/          # CursorRule, CursorCommand, ContextDoc, Readme
-├── templates/           # Handlebars templates (cursor/, docs/)
-├── models/              # ScanResult, DetectionResult, AnalysisReport
-├── utils/               # logger, file, ripgrep, hash, cursorCli
-├── validators/          # PathValidator, ConfigValidator
-└── pipeline/            # AnalysisPipeline orchestrator
+├── cli/         # command registration and handlers
+├── scanners/    # repository discovery
+├── detectors/   # stack and repository signal detection
+├── analyzers/   # architecture, modules, security, conventions
+├── generators/  # Cursor/doc generation
+├── templates/   # Handlebars templates
+├── models/      # report and detection types
+├── utils/       # CLI helpers, filesystem helpers, Cursor CLI integration
+├── validators/  # path/config validation
+└── pipeline/    # orchestration
 ```
 
-| Module | Responsibility |
-|--------|----------------|
-| `cli` | Argument parsing, progress output, error handling |
-| `scanners` | File system traversal, content reading, manifest parsing |
-| `detectors` | Pattern matching for languages, frameworks, CI/CD, etc. |
-| `analyzers` | Cross-cutting synthesis (architecture, modules, security) |
-| `generators` | Template rendering or Cursor CLI invocation |
-| `templates` | Handlebars templates for fallback generation |
-| `models` | TypeScript interfaces for scan/detection/report data |
-| `utils` | Logging, file helpers, ripgrep wrapper, Cursor CLI integration |
-| `validators` | Path and config validation |
-| `pipeline` | Orchestrates phases 1–5 in order |
-
----
-
-## Generated Artifacts
-
-| Artifact | Purpose |
-|----------|---------|
-| **Cursor rules** (`.mdc`) | Provide Cursor IDE with repository context: baseline, architecture, testing, security, tech stack |
-| **Cursor commands** (`.md`) | Pre-built prompts for explain-repo, trace-feature, create-test-plan, document-module, review-risk |
-| **Context docs** | Repo map, architecture overview, module index, coding conventions, testing strategy, glossary, known risks |
-
-Each generated file includes a header with generation date and RepoSage version.
-
----
-
-## Supported Technologies
-
-**Languages & runtimes:** TypeScript, JavaScript, Python, Go, Rust, C#, Java, Ruby
-
-**Manifests:** package.json, requirements.txt, go.mod, Cargo.toml, *.csproj, pom.xml, build.gradle
-
-**CI/CD:** GitHub Actions, GitLab CI, Azure Pipelines
-
-**Infrastructure:** Dockerfile, docker-compose, Terraform, Kubernetes manifests
-
-**Databases:** PostgreSQL, MySQL, SQLite, MongoDB, Redis (via import/pattern detection)
-
----
-
-## Development
+## Developer Usage
 
 ```bash
-# Clone and install
-git clone https://github.com/your-org/reposage.git
-cd reposage
+# Install dependencies
 pnpm install
 
 # Build
 pnpm run build
 
-# Watch mode
-pnpm dev
+# Watch TypeScript during development
+pnpm run dev
 
-# Lint and format
+# Lint
 pnpm run lint
+
+# Auto-fix lint issues
 pnpm run lint:fix
+
+# Check formatting
+pnpm run format:check
+
+# Format source
 pnpm run format
 
-# Run locally
-node dist/cli/index.js scan .
+# Run the CLI locally
+node dist/cli/index.js analyze .
+node dist/cli/index.js generate . --no-ai
 ```
 
----
+CI currently validates:
 
-## Contributing
+- Node.js 18 and 20
+- `npm run lint`
+- `npm run format:check`
+- `npm run build`
+- `npm audit --audit-level=high`
 
-Contributions are welcome. Please:
+## Current Notes
 
-1. Open an issue to discuss significant changes
-2. Fork the repo and create a feature branch
-3. Follow existing code style (ESLint, Prettier)
-4. Add or update tests where applicable
-5. Submit a pull request with a clear description
-
----
-
-## Roadmap
-
-- [ ] AST-based analysis (tree-sitter) for deeper code understanding
-- [ ] Richer architecture inference (hexagonal, clean architecture)
-- [ ] Test coverage analysis and recommendations
-- [ ] Dependency graph visualization
-- [ ] IDE integrations (VS Code extension)
-- [ ] Configurable detection rules and custom templates
-
----
+- Architecture inference is lightweight and based mainly on detected frameworks.
+- `explain --ai` currently falls back to the standard explanation flow.
+- The generated artifacts are designed to bootstrap context quickly, not replace manual architecture review.
 
 ## License
 
