@@ -7,3 +7,21 @@ globs: *
 
 Generated: {{generatedAt}}
 Version: {{version}}
+
+## Stack Constraints
+
+{{#if report.languages.data.length}}
+- Languages: {{#each report.languages.data}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{#if report.frameworks.data.length}}
+- Frameworks: {{#each report.frameworks.data}}{{name}}{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+- Use only technologies detected in `.cursor/context/tech-stack.md` unless explicitly requested.
+
+{{#if stackProfile.isLaravel}}
+## Laravel Rules
+
+- Prefer Laravel conventions for routing, controllers, validation, authorization, ORM, and background jobs.
+- Use `composer` and `php artisan` commands for framework operations.
+- Do not introduce Python-specific examples, tooling, or commands unless Python is also detected.
+{{/if}}

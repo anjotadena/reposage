@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Project Overview
 
@@ -11,10 +11,10 @@ Repository: `/home/an0malyx/projects/reposage`
 ## Key Technologies
 
 ### Languages
-- **Markdown**: 33 files (22%)
+- **JSON**: 5 files (3%)
+- **Markdown**: 37 files (23%)
 - **JavaScript**: 1 files (1%)
-- **JSON**: 3 files (2%)
-- **TypeScript**: 46 files (31%)
+- **TypeScript**: 49 files (31%)
 
 
 ## Entry Points
@@ -31,7 +31,8 @@ Start here when exploring the codebase:
 1. Read this file for project overview
 2. Check `.cursor/context/architecture-overview.md` for component relationships
 3. Check `.cursor/context/tech-stack.md` for tooling details
-4. Use `.cursor/automations/` workflows for recurring tasks
+4. Check `.cursor/skills/tech-stack-implementation/SKILL.md` before code generation
+5. Use `.cursor/automations/` workflows for recurring tasks
 
 ## High-Signal Files
 

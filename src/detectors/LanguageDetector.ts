@@ -3,6 +3,7 @@ import type { DetectionResult } from "../models/DetectionResult.js";
 import type { LanguageInfo } from "../models/AnalysisReport.js";
 
 const LANG_MAP: Record<string, { name: string; exts: string[] }> = {
+  php: { name: "PHP", exts: ["php"] },
   ts: { name: "TypeScript", exts: ["ts", "tsx"] },
   tsx: { name: "TypeScript", exts: ["ts", "tsx"] },
   js: { name: "JavaScript", exts: ["js", "jsx", "mjs", "cjs"] },

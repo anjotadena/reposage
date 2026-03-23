@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Analyze Performance
 
@@ -6,6 +6,7 @@ Analyze performance of the selected code or feature.
 
 ## Context
 
+- Read `.cursor/skills/tech-stack-implementation/SKILL.md` first
 Entry points to consider:
 - `dist/cli/index.js` (main)
 - `dist/cli/index.js` (bin)
@@ -20,14 +21,15 @@ Entry points to consider:
 ## Steps
 
 1. Identify the critical path in the target code
-2. Check for common performance anti-patterns:
+2. Keep recommendations limited to detected stack capabilities and tooling
+3. Check for common performance anti-patterns:
    - N+1 queries
    - Blocking I/O in async code
    - Unnecessary data copying
    - Missing caching opportunities
-3. Analyze algorithm complexity
-4. Review resource usage (memory, connections, file handles)
-5. Suggest profiling strategy
+4. Analyze algorithm complexity
+5. Review resource usage (memory, connections, file handles)
+6. Suggest profiling strategy
 
 ## Output
 

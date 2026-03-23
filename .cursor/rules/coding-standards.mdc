@@ -5,7 +5,7 @@ globs: "*"
 
 # Coding Standards
 
-> Generated: 2026-03-14T02:16:42.230Z | RepoSage v0.1.0
+> Generated: 2026-03-23T13:40:52.385Z | RepoSage v0.1.0
 
 ## Detected Tooling
 
@@ -30,7 +30,7 @@ globs: "*"
 
 ## Naming Conventions
 
-Based on detected languages (Markdown, JavaScript, JSON, TypeScript):
+Based on detected languages (JSON, Markdown, JavaScript, TypeScript):
 - Use descriptive, meaningful names
 - Follow language-specific conventions
 - Match existing patterns in the codebase

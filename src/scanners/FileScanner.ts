@@ -23,6 +23,8 @@ const KEY_FILE_PATTERNS: Record<string, string> = {
   "package-lock.json": "**/package-lock.json",
   "pnpm-lock.yaml": "**/pnpm-lock.yaml",
   "yarn.lock": "**/yarn.lock",
+  "composer.json": "**/composer.json",
+  "composer.lock": "**/composer.lock",
   "requirements.txt": "**/requirements.txt",
   "go.mod": "**/go.mod",
   "Cargo.toml": "**/Cargo.toml",

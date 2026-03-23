@@ -8,6 +8,9 @@ Create a new API endpoint following repository conventions.
 - Use the analysis report for API structure and routes
 - Follow existing patterns for request/response handling
 - Use only framework patterns confirmed in `.cursor/context/tech-stack.md`
+{{#if stackProfile.isLaravel}}
+- For Laravel: wire route definitions in `routes/api.php` (or the existing route file), use controllers + Form Requests, and standard Laravel API resources where present
+{{/if}}
 
 ## Inputs
 - Endpoint path and HTTP method

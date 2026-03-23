@@ -33,6 +33,33 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<Fr
       // ignore
     }
   }
+
+  const composerPath = scanResult.keyFiles["composer.json"];
+  if (composerPath) {
+    const fs = await import("node:fs");
+    try {
+      const raw = fs.readFileSync(composerPath, "utf-8");
+      const composer = JSON.parse(raw) as { "require-dev"?: Record<string, string> };
+      const dev = composer["require-dev"] ?? {};
+      const knownPhp: Record<string, string> = {
+        "phpunit/phpunit": "PHPUnit",
+        "pestphp/pest": "Pest",
+      };
+      for (const [dep, name] of Object.entries(knownPhp)) {
+        if (dev[dep]) {
+          result.push({
+            name,
+            category: "testing",
+            version: dev[dep],
+            confidence: "high",
+            evidence: [{ file: composerPath, pattern: dep, description: `Found in require-dev` }],
+          });
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
   return {
     detector: "TestFrameworkDetector",
     data: result,

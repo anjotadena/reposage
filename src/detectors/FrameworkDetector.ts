@@ -37,6 +37,35 @@ export async function detect(scanResult: ScanResult): Promise<DetectionResult<Fr
       // ignore parse errors
     }
   }
+
+  const composerPath = scanResult.keyFiles["composer.json"];
+  if (composerPath) {
+    const fs = await import("node:fs");
+    try {
+      const raw = fs.readFileSync(composerPath, "utf-8");
+      const composer = JSON.parse(raw) as {
+        require?: Record<string, string>;
+      };
+      const deps = composer.require ?? {};
+      if (deps["laravel/framework"] || deps["laravel/laravel"]) {
+        result.push({
+          name: "Laravel",
+          category: "backend",
+          version: deps["laravel/framework"] ?? deps["laravel/laravel"],
+          confidence: "high",
+          evidence: [
+            {
+              file: composerPath,
+              pattern: "laravel/framework",
+              description: "Found in composer require dependencies",
+            },
+          ],
+        });
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }
   return {
     detector: "FrameworkDetector",
     data: result,

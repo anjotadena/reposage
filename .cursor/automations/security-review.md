@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Security Review
 
@@ -8,7 +8,7 @@ Automated workflow for security-focused code review.
 
 - Changes to authentication or authorization code
 - New API endpoints or route handlers
-- Dependency updates (package.json, requirements.txt, etc.)
+- Dependency updates (`package.json`)
 - Changes to configuration or environment handling
 - Manual invocation for security audits
 
@@ -59,8 +59,8 @@ Identify security vulnerabilities and ensure secure coding practices:
 - No pre-existing security findings detected
 - Auth patterns: login, authenticate, authorize, session, token, jwt
 - Crypto patterns: hash, encrypt, decrypt, sign, verify
-- Input patterns: req.body, req.params, req.query, user input
-- Dangerous patterns: eval, exec, innerHTML, dangerouslySetInnerHTML
+- Input patterns: user input from requests, params, payloads, forms
+- Dangerous patterns: eval-like code execution, shell execution with unsanitized input, raw output rendering
 
 ## Expected Output
 

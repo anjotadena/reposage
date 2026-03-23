@@ -5,6 +5,7 @@
 import path from "node:path";
 import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generatePromptViaAI } from "./AIGenerator.js";
+import { buildStackProfile } from "./stackProfile.js";
 
 const PROMPT_FILES = [
   "generate-feature",
@@ -26,6 +27,7 @@ export class CursorPromptGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
+    const stackProfile = buildStackProfile(this.report);
     const promptsDir = path.join(this.rootPath, ".cursor", "prompts");
     this.ensureDir(promptsDir);
 
@@ -39,6 +41,7 @@ export class CursorPromptGenerator extends BaseGenerator {
       } else {
         content = this.renderTemplate(`cursor/prompts/${name}.hbs`, {
           report: this.report,
+          stackProfile,
           generatedAt: this.report.metadata.generatedAt.toISOString(),
           version: this.report.metadata.generatorVersion,
         });

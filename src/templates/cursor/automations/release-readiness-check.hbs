@@ -34,7 +34,7 @@ Validate that the release is safe, complete, and well-documented:
    - Verify migration guides if needed
 
 3. **Audit Dependencies**
-   - Run security audit (npm audit, pip-audit, etc.)
+   - Run security audit ({{#each stackProfile.securityAuditCommands}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}})
    - Check for outdated critical dependencies
    - Verify license compatibility
 

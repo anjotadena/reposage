@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-23T00:00:00.000Z | RepoSage 1.1.1 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Analyze Codebase
 
@@ -11,6 +11,7 @@ Use these sources first:
 - `.cursor/context/architecture-overview.md`
 - `.cursor/context/tech-stack.md`
 - `.cursor/context/domain-knowledge.md`
+- `.cursor/skills/tech-stack-implementation/SKILL.md`
 
 Entry points to consider:
 - `dist/cli/index.js` (main)
@@ -25,11 +26,12 @@ Entry points to consider:
 ## Steps
 
 1. Identify the relevant entry points, modules, and boundaries for the requested scope
-2. Summarize the responsibility of each important file or component
-3. Trace inbound and outbound dependencies
-4. Call out architectural patterns, conventions, and coupling hotspots
-5. Highlight risks, missing tests, or unclear ownership
-6. Suggest safe next steps for implementation, refactoring, or debugging
+2. Constrain analysis and recommendations to detected tech stack evidence
+3. Summarize the responsibility of each important file or component
+4. Trace inbound and outbound dependencies
+5. Call out architectural patterns, conventions, and coupling hotspots
+6. Highlight risks, missing tests, or unclear ownership
+7. Suggest safe next steps for implementation, refactoring, or debugging
 
 ## Output
 

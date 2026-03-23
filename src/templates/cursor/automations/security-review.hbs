@@ -8,7 +8,7 @@ Automated workflow for security-focused code review.
 
 - Changes to authentication or authorization code
 - New API endpoints or route handlers
-- Dependency updates (package.json, requirements.txt, etc.)
+- Dependency updates ({{#each stackProfile.dependencyFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}})
 - Changes to configuration or environment handling
 - Manual invocation for security audits
 
@@ -66,8 +66,11 @@ Identify security vulnerabilities and ensure secure coding practices:
 {{/if}}
 - Auth patterns: login, authenticate, authorize, session, token, jwt
 - Crypto patterns: hash, encrypt, decrypt, sign, verify
-- Input patterns: req.body, req.params, req.query, user input
-- Dangerous patterns: eval, exec, innerHTML, dangerouslySetInnerHTML
+- Input patterns: user input from requests, params, payloads, forms
+- Dangerous patterns: eval-like code execution, shell execution with unsanitized input, raw output rendering
+{{#if stackProfile.isLaravel}}
+- Laravel-specific patterns: `Request::input()`, `$request->all()`, `DB::raw()`, policy/gate checks, mass assignment (`$fillable`/`$guarded`)
+{{/if}}
 
 ## Expected Output
 

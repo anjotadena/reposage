@@ -4,6 +4,7 @@ import readline from "node:readline";
 import chalk from "chalk";
 import ora from "ora";
 import { AnalysisPipeline } from "../../pipeline/AnalysisPipeline.js";
+import type { AnalysisReport } from "../../models/index.js";
 import { PathValidator } from "../../validators/PathValidator.js";
 import { checkCursorCLIReady } from "../../utils/cursorCli.js";
 
@@ -16,6 +17,31 @@ async function confirmOverride(message: string): Promise<boolean> {
       resolve(/^y(es)?$/i.test(answer.trim()));
     });
   });
+}
+
+function buildTechStackStandards(report: AnalysisReport): string[] {
+  const standards: string[] = [];
+  const languages = report.languages.data.map((l) => l.name);
+  const frameworks = report.frameworks.data.map((f) => f.name);
+  const tests = report.testFrameworks.data.map((t) => t.name);
+
+  if (languages.length > 0) {
+    standards.push(`Language standards: ${languages.join(", ")}`);
+  }
+  if (frameworks.length > 0) {
+    standards.push(`Framework standards: ${frameworks.join(", ")}`);
+  }
+  if (tests.length > 0) {
+    standards.push(`Testing standards: ${tests.join(", ")}`);
+  }
+
+  if (report.codingConventions.data.eslint) standards.push("Code quality: ESLint");
+  if (report.codingConventions.data.prettier) standards.push("Formatting: Prettier");
+  if (report.codingConventions.data.strictTypeScript) {
+    standards.push("Type safety: strict TypeScript");
+  }
+
+  return standards;
 }
 
 export async function generateCommand(
@@ -70,10 +96,51 @@ export async function generateCommand(
     await pipeline.runPhase1();
     spinner.succeed("Scan complete");
 
-    spinner = ora("Exploring...").start();
+    spinner = ora("Exploring repository structure...").start();
     await pipeline.runPhase2();
+    spinner.succeed("Repository structure indexed");
+
+    spinner = ora("Analyzing tech stack...").start();
     await pipeline.runPhase3();
-    spinner.succeed("Analysis complete");
+    const report = pipeline.getReport();
+    if (!report) {
+      spinner.fail("Tech stack analysis failed");
+      throw new Error("No analysis report generated. Cannot generate context without tech stack analysis.");
+    }
+    spinner.succeed("Tech stack analysis complete");
+
+    const detectedLanguages = report.languages.data.map((lang) => lang.name);
+    const detectedFrameworks = report.frameworks.data.map((fw) => fw.name);
+    const stackStandards = buildTechStackStandards(report);
+
+    if (detectedLanguages.length === 0 && detectedFrameworks.length === 0) {
+      throw new Error(
+        "No recognizable tech stack detected. Run analyze and ensure manifests/source files are present before generating context."
+      );
+    }
+
+    console.log(
+      chalk.gray(
+        `Detected stack: ${detectedLanguages.length > 0 ? detectedLanguages.join(", ") : "Unknown languages"}`
+      )
+    );
+    console.log(
+      chalk.gray(
+        `Detected frameworks: ${
+          detectedFrameworks.length > 0 ? detectedFrameworks.join(", ") : "No frameworks detected"
+        }`
+      )
+    );
+    if (stackStandards.length > 0) {
+      console.log(chalk.gray("Applying stack standards:"));
+      for (const standard of stackStandards) {
+        console.log(chalk.gray(`  - ${standard}`));
+      }
+    } else {
+      console.log(
+        chalk.yellow("No explicit stack standards detected (linter/test/framework); generation will use minimal defaults.")
+      );
+    }
 
     if (opts.force !== false) {
       console.log(chalk.gray("\nGenerating:"));
@@ -89,6 +156,7 @@ export async function generateCommand(
     console.log("  - .cursor/rules/ (11 rule files)");
     console.log("  - .cursor/commands/ (10 command files)");
     console.log("  - .cursor/prompts/ (5 prompt files)");
+    console.log("  - .cursor/skills/ (20 yaml + 1 markdown skill files)");
     console.log("  - .cursor/context/ (4 context files)");
     console.log("  - .cursor/automations/ (6 automation workflows)");
     console.log("  - docs/context/ (7 documentation files)");

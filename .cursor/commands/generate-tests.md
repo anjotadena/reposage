@@ -1,11 +1,13 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 # Generate Tests
 
 Generate unit and integration tests for the selected module or feature.
 
 ## Context
+- Read `.cursor/skills/tech-stack-implementation/SKILL.md` first
 - Use the analysis report for test framework and patterns
 - Follow existing test structure and naming
+- Keep test patterns aligned with detected framework and tooling
 
 ## Inputs
 - Target module or file path

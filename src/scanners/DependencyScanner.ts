@@ -1,13 +1,13 @@
 /**
  * Parses dependency manifest files: package.json, requirements.txt,
- * go.mod, Cargo.toml, *.csproj, pom.xml, build.gradle.
+ * go.mod, Cargo.toml, composer.json, *.csproj, pom.xml, build.gradle.
  */
 
 import fs from "node:fs";
 import type { ScanResult } from "../models/ScanResult.js";
 
 export interface ParsedDependencies {
-  type: "npm" | "pip" | "go" | "cargo" | "dotnet" | "maven" | "gradle";
+  type: "npm" | "pip" | "go" | "cargo" | "composer" | "dotnet" | "maven" | "gradle";
   dependencies: Record<string, string>;
   devDependencies?: Record<string, string>;
   path: string;
@@ -43,6 +43,12 @@ export class DependencyScanner {
     if (cargoPath) {
       const cargo = this.parseCargoToml(cargoPath);
       if (cargo) results.push(cargo);
+    }
+
+    const composerPath = this.scanResult.keyFiles["composer.json"];
+    if (composerPath) {
+      const composer = this.parseComposerJson(composerPath);
+      if (composer) results.push(composer);
     }
 
     const csprojFiles = this.scanResult.files.filter((f) => f.relativePath.endsWith(".csproj"));
@@ -135,6 +141,26 @@ export class DependencyScanner {
         }
       }
       return { type: "cargo", dependencies: deps, path: filePath };
+    } catch {
+      return null;
+    }
+  }
+
+  private parseComposerJson(filePath: string): ParsedDependencies | null {
+    try {
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const composer = JSON.parse(raw) as {
+        require?: Record<string, string>;
+        "require-dev"?: Record<string, string>;
+      };
+      const dependencies = { ...(composer.require ?? {}) };
+      if (dependencies.php) delete dependencies.php;
+      return {
+        type: "composer",
+        dependencies,
+        devDependencies: composer["require-dev"] ?? {},
+        path: filePath,
+      };
     } catch {
       return null;
     }

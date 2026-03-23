@@ -6,9 +6,7 @@ Automated workflow for reviewing dependency additions, updates, and removals.
 
 ## Trigger
 
-- Changes to package.json, package-lock.json
-- Changes to requirements.txt, Pipfile, poetry.lock
-- Changes to Cargo.toml, go.mod, Gemfile
+- Changes to {{#each stackProfile.dependencyFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
 - Dependabot or Renovate PRs
 - Manual dependency audit request
 
@@ -50,7 +48,7 @@ Assess impact and risk of dependency changes:
 
 6. **Compatibility Check**
    - Verify peer dependency requirements
-   - Check Node/Python/runtime version compatibility
+   - Check {{stackProfile.runtimeLabel}} runtime version compatibility
    - Note any conflicting dependency versions
 
 7. **Generate Review Report**
@@ -72,9 +70,9 @@ Assess impact and risk of dependency changes:
   - **{{this.severity}}**: {{this.description}}
 {{/each}}
 {{/if}}
-- Dependency files: package.json, requirements.txt, Cargo.toml, go.mod
-- Lock files: package-lock.json, yarn.lock, poetry.lock
-- Security sources: npm audit, Snyk, GitHub Advisory Database
+- Dependency files: {{#each stackProfile.dependencyFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+- Lock files: {{#each stackProfile.lockFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+- Security sources: {{#each stackProfile.securityAuditCommands}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}, GitHub Advisory Database
 
 ## Expected Output
 

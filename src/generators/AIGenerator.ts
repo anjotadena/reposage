@@ -30,6 +30,8 @@ const OUTPUT_QUALITY_RUBRIC = `
 - Define expected outputs and fallback behaviors
 - Ensure artifacts complement each other (rules constrain, commands execute, prompts structure, automations repeat)
 - For commands and skills, require stack-aware execution guidance grounded in detected technologies
+- Mention only ecosystems detected in the report; avoid generic multi-stack examples
+- If Laravel/PHP is detected, keep examples and commands Laravel/PHP-native unless another stack is explicitly detected
 `;
 
 function buildArtifactPrompt(
@@ -107,7 +109,7 @@ const COMMAND_INSTRUCTIONS: Record<string, string> = {
 
 const SKILL_INSTRUCTIONS: Record<string, string> = {
   "tech-stack-implementation":
-    "Generate a Cursor skill file at .cursor/skills/tech-stack-implementation/SKILL.md. The skill must force stack-grounded generation: detected technologies first, no unsupported assumptions, explicit unknowns, and concrete anti-hallucination guardrails. Include sections: Detected Stack Evidence, How To Use This Skill, Hallucination Guardrails, Output Quality Checks.",
+    "Generate a Cursor skill file at .cursor/skills/tech-stack-implementation/SKILL.md. The skill must force stack-grounded generation: detected technologies first, no unsupported assumptions, explicit unknowns, and concrete anti-hallucination guardrails. Include sections: Detected Stack Evidence, How To Use This Skill, Hallucination Guardrails, Output Quality Checks. If Laravel is detected, add a Laravel-specific guidance section and explicitly prohibit Python-centric examples unless Python is also detected.",
 };
 
 const DOC_INSTRUCTIONS: Record<string, string> = {
@@ -196,7 +198,7 @@ Structure:
 - Fallback: Manual review requirements for uncertain items`,
   "dependency-change-review": `Generate a Cursor automation workflow (.md) for dependency change review.
 Structure:
-- Trigger: When package.json, requirements.txt, or similar files change
+- Trigger: When detected dependency manifest files change (do not list ecosystems not present in report)
 - Goal: Assess impact and risk of dependency updates
 - Steps: Identify changed deps, check for breaking changes, security advisories, license issues
 - Signals to inspect: Dependencies from the report, security findings

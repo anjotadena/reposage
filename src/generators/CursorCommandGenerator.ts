@@ -5,6 +5,7 @@
 import path from "node:path";
 import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateCommandViaAI } from "./AIGenerator.js";
+import { buildStackProfile } from "./stackProfile.js";
 
 const COMMAND_FILES = [
   "explain-repo",
@@ -32,6 +33,7 @@ export class CursorCommandGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
+    const stackProfile = buildStackProfile(this.report);
     const commandsDir = path.join(this.rootPath, ".cursor", "commands");
     this.ensureDir(commandsDir);
 
@@ -45,6 +47,7 @@ export class CursorCommandGenerator extends BaseGenerator {
       } else {
         content = this.renderTemplate(`cursor/commands/${name}.hbs`, {
           report: this.report,
+          stackProfile,
           generatedAt: this.report.metadata.generatedAt.toISOString(),
           version: this.report.metadata.generatorVersion,
         });

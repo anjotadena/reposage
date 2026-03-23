@@ -5,6 +5,7 @@
 import path from "node:path";
 import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateAutomationViaAI } from "./AIGenerator.js";
+import { buildStackProfile } from "./stackProfile.js";
 
 const AUTOMATION_FILES = [
   "pr-review-or-risk-scan",
@@ -27,6 +28,7 @@ export class CursorAutomationGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
+    const stackProfile = buildStackProfile(this.report);
     const automationsDir = path.join(this.rootPath, ".cursor", "automations");
     this.ensureDir(automationsDir);
 
@@ -40,6 +42,7 @@ export class CursorAutomationGenerator extends BaseGenerator {
       } else {
         content = this.renderTemplate(`cursor/automations/${name}.hbs`, {
           report: this.report,
+          stackProfile,
           generatedAt: this.report.metadata.generatedAt.toISOString(),
           version: this.report.metadata.generatorVersion,
         });

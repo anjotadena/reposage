@@ -1,4 +1,4 @@
-<!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Tech Stack Implementation
 
@@ -6,30 +6,14 @@ Use this skill before generating code, commands, or prompts. Anchor every output
 
 ## Detected Stack Evidence
 
-{{#if report.languages.data}}
 ### Languages
-{{#each report.languages.data}}
-- **{{name}}** ({{fileCount}} files, {{percentage}}%)
-{{/each}}
-{{else}}
-- No language evidence available from analysis report.
-{{/if}}
+- **JSON** (5 files, 3%)
+- **Markdown** (37 files, 23%)
+- **JavaScript** (1 files, 1%)
+- **TypeScript** (49 files, 31%)
 
-{{#if report.frameworks.data}}
-### Frameworks
-{{#each report.frameworks.data}}
-- **{{name}}** ({{category}}){{#if version}} — v{{version}}{{/if}}
-{{/each}}
-{{else}}
 - No framework evidence available from analysis report.
-{{/if}}
 
-{{#if report.testFrameworks.data}}
-### Testing
-{{#each report.testFrameworks.data}}
-- **{{name}}**{{#if version}} — v{{version}}{{/if}}
-{{/each}}
-{{/if}}
 
 ## How To Use This Skill
 
@@ -47,14 +31,6 @@ Use this skill before generating code, commands, or prompts. Anchor every output
 - Do not include cross-ecosystem patterns unless those ecosystems are detected in stack evidence.
 - Call out uncertainty explicitly with required follow-up checks.
 
-{{#if stackProfile.isLaravel}}
-## Laravel Execution Guidance
-
-- Prefer Laravel-native patterns: controllers, form requests, policies/gates, Eloquent scopes, migrations, jobs, events.
-- Use artisan/composer workflows first (`php artisan`, `composer`) before suggesting non-PHP tooling.
-- Keep validation in form requests and authorization in policies where possible.
-- Avoid introducing non-Laravel implementation examples unless explicitly requested.
-{{/if}}
 
 ## Output Quality Checks
 

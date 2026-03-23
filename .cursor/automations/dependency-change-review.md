@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Dependency Change Review
 
@@ -6,9 +6,7 @@ Automated workflow for reviewing dependency additions, updates, and removals.
 
 ## Trigger
 
-- Changes to package.json, package-lock.json
-- Changes to requirements.txt, Pipfile, poetry.lock
-- Changes to Cargo.toml, go.mod, Gemfile
+- Changes to `package.json`
 - Dependabot or Renovate PRs
 - Manual dependency audit request
 
@@ -50,7 +48,7 @@ Assess impact and risk of dependency changes:
 
 6. **Compatibility Check**
    - Verify peer dependency requirements
-   - Check Node/Python/runtime version compatibility
+   - Check Node.js runtime version compatibility
    - Note any conflicting dependency versions
 
 7. **Generate Review Report**
@@ -60,9 +58,9 @@ Assess impact and risk of dependency changes:
 
 ## Signals to Inspect
 
-- Dependency files: package.json, requirements.txt, Cargo.toml, go.mod
-- Lock files: package-lock.json, yarn.lock, poetry.lock
-- Security sources: npm audit, Snyk, GitHub Advisory Database
+- Dependency files: `package.json`
+- Lock files: `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`
+- Security sources: `npm audit`, GitHub Advisory Database
 
 ## Expected Output
 

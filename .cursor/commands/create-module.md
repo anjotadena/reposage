@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Create Module
 
@@ -6,6 +6,7 @@ Create a new module following repository conventions.
 
 ## Context
 
+- Read `.cursor/skills/tech-stack-implementation/SKILL.md` first
 
 ## Inputs
 
@@ -16,11 +17,12 @@ Create a new module following repository conventions.
 ## Steps
 
 1. Check `.cursor/context/architecture-overview.md` for module patterns
-2. Verify the name follows existing conventions
-3. Create directory structure matching siblings
-4. Implement with proper exports and types
-5. Add index file if pattern exists
-6. Create basic tests following test patterns
+2. Ensure implementation choices match detected languages/frameworks only
+3. Verify the name follows existing conventions
+4. Create directory structure matching siblings
+5. Implement with proper exports and types
+6. Add index file if pattern exists
+7. Create basic tests following test patterns
 
 ## Output
 

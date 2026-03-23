@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-14T02:16:42.230Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
 
 # Release Readiness Check
 
@@ -34,7 +34,7 @@ Validate that the release is safe, complete, and well-documented:
    - Verify migration guides if needed
 
 3. **Audit Dependencies**
-   - Run security audit (npm audit, pip-audit, etc.)
+   - Run security audit (`npm audit`)
    - Check for outdated critical dependencies
    - Verify license compatibility
 
@@ -61,7 +61,7 @@ Validate that the release is safe, complete, and well-documented:
 ## Signals to Inspect
 
 - Version: 0.1.0
-- Analysis date: Sat Mar 14 2026 10:16:42 GMT+0800 (Philippine Standard Time)
+- Analysis date: Mon Mar 23 2026 21:40:52 GMT+0800 (Philippine Standard Time)
 - Entry points to verify: `dist/cli/index.js`, `dist/cli/index.js`
 - Release files: CHANGELOG.md, package.json, version.ts
 - Config files: .env.production, config/production.*
