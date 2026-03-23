@@ -8,6 +8,7 @@ import { generateCommandViaAI } from "./AIGenerator.js";
 
 const COMMAND_FILES = [
   "explain-repo",
+  "analyze-codebase",
   "trace-feature",
   "create-test-plan",
   "document-module",

@@ -82,6 +82,8 @@ const RULE_INSTRUCTIONS: Record<string, string> = {
 const COMMAND_INSTRUCTIONS: Record<string, string> = {
   "explain-repo":
     "Generate a Cursor command file (.md) that instructs the AI to explain the repository to a developer. The command should: 1) Reference the analysis report context, 2) Ask the AI to summarize structure, entry points, and key modules, 3) Be concise (under 30 lines).",
+  "analyze-codebase":
+    "Generate a Cursor command file (.md) for codebase analysis. The command should guide the AI to analyze a requested scope in the repository by summarizing responsibilities, tracing dependencies, calling out architecture and risks, and suggesting safe next steps. Reference the report's entry points, modules, conventions, and related .cursor/context files.",
   "trace-feature":
     "Generate a Cursor command file (.md) for tracing a feature through the codebase. The command should ask the AI to trace from entry point to data layer using the module/API info in the report.",
   "create-test-plan":
