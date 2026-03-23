@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/anjotadena/reposage/compare/v1.2.0...v1.3.0) (2026-03-23)
+
+
+### Features
+
+* introduce stack-grounded skills and enhance command instructions for AI generation ([b5602f8](https://github.com/anjotadena/reposage/commit/b5602f89b7501ddff53941f157c85b4cbe7f30f4))
+
 ## [1.2.0](https://github.com/anjotadena/reposage/compare/v1.1.1...v1.2.0) (2026-03-23)
 
 
