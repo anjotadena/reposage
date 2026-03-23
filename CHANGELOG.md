@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/anjotadena/reposage/compare/v1.1.1...v1.2.0) (2026-03-23)
+
+
+### Features
+
+* add 'analyze-codebase' command to AIGenerator and update command list in CursorCommandGenerator ([989f37e](https://github.com/anjotadena/reposage/commit/989f37ed1f802a7cb4f136f6179befc243143736))
+
+
+### Bug Fixes
+
+* ensure .cursor directory is created if it does not exist before checking for overrides ([8198ab2](https://github.com/anjotadena/reposage/commit/8198ab23e444885076e9302bd799d7159b36cae3))
+
 ## [1.1.1](https://github.com/anjotadena/reposage/compare/v1.1.0...v1.1.1) (2026-03-14)
 
 
