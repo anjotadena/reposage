@@ -172,7 +172,9 @@ export async function runGenerateWorkflow(
     });
 
     console.log(chalk.green("\nGenerated artifacts:"));
-    console.log("  - .cursor/rules/ (8 core .mdc rules: baseline, architecture, security, testing, tech-stack, …)");
+    console.log(
+      "  - .cursor/rules/ (8 core .mdc rules: baseline, architecture, security, testing, tech-stack, …)"
+    );
     console.log("  - .cursor/commands/ (12 command files)");
     console.log("  - .cursor/prompts/ (5 prompt files)");
     console.log("  - .cursor/skills/tech-stack-implementation/SKILL.md");
