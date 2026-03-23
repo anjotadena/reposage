@@ -1,0 +1,42 @@
+<!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+
+# Implement task
+
+Implement a concrete work item (ticket, bugfix, or scoped feature) in **`{{stackProfile.projectName}}`**. Cursor already applies **`.cursor/rules/*.mdc`** — do not restate them here; rely on this command for **skills, context, prompts, and follow-up automations**.
+
+## Before writing code
+
+1. **Skill (required)** — Read `.cursor/skills/tech-stack-implementation/SKILL.md` and stay within detected stack evidence.
+2. **Context (pick what matches the task)**  
+   - Orientation: `.cursor/context/project-overview.md`  
+   - Boundaries & layers: `.cursor/context/architecture-overview.md`  
+   - Languages, frameworks, tooling: `.cursor/context/tech-stack.md`  
+   - Terms and names: `.cursor/context/domain-knowledge.md`
+3. **Prompts (optional patterns)** — For structure and acceptance-style output, mirror sections from `.cursor/prompts/generate-feature.md` (plan → changes → tests). Use `.cursor/prompts/refactor-code.md` if the task is mostly refactoring.
+
+{{#if report.modules.data}}
+## Modules from analysis (hints)
+
+{{#each report.modules.data}}
+- `{{name}}` — `{{path}}`
+{{/each}}
+{{/if}}
+
+## Inputs
+
+- **Task description**: What to build or fix (link or paste text)
+- **Acceptance criteria**: What “done” means
+- **Scope**: Files or areas to touch (if known)
+
+## Steps
+
+1. Map the task to existing modules, entry points, and patterns from context + repo files.
+2. Implement smallest change that meets criteria; match existing conventions (see `tech-stack` + SKILL).
+3. Add or update tests using `.cursor/commands/generate-tests` when behavior changes.
+4. **After changes**: run or schedule `pr-review-or-risk-scan` automation; use `release-readiness-check` before release-related work.
+
+## Output
+
+- Code and config changes with brief rationale
+- Tests or manual verification notes
+- List of files touched and any follow-ups for `.cursor/context/` if structure changed

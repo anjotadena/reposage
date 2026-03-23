@@ -7,13 +7,12 @@ import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateAutomationViaAI } from "./AIGenerator.js";
 import { buildStackProfile } from "./stackProfile.js";
 
+/** High-value automations only; large-change test plans and dependency-only reviews are covered by commands + remaining workflows. */
 const AUTOMATION_FILES = [
   "pr-review-or-risk-scan",
   "security-review",
   "refresh-context-on-structure-change",
-  "test-plan-on-large-change",
   "release-readiness-check",
-  "dependency-change-review",
 ];
 
 export class CursorAutomationGenerator extends BaseGenerator {
@@ -28,7 +27,7 @@ export class CursorAutomationGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
-    const stackProfile = buildStackProfile(this.report);
+    const stackProfile = buildStackProfile(this.report, this.rootPath);
     const automationsDir = path.join(this.rootPath, ".cursor", "automations");
     this.ensureDir(automationsDir);
 

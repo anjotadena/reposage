@@ -1,8 +1,16 @@
-<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T23:22:28.194Z | RepoSage 0.1.0 -->
 
 # Architecture Overview
 
-Component relationships and architectural patterns for agents and automations.
+Component relationships for **`reposage`**. Describes this codebase’s structure — validate against the repo before treating any statement as fact.
+
+## This project
+
+| Field | Value |
+|-------|--------|
+| Project | `reposage` |
+| Path | `/home/an0malyx/projects/reposage` |
+| Primary runtime | Node.js |
 
 ## Architecture Style
 

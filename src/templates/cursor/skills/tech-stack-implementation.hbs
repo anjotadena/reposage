@@ -56,6 +56,24 @@ Use this skill before generating code, commands, or prompts. Anchor every output
 - Avoid introducing non-Laravel implementation examples unless explicitly requested.
 {{/if}}
 
+## Daily development workflow (this project)
+
+1. **Context first**: `.cursor/context/project-overview.md` → `architecture-overview.md` → `tech-stack.md`.
+2. **Rules**: `.cursor/rules/*.mdc` — especially `architecture.mdc`, `security.mdc`, `testing.mdc`.
+3. **Commands**: use `.cursor/commands/` for repeatable tasks (`explain-repo`, `analyze-codebase`, `generate-tests`, etc.).
+4. **Automations**: run `pr-review-or-risk-scan`, `security-review`, or `release-readiness-check` when the task matches.
+5. **Refresh**: after large refactors, re-run RepoSage (`reposage rsync` or `reposage generate`) to align `.cursor/` with the repo.
+
+## Productivity commands (Cursor)
+
+| Goal | Command file |
+|------|----------------|
+| Orient | `explain-repo` |
+| Deep dive | `analyze-codebase`, `trace-feature` |
+| Implement | `implement-task` |
+| Ship safely | `review-risk`, `generate-tests`, `create-test-plan` |
+| Ship release | use `release-readiness-check` automation |
+
 ## Output Quality Checks
 
 - Generated file references at least one detected stack signal.

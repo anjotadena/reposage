@@ -5,6 +5,7 @@
 import path from "node:path";
 import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateCursorContextViaAI } from "./AIGenerator.js";
+import { buildStackProfile } from "./stackProfile.js";
 
 const CONTEXT_FILES = [
   "project-overview",
@@ -25,6 +26,7 @@ export class CursorContextGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
+    const stackProfile = buildStackProfile(this.report, this.rootPath);
     const contextDir = path.join(this.rootPath, ".cursor", "context");
     this.ensureDir(contextDir);
 
@@ -38,6 +40,7 @@ export class CursorContextGenerator extends BaseGenerator {
       } else {
         content = this.renderTemplate(`cursor/context/${name}.hbs`, {
           report: this.report,
+          stackProfile,
           generatedAt: this.report.metadata.generatedAt.toISOString(),
           version: this.report.metadata.generatorVersion,
         });

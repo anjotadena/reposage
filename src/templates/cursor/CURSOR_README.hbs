@@ -1,0 +1,89 @@
+<!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
+
+# Cursor guide — {{stackProfile.projectName}}
+
+How to use the **generated `.cursor/`** assets for this repository. Regenerate after major changes: `reposage rsync .` (or `reposage generate . --force`).
+
+## Overview
+
+- **Project root**: `{{stackProfile.repositoryPath}}`
+- **Primary runtime**: {{stackProfile.runtimeLabel}}
+- **Purpose**: Ship changes safely using rules, commands, prompts, context, automations, and the stack skill — all grounded in RepoSage analysis of **this** codebase.
+
+## Usage
+
+| Asset | Role |
+|-------|------|
+| `.cursor/rules/*.mdc` | Always-on constraints (architecture, security, testing, tech stack, naming, API) |
+| `.cursor/commands/*.md` | On-demand workflows (explain, analyze, test, review, refactor) |
+| `.cursor/prompts/*.md` | Structured prompts for features, refactors, tests, review, debug |
+| `.cursor/context/*.md` | Repo memory: overview, architecture, stack, domain |
+| `.cursor/automations/*.md` | Repeatable checks (PR review, security, context refresh, release readiness) |
+| `.cursor/skills/tech-stack-implementation/SKILL.md` | Stack-grounded generation; use before inventing patterns |
+
+## Daily development examples
+
+1. **Start**: read `context/project-overview.md`, then `architecture-overview.md` and `tech-stack.md`.
+2. **Feature**: use prompt `generate-feature` + command `trace-feature` or `create-module` as needed; follow `rules/architecture.mdc` and `skills/tech-stack-implementation/SKILL.md`.
+3. **Tests**: command `generate-tests` or `create-test-plan`; align with `rules/testing.mdc`.
+4. **Review**: command `review-risk` or automation `pr-review-or-risk-scan` before merge.
+5. **Release**: automation `release-readiness-check`; refresh context with `refresh-context-on-structure-change` after big structural edits.
+
+## MCP — use with this project
+
+Configure MCP in **Cursor Settings → MCP** as needed. Pairings that usually match this stack:
+
+{{#if stackProfile.isNode}}
+- **Filesystem / workspace**: default Cursor workspace access for this repo.
+- **Suggested**: package and script context via your `package.json` scripts (run tests, lint, build locally).
+{{/if}}
+{{#if stackProfile.isPython}}
+- **Suggested**: Python environment + test runner MCP if you use external test orchestration.
+{{/if}}
+{{#if stackProfile.isPhp}}
+- **Suggested**: PHP/Laravel ecosystem tools if you use Composer/Artisan heavily in CI.
+{{/if}}
+{{#unless stackProfile.isNode}}
+{{#unless stackProfile.isPython}}
+{{#unless stackProfile.isPhp}}
+- **Suggested**: add MCPs that match your detected languages and CI (see `context/tech-stack.md`).
+{{/unless}}
+{{/unless}}
+{{/unless}}
+
+*MCP availability depends on your org and Cursor configuration; treat the table above as suggestions, not requirements.*
+
+## Suggested MCPs (optional)
+
+- **Git / PR**: if your team uses hosted Git with API access, an MCP that surfaces PR diff context can complement `pr-review-or-risk-scan`.
+- **Docs**: if you maintain external docs, a docs or wiki MCP can align answers with `.cursor/context/`.
+- **Cloud / DB**: only if this repo integrates with services reflected in the analysis report — avoid unrelated MCP noise.
+
+## Daily workflow
+
+1. Sync context: `project-overview` → `tech-stack`.
+2. Pick a **command** matching the task (orient, implement, test, review).
+3. Let **rules** constrain edits; use **SKILL.md** before generating code.
+4. Run an **automation** when the situation matches its trigger (security-sensitive change → `security-review`).
+5. Re-run **RepoSage** when structure or stack signals change.
+
+## How to stay productive
+
+- Prefer **evidence** (this repo’s files + generated context) over generic stack advice.
+- Keep **one source of truth** for stack facts: `context/tech-stack.md` + manifests on disk.
+- **Regenerate** `.cursor/` when onboarding new areas or after refactors so agents stay aligned.
+
+## Productivity commands (quick map)
+
+| Goal | Command |
+|------|---------|
+| Understand repo | `explain-repo`, `analyze-codebase` |
+| Follow a flow | `trace-feature` |
+| Implement work | `implement-task` |
+| Add tests | `generate-tests`, `create-test-plan` |
+| Harden change | `review-risk`, `analyze-performance` |
+| Structure work | `document-module`, `create-module`, `create-endpoint` |
+
+---
+
+*Regenerate this file and all `.cursor/` assets: `reposage rsync <path>`*

@@ -27,7 +27,7 @@ export class CursorPromptGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
-    const stackProfile = buildStackProfile(this.report);
+    const stackProfile = buildStackProfile(this.report, this.rootPath);
     const promptsDir = path.join(this.rootPath, ".cursor", "prompts");
     this.ensureDir(promptsDir);
 

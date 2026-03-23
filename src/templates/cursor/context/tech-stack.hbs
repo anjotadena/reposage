@@ -2,7 +2,12 @@
 
 # Tech Stack
 
-Complete technology inventory for agents and automation workflows.
+Technology inventory for **`{{stackProfile.projectName}}`** — use this file (and manifests on disk) as source of truth for this project’s stack, not generic assumptions.
+
+## This project
+
+- **Root**: `{{stackProfile.repositoryPath}}`
+- **Dependency manifests to watch**: {{#each stackProfile.dependencyFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
 
 ## Languages
 
@@ -21,9 +26,9 @@ Language breakdown not available.
 {{#if report.frameworks.data}}
 ### Application Frameworks
 {{#each report.frameworks.data}}
-{{#ifCond category "!=" "testing"}}
+{{#unless (eq category "testing")}}
 - **{{name}}** ({{category}}){{#if version}} — v{{version}}{{/if}}
-{{/ifCond}}
+{{/unless}}
 {{/each}}
 {{/if}}
 

@@ -1,12 +1,13 @@
-<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T23:22:28.194Z | RepoSage 0.1.0 -->
 
 # Domain Knowledge
 
-Key terms, concepts, and patterns for agents and automations.
+Domain vocabulary inferred for **`reposage`**. Extend this file as you learn real product terms — do not treat scan-derived names as full product documentation.
 
 ## Project Domain
 
-Repository: `/home/an0malyx/projects/reposage`
+- **Repository root**: `/home/an0malyx/projects/reposage`
+- **Short name**: `reposage`
 
 ## Key Terms
 

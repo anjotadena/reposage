@@ -2,20 +2,85 @@
 
 # Architecture Overview
 
-Component relationships and architectural patterns for agents and automations.
+Component relationships for **`{{stackProfile.projectName}}`**. Describes this codebase’s structure — validate against the repo before treating any statement as fact.
 
-## Architecture Style
+## Project directory
+
+| Field | Value |
+|-------|--------|
+| **Repository root** | `{{stackProfile.repositoryPath}}` |
+| **Project folder name** | `{{stackProfile.projectName}}` |
+| **Primary runtime** | {{stackProfile.runtimeLabel}} |
+
+This is the **directory RepoSage analyzed**; treat it as the workspace boundary for planning changes.
+
+## Why this architecture is described this way
+
+Analysis combines **framework detection**, **entry points**, **modules**, and **routes** — not a human architecture review.
+
+{{#if report.architecture.data.style}}
+{{#unless (eq report.architecture.data.style "Unknown")}}
+- The label **{{report.architecture.data.style}}** is a **heuristic** match (folder and framework patterns), not a guaranteed enterprise classification.
+{{/unless}}
+{{/if}}
+{{#if report.frameworks.data}}
+- **Frameworks** (non-test) — explain where request handling, UI, or build tooling typically live:  
+{{#each report.frameworks.data}}
+{{#unless (eq category "testing")}}
+  - {{name}} ({{category}})
+{{/unless}}
+{{/each}}
+{{/if}}
+{{#if report.modules.data.length}}
+- **Module-like areas** suggest **separation by directory** — prefer extending one area cohesively over scattering logic across unrelated folders.
+{{/if}}
+{{#if report.apiRoutes.data.length}}
+- **Declared routes** outline the HTTP surface; keep handlers aligned with that structure.
+{{/if}}
+
+## Architecture style
 
 {{#if report.architecture.data.style}}
 **Detected**: {{report.architecture.data.style}}
 {{#if report.architecture.data.description}}
+
 {{report.architecture.data.description}}
 {{/if}}
 {{else}}
-Architecture style not confidently detected. Infer from module structure.
+Architecture style not confidently detected. Infer from `src/` (or equivalent) and dominant framework docs.
 {{/if}}
 
-## Component Relationships
+## Linting, formatting, and quality
+
+{{#if report.codingConventions.data}}
+| Signal | Notes |
+|--------|--------|
+| ESLint | {{#if report.codingConventions.data.eslint}}Use project ESLint rules on edited files{{else}}Not detected — follow nearby file style{{/if}} |
+| Prettier | {{#if report.codingConventions.data.prettier}}Run Prettier on touched files{{else}}Not detected{{/if}} |
+| EditorConfig | {{#if report.codingConventions.data.editorConfig}}Match indentation/line endings{{else}}Not detected{{/if}} |
+| Git hooks | {{#if report.codingConventions.data.husky}}Respect pre-commit / CI checks{{else}}Not detected{{/if}} |
+| Strict TypeScript | {{#if report.codingConventions.data.strictTypeScript}}Prefer strict typing in TS{{else}}N/A or not strict{{/if}} |
+
+{{#if report.codingConventions.data.configFiles.length}}
+**Relevant files**: {{#each report.codingConventions.data.configFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{else}}
+No convention metadata in the report — inspect the repo for `eslint`, `prettier`, `tsconfig`, etc.
+{{/if}}
+
+### Stack-aligned practices
+
+{{#if stackProfile.isNode}}
+- **Node/TS**: keep `package.json` scripts authoritative; run `lint` / `test` / `build` as defined before large merges.
+{{/if}}
+{{#if stackProfile.isLaravel}}
+- **Laravel**: favor framework-native layers (HTTP → actions/controllers → domain → persistence) over ad-hoc includes.
+{{/if}}
+{{#if stackProfile.isPython}}
+- **Python**: follow the project’s env tool (venv, poetry, etc.) and test command from docs or CI.
+{{/if}}
+
+## Component relationships
 
 {{#if report.modules.data}}
 ### Modules
@@ -31,7 +96,7 @@ Architecture style not confidently detected. Infer from module structure.
 {{/each}}
 {{/if}}
 
-## API Surface
+## API surface
 
 {{#if report.apiRoutes.data}}
 ### Routes
@@ -44,7 +109,7 @@ Architecture style not confidently detected. Infer from module structure.
 No API routes detected.
 {{/if}}
 
-## Data Layer
+## Data layer
 
 {{#if report.databases.data}}
 ### Databases
@@ -64,10 +129,22 @@ No database integration detected.
 - Terraform: {{#if report.infrastructure.data.terraform}}Yes{{else}}No{{/if}}
 {{/if}}
 
-## Architecture Guidelines for Automations
+{{#if report.cicd.data.length}}
+## CI/CD (quality gates)
+
+{{#each report.cicd.data}}
+- **{{type}}**: `{{path}}`{{#if configFile}} — `{{configFile}}`{{/if}}
+{{/each}}
+
+Align local checks with what CI runs (build, lint, test) before merging risky changes.
+{{/if}}
+
+## Architecture guidelines for automations
 
 When reviewing or modifying code:
-1. Respect module boundaries — avoid cross-cutting dependencies
-2. Keep the detected architecture style intact
-3. Route changes through appropriate layers
-4. Flag architectural violations for review
+
+1. Respect module boundaries — avoid cross-cutting dependencies.
+2. Keep the inferred architecture style and framework idioms intact.
+3. Route changes through appropriate layers.
+4. Honor **lint/format/test** expectations for this stack.
+5. Flag architectural violations for human review.

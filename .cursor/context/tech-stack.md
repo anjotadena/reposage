@@ -1,8 +1,13 @@
-<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T23:22:28.194Z | RepoSage 0.1.0 -->
 
 # Tech Stack
 
-Complete technology inventory for agents and automation workflows.
+Technology inventory for **`reposage`** — use this file (and manifests on disk) as source of truth for this project’s stack, not generic assumptions.
+
+## This project
+
+- **Root**: `/home/an0malyx/projects/reposage`
+- **Dependency manifests to watch**: `package.json`
 
 ## Languages
 
@@ -11,7 +16,7 @@ Complete technology inventory for agents and automation workflows.
 | JSON | 5 | 3% |
 | Markdown | 37 | 23% |
 | JavaScript | 1 | 1% |
-| TypeScript | 49 | 31% |
+| TypeScript | 53 | 33% |
 
 ## Frameworks & Libraries
 

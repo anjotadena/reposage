@@ -7,16 +7,18 @@ import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateRuleViaAI } from "./AIGenerator.js";
 import { buildStackProfile } from "./stackProfile.js";
 
+/**
+ * Core rules only: baseline, canonical merged architecture/security/testing,
+ * tech stack, and conventions. Duplicate numbered + named pairs are merged into
+ * architecture.mdc, security.mdc, and testing.mdc.
+ */
 const RULE_FILES = [
   "00-repo-baseline",
-  "10-architecture",
-  "20-testing-strategy",
-  "30-security",
-  "40-tech-stack",
-  "coding-standards",
   "architecture",
   "security",
   "testing",
+  "40-tech-stack",
+  "coding-standards",
   "api-design",
   "naming-conventions",
 ];
@@ -33,7 +35,7 @@ export class CursorRuleGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
-    const stackProfile = buildStackProfile(this.report);
+    const stackProfile = buildStackProfile(this.report, this.rootPath);
     const rulesDir = path.join(this.rootPath, ".cursor", "rules");
     this.ensureDir(rulesDir);
 

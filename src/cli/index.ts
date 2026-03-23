@@ -42,6 +42,19 @@ program
   });
 
 program
+  .command("rsync <path>")
+  .description(
+    "Regenerate all RepoSage Cursor outputs (.cursor/, docs/context/) with --force and no prompt — use for ongoing .cursor maintenance"
+  )
+  .option("--ai", "Use Cursor CLI with AI to generate (default)")
+  .option("--no-ai", "Use Handlebars templates instead of AI")
+  .option("-m, --model <model>", "AI model for generation (default: gpt-5.2)", "gpt-5.2")
+  .action(async (path: string, opts: { ai?: boolean; model?: string }) => {
+    const { rsyncCommand } = await import("./commands/rsync.js");
+    await rsyncCommand(path, opts);
+  });
+
+program
   .command("explain <path>")
   .description("Output human-readable repository summary")
   .option("--ai", "Use AI for enhanced explanation (requires external LLM)")

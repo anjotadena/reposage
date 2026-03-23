@@ -3,6 +3,7 @@
  */
 
 import type { AnalysisReport } from "../models/index.js";
+import { cleanupObsoleteCursorArtifacts } from "./cleanupObsoleteArtifacts.js";
 
 export interface GeneratorOptions {
   force?: boolean;
@@ -22,6 +23,7 @@ export async function runGenerators(
   const { CursorContextGenerator } = await import("./CursorContextGenerator.js");
   const { CursorAutomationGenerator } = await import("./CursorAutomationGenerator.js");
   const { CursorSkillGenerator } = await import("./CursorSkillGenerator.js");
+  const { CursorReadmeGenerator } = await import("./CursorReadmeGenerator.js");
   const { ContextDocGenerator } = await import("./ContextDocGenerator.js");
 
   const cursorRules = new CursorRuleGenerator(report, rootPath);
@@ -30,6 +32,7 @@ export async function runGenerators(
   const cursorContext = new CursorContextGenerator(report, rootPath);
   const cursorAutomations = new CursorAutomationGenerator(report, rootPath);
   const cursorSkills = new CursorSkillGenerator(report, rootPath);
+  const cursorReadme = new CursorReadmeGenerator(report, rootPath);
   const contextDocs = new ContextDocGenerator(report, rootPath);
 
   await Promise.all([
@@ -39,6 +42,9 @@ export async function runGenerators(
     cursorContext.generate(options),
     cursorAutomations.generate(options),
     cursorSkills.generate(options),
+    cursorReadme.generate(options),
     contextDocs.generate(options),
   ]);
+
+  cleanupObsoleteCursorArtifacts(rootPath);
 }

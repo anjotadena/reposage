@@ -1,7 +1,47 @@
 <!-- Generated: {{generatedAt}} | RepoSage {{version}} -->
 
-# Architecture Overview
+# Architecture overview
 
-## Detected Architecture
+Published copy of architecture context for **`{{stackProfile.projectName}}`** (`{{stackProfile.repositoryPath}}`). Prefer `.cursor/context/architecture-overview.md` for day-to-day agent use; keep this file in sync when you change structure.
 
-(Generated from analysis)
+## Why this description exists
+
+It summarizes **heuristic** detection (frameworks, modules, routes), not a formal design review. Use it to onboard engineers; validate assumptions against the repo.
+
+## Rationale (from evidence)
+
+{{#if report.architecture.data.style}}
+{{#unless (eq report.architecture.data.style "Unknown")}}
+- Style **{{report.architecture.data.style}}** was inferred from patterns in the codebase, not from an ADR.
+{{/unless}}
+{{/if}}
+{{#if report.frameworks.data}}
+- Frameworks shape where features live; follow their conventions.
+{{/if}}
+{{#if report.modules.data}}
+- Directory-based modules imply **boundaries** — extend cohesively within an area.
+{{/if}}
+
+## Linting and engineering discipline
+
+{{#if report.codingConventions.data}}
+| Check | Status |
+|-------|--------|
+| ESLint | {{#if report.codingConventions.data.eslint}}Detected{{else}}—{{/if}} |
+| Prettier | {{#if report.codingConventions.data.prettier}}Detected{{else}}—{{/if}} |
+| Strict TS | {{#if report.codingConventions.data.strictTypeScript}}Yes{{else}}—{{/if}} |
+
+{{#if report.codingConventions.data.configFiles.length}}
+Config: {{#each report.codingConventions.data.configFiles}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}
+{{/if}}
+{{else}}
+Add ESLint/Prettier/tsconfig as the team standardizes; match neighboring files until then.
+{{/if}}
+
+## Detected summary
+
+{{#if report.architecture.data.description}}
+{{report.architecture.data.description}}
+{{else}}
+See module and entry-point layout in the repository.
+{{/if}}

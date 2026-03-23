@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T23:22:28.194Z | RepoSage 0.1.0 -->
 
 # Generate Feature
 
@@ -49,4 +49,4 @@ Generate a new feature for this codebase.
 
 After feature generation:
 - Run `pr-review-or-risk-scan` before merge
-- Run `test-plan-on-large-change` if spanning modules
+- Use `create-test-plan` / `generate-tests` commands if spanning modules; run `pr-review-or-risk-scan` before merge

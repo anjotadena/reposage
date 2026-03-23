@@ -7,6 +7,8 @@ import fs from "node:fs";
 import path from "node:path";
 import type { AnalysisReport } from "../../models/index.js";
 
+Handlebars.registerHelper("eq", (a: unknown, b: unknown) => a === b);
+
 export abstract class BaseGenerator {
   constructor(
     protected report: AnalysisReport,

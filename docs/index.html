@@ -85,7 +85,7 @@
   <main>
     <h1>RepoSage Documentation</h1>
     <div class="meta">
-      <span><strong>Version:</strong> 1.3.0</span>
+      <span><strong>Version:</strong> 1.3.1</span>
       <span><strong>Node:</strong> 18+</span>
       <span><strong>License:</strong> MIT</span>
       <span><a href="https://github.com/anjotadena/reposage" target="_blank" rel="noopener noreferrer">GitHub</a></span>
@@ -123,6 +123,11 @@ reposage --help</code></pre>
           <td><code>reposage generate &lt;path&gt;</code></td>
           <td>Generate Cursor artifacts and docs from analysis</td>
           <td><code>reposage generate . --no-ai</code></td>
+        </tr>
+        <tr>
+          <td><code>reposage rsync &lt;path&gt;</code></td>
+          <td>Full refresh of generated files (<code>--force</code>, no prompt)</td>
+          <td><code>reposage rsync . --no-ai</code></td>
         </tr>
         <tr>
           <td><code>reposage explain &lt;path&gt;</code></td>
@@ -180,6 +185,9 @@ reposage analyze .
 # 3) Generate artifacts
 reposage generate . --no-ai
 
+# 3b) Ongoing refresh (no confirmation)
+reposage rsync . --no-ai
+
 # 4) Explain repository summary
 reposage explain .</code></pre>
 
@@ -198,18 +206,19 @@ reposage generate . --model gpt-5.2</code></pre>
 
     <h2>Generated Output</h2>
     <pre><code>.cursor/
-  rules/
+  rules/          # 8 core .mdc (merged architecture, security, testing)
   commands/
   prompts/
   context/
-  automations/
-  skills/
+  automations/    # 4 workflows
+  skills/         # tech-stack-implementation/SKILL.md
+  CURSOR_README.md
 
 docs/
   context/</code></pre>
     <ul>
-      <li>Rules: architecture, testing, security, naming, tech-stack constraints.</li>
-      <li>Commands: explain, trace, document, generate tests, analyze performance.</li>
+      <li>Rules: baseline, canonical architecture, security, testing, tech-stack, naming, API, coding standards.</li>
+      <li>Commands: explain, implement-task, trace, document, generate tests, analyze performance.</li>
       <li>Prompts: feature generation, refactoring, debugging, review, unit tests.</li>
       <li>Context docs: architecture overview, module index, glossary, known risks.</li>
     </ul>
@@ -220,6 +229,7 @@ reposage analyze ../another-repo
 
 # Force refresh generated output after refactor
 reposage generate . --force --no-ai
+reposage rsync . --no-ai
 
 # AI generation with explicit model
 reposage generate ./service-a --model gpt-5.2

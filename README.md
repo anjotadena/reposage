@@ -34,6 +34,7 @@ RepoSage is useful when a repository has little documentation, unclear structure
 reposage scan <path>
 reposage analyze <path>
 reposage generate [options] <path>
+reposage rsync [options] <path>
 reposage explain [options] <path>
 reposage update
 ```
@@ -43,6 +44,7 @@ reposage update
 | `scan <path>` | Fast repository scan with file statistics and detected key files |
 | `analyze <path>` | Runs detection and prints a structured analysis summary |
 | `generate <path>` | Generates Cursor assets and context docs from the analysis report |
+| `rsync <path>` | Regenerates all generated `.cursor/` and `docs/context/` files with `--force` and no prompt (ongoing maintenance) |
 | `explain <path>` | Prints a short human-readable repository summary |
 | `update` | Updates a global install, or prints source-update instructions for linked/source installs |
 
@@ -129,6 +131,9 @@ reposage analyze ./my-project
 # Generate or refresh Cursor assets
 reposage generate ./my-project --force
 
+# Full refresh without confirmation (same outputs as generate --force)
+reposage rsync ./my-project
+
 # Print a short repo summary
 reposage explain ./my-project
 
@@ -150,19 +155,21 @@ Notes:
 - If `.cursor/` already exists and `--force` is not provided, RepoSage asks for confirmation before overwriting generated assets.
 - Generated output targets `.cursor/` and `docs/context/`.
 - `README.md` is not part of the normal `generate` pipeline.
+- Use `rsync` as the non-interactive full refresh of `.cursor/` and `docs/context/` (same generator pipeline as `generate`).
 
 ## What Gets Generated
 
-Running `reposage generate <path>` creates or refreshes these artifacts:
+Running `reposage generate <path>` or `reposage rsync <path>` creates or refreshes these artifacts:
 
 ```text
 .cursor/
-├── rules/           # 11 rule files
-├── commands/        # 11 command files
+├── rules/           # 8 core .mdc rules (baseline merged architecture, security, testing, tech-stack, …)
+├── commands/        # 12 command files
 ├── prompts/         # 5 prompt files
-├── context/         # 4 context files
-├── automations/     # 6 automation workflows
-└── skills/          # 1 stack-grounded skill bundle
+├── context/         # 4 context files (project-grounded to this repo)
+├── automations/     # 4 automation workflows
+├── skills/          # tech-stack-implementation/SKILL.md only (no YAML packs)
+└── CURSOR_README.md # Cursor onboarding: usage, MCPs, daily workflow, productivity
 
 docs/
 └── context/         # 7 documentation files
@@ -171,7 +178,7 @@ docs/
 Examples of generated assets:
 
 - Rules for architecture, security, testing, naming, and tech stack.
-- Commands such as `explain-repo`, `analyze-codebase`, `trace-feature`, and `generate-tests`.
+- Commands such as `explain-repo`, `implement-task`, `analyze-codebase`, `trace-feature`, and `generate-tests`.
 - Prompts for feature generation, debugging, code review, refactoring, and unit-test writing.
 - Automation playbooks for PR review, dependency review, release readiness, and security review.
 - Skills for stack-grounded generation to reduce hallucination and keep outputs evidence-based.

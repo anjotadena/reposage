@@ -1,12 +1,13 @@
-<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T23:22:28.194Z | RepoSage 0.1.0 -->
 
 # Project Overview
 
-High-level summary for Cursor agents and automation workflows.
+High-level summary for **this repository** (`reposage`) — not generic boilerplate. Content is grounded in RepoSage analysis of the project directory.
 
 ## Purpose
 
-Repository: `/home/an0malyx/projects/reposage`
+- **Root path**: `/home/an0malyx/projects/reposage`
+- **Display name**: `reposage`
 
 ## Key Technologies
 
@@ -14,7 +15,7 @@ Repository: `/home/an0malyx/projects/reposage`
 - **JSON**: 5 files (3%)
 - **Markdown**: 37 files (23%)
 - **JavaScript**: 1 files (1%)
-- **TypeScript**: 49 files (31%)
+- **TypeScript**: 53 files (33%)
 
 
 ## Entry Points

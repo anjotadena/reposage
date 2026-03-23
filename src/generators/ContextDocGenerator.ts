@@ -5,6 +5,7 @@
 import path from "node:path";
 import { BaseGenerator } from "./base/BaseGenerator.js";
 import { generateContextDocViaAI } from "./AIGenerator.js";
+import { buildStackProfile } from "./stackProfile.js";
 
 const DOC_FILES = [
   "repo-map",
@@ -28,6 +29,7 @@ export class ContextDocGenerator extends BaseGenerator {
     const force = options.force ?? false;
     const useAI = options.useAI ?? false;
     const model = options.model ?? "gpt-5.2";
+    const stackProfile = buildStackProfile(this.report, this.rootPath);
     const docsDir = path.join(this.rootPath, "docs", "context");
     this.ensureDir(docsDir);
 
@@ -41,6 +43,7 @@ export class ContextDocGenerator extends BaseGenerator {
       } else {
         content = this.renderTemplate(`docs/${name}.hbs`, {
           report: this.report,
+          stackProfile,
           generatedAt: this.report.metadata.generatedAt.toISOString(),
           version: this.report.metadata.generatorVersion,
         });

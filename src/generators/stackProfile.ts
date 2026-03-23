@@ -1,6 +1,11 @@
+import path from "node:path";
 import type { AnalysisReport } from "../models/index.js";
 
 export interface StackProfile {
+  /** Directory name of the analyzed repository root */
+  projectName: string;
+  /** Absolute path from analysis metadata */
+  repositoryPath: string;
   isLaravel: boolean;
   isPhp: boolean;
   isNode: boolean;
@@ -21,7 +26,10 @@ function hasFramework(report: AnalysisReport, frameworkName: string): boolean {
   return report.frameworks.data.some((fw) => fw.name.toLowerCase() === frameworkName.toLowerCase());
 }
 
-export function buildStackProfile(report: AnalysisReport): StackProfile {
+export function buildStackProfile(report: AnalysisReport, rootPath?: string): StackProfile {
+  const repositoryPath = rootPath ?? report.metadata.targetRepository;
+  const projectName = path.basename(path.resolve(repositoryPath));
+
   const isLaravel = hasFramework(report, "Laravel");
   const isPhp = hasLanguage(report, "PHP") || isLaravel;
   const isNode = hasLanguage(report, "JavaScript") || hasLanguage(report, "TypeScript");
@@ -64,6 +72,8 @@ export function buildStackProfile(report: AnalysisReport): StackProfile {
   if (isPython) runtimeParts.push("Python");
 
   return {
+    projectName,
+    repositoryPath,
     isLaravel,
     isPhp,
     isNode,

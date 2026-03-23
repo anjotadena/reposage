@@ -1,4 +1,4 @@
-<!-- Generated: 2026-03-23T13:40:52.385Z | RepoSage 0.1.0 -->
+<!-- Generated: 2026-03-23T23:22:28.194Z | RepoSage 0.1.0 -->
 
 # Release Readiness Check
 
@@ -61,7 +61,7 @@ Validate that the release is safe, complete, and well-documented:
 ## Signals to Inspect
 
 - Version: 0.1.0
-- Analysis date: Mon Mar 23 2026 21:40:52 GMT+0800 (Philippine Standard Time)
+- Analysis date: Tue Mar 24 2026 07:22:28 GMT+0800 (Philippine Standard Time)
 - Entry points to verify: `dist/cli/index.js`, `dist/cli/index.js`
 - Release files: CHANGELOG.md, package.json, version.ts
 - Config files: .env.production, config/production.*
