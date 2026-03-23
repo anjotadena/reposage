@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/anjotadena/reposage/compare/v1.3.1...v1.4.0) (2026-03-23)
+
+
+### Features
+
+* add rsync command for non-interactive file regeneration ([07ead48](https://github.com/anjotadena/reposage/commit/07ead481d47922e89f87585b826b5c64da97dd16))
+
+
+### Bug Fixes
+
+* format ([5e26e97](https://github.com/anjotadena/reposage/commit/5e26e9730c73e59a88a69eb9afcca7514e9ecdaf))
+
 ## [1.3.1](https://github.com/anjotadena/reposage/compare/v1.3.0...v1.3.1) (2026-03-23)
 
 
