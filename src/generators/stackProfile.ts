@@ -12,7 +12,9 @@ export interface StackProfile {
 }
 
 function hasLanguage(report: AnalysisReport, languageName: string): boolean {
-  return report.languages.data.some((lang) => lang.name.toLowerCase() === languageName.toLowerCase());
+  return report.languages.data.some(
+    (lang) => lang.name.toLowerCase() === languageName.toLowerCase()
+  );
 }
 
 function hasFramework(report: AnalysisReport, frameworkName: string): boolean {

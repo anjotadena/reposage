@@ -105,7 +105,9 @@ export async function generateCommand(
     const report = pipeline.getReport();
     if (!report) {
       spinner.fail("Tech stack analysis failed");
-      throw new Error("No analysis report generated. Cannot generate context without tech stack analysis.");
+      throw new Error(
+        "No analysis report generated. Cannot generate context without tech stack analysis."
+      );
     }
     spinner.succeed("Tech stack analysis complete");
 
@@ -138,7 +140,9 @@ export async function generateCommand(
       }
     } else {
       console.log(
-        chalk.yellow("No explicit stack standards detected (linter/test/framework); generation will use minimal defaults.")
+        chalk.yellow(
+          "No explicit stack standards detected (linter/test/framework); generation will use minimal defaults."
+        )
       );
     }
 
