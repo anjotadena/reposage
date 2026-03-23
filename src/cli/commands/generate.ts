@@ -50,7 +50,11 @@ export async function generateCommand(
 
   let force = opts.force ?? false;
   const cursorDir = path.join(resolved, ".cursor");
-  if (fs.existsSync(cursorDir) && !force) {
+  const cursorExisted = fs.existsSync(cursorDir);
+  if (!cursorExisted) {
+    fs.mkdirSync(cursorDir, { recursive: true });
+  }
+  if (cursorExisted && !force) {
     const ok = await confirmOverride("Are you sure you want to override existing .cursor/**/*?");
     if (!ok) {
       console.log(chalk.gray("Aborted."));
