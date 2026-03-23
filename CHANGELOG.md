@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/anjotadena/reposage/compare/v1.3.0...v1.3.1) (2026-03-23)
+
+
+### Bug Fixes
+
+* trigger release workflow ([4720151](https://github.com/anjotadena/reposage/commit/47201511e442776f48d5b9db5dcb005e2799b242))
+
 ## [1.3.0](https://github.com/anjotadena/reposage/compare/v1.2.0...v1.3.0) (2026-03-23)
 
 
