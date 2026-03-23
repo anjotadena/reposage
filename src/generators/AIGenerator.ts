@@ -304,12 +304,7 @@ export async function generateSkillViaAI(
   const instructions =
     SKILL_INSTRUCTIONS[skillName] ??
     "Generate a Cursor skill file that is strictly grounded in detected technology evidence.";
-  const prompt = buildArtifactPrompt(
-    "Cursor skill",
-    `${skillName}/SKILL.md`,
-    report,
-    instructions
-  );
+  const prompt = buildArtifactPrompt("Cursor skill", `${skillName}/SKILL.md`, report, instructions);
   return runAgent(prompt, {
     model: options.model ?? DEFAULT_MODEL,
     workspace: options.workspace,
